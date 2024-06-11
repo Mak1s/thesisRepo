@@ -79,7 +79,7 @@ function getX3MLFile(){
         }
     };
 
-    // Create a new FormData object to send the file
+    // Create a new FormData object to send the file 
     /*let combinedFormData = new FormData();
     if (file) {
         combinedFormData.append('fileUpload', file); // Add the file
