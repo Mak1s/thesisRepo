@@ -25,7 +25,7 @@
                 <button type="button" class="btn btn-dark" onclick="togleVisibility(3)">New project</button>
                 <button type="button" class="btn btn-dark" onclick="togleVisibility(4)">Load</button>
             </div>
-            <div class="row justify-content-center" id="buttons"style="display: none;">
+            <div class="row justify-content-center" id="buttons" style="display: none;">
                 <button type="button" class="btn btn-dark" onclick="togleVisibility(1)">Change Class only</button>
                 <button type="button" class="btn btn-dark" onclick="togleVisibility(2)">Change Class and Property</button>
             </div>
@@ -34,16 +34,19 @@
             <div class="col-sm-6 mb-5">
                 <form action="/upload" id="uploadForm">
                     <div class="form-group">
-                            <label for="fileUpload">Choose .x3ml file to tranform &nbsp; &nbsp; &nbsp;*</label><br>
+                            <label for="fileUpload">Choose .x3ml file to transform &nbsp; &nbsp; &nbsp;*</label><br>
                             <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
                     </div>        
                     <button type="submit" class="btn btn-dark">Upload</button>
                 </form>
+                <div class="col-sm-4" id="addedContent">
+                    <!--blank-->
+                </div>
             </div>
             <div class="col-sm-6 ">
                 <form action="/upload">
                     <div class="form-group">
-                            <label for="fileUpload">Choose .rdf file to tranform &nbsp; &nbsp; &nbsp;*</label><br>
+                            <label for="fileUpload">Choose .rdf file to transform &nbsp; &nbsp; &nbsp;*</label><br>
                             <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
                     </div>        
                     <button type="submit" class="btn btn-dark">Upload</button>
@@ -146,7 +149,7 @@
             <div class="col-sm-6">
                 <form action="/upload">
                     <div class="form-group">
-                            <label for="fileUpload">Choose .x3ml file to tranform &nbsp; &nbsp; &nbsp;*</label><br>
+                            <label for="fileUpload">Choose .x3ml file to transform &nbsp; &nbsp; &nbsp;*</label><br>
                             <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
                     </div>        
                     <button type="submit" class="btn btn-dark">Upload</button>
@@ -155,7 +158,7 @@
             <div class="col-sm-6">
                 <form action="/upload">
                     <div class="form-group">
-                            <label for="fileUpload">Choose .rdf file to tranform &nbsp; &nbsp; &nbsp;*</label><br>
+                            <label for="fileUpload">Choose .rdf file to transform &nbsp; &nbsp; &nbsp;*</label><br>
                             <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
                     </div>        
                     <button type="submit" class="btn btn-dark">Upload</button>
@@ -421,7 +424,7 @@
             </div>
             <div class="col-sm-6">
                 <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
-                <input class="form-control" id="propertyTO"type="text" placeholder="P90_has_value">
+                <input class="form-control" id="propertyTO" type="text" placeholder="P90_has_value">
                 <button type="submit" class="btn btn-dark" onclick="getValueProperty()">Change</button>
             </div>
         </div>
