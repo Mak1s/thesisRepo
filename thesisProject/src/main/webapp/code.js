@@ -61,6 +61,7 @@ function getX3MLFile(){
     let formData = new FormData(myForm);
     const fileInput = document.getElementById('fileUpload');
     const file = fileInput.files[0];
+    var jsonData=JSON.stringify(file);
     if(!file){
         document.getElementById('addedContent').innerHTML="Error";
         return;
@@ -69,7 +70,7 @@ function getX3MLFile(){
 
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            const responseData = JSON.parse(xhr.responseText);
+            const responseData = JSON.parse(jsonData);
             $('#addedContent').html("File uploaded successfully!<br> File Data");
             $('#addedContent').append(createTableFromJSON(responseData));
             console.log(responseData);
@@ -79,12 +80,12 @@ function getX3MLFile(){
     };
 
     // Create a new FormData object to send the file
-    let combinedFormData = new FormData();
+    /*let combinedFormData = new FormData();
     if (file) {
         combinedFormData.append('fileUpload', file); // Add the file
     }
+*/    console.log(jsonData);
 
-    xhr.open("POST", "UploadFile");
-    // Note: Do not set Content-Type header for FormData, the browser will automatically set it
-    xhr.send(combinedFormData);
+    xhr.open("GET", "UploadFile");
+    xhr.send(jsonData);
 }
