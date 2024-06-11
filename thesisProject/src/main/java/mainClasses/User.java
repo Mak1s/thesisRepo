@@ -27,4 +27,12 @@ public class User {
     public void setPassword(String password){
         this.password=password;
     }
+    
+    public String getProjects(){
+        return projects;
+    }
+    
+    public void setProjects( String projects){
+        this.projects=projects;
+    }
 }
