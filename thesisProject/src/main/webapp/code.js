@@ -55,15 +55,28 @@ function getValueProperty(){
 function logout() {
     window.location.href = 'login.html'; 
 }
-function getX3MLFile() {
-    let myForm = document.getElementById('uploadForm');
+
+function formChooser(option){
+    if(option ==1){
+        getX3MLFile('uploadForm','fileUpload','addedContent','uploadServlet');
+    }else if(option ==2){
+        getX3MLFile('uploadForm1','fileUpload1','addedContent1','uploadServletRDF');
+    }else if(option ==3){
+        getX3MLFile('uploadForm2','fileUpload2','addedContent2','uploadServlet1');        
+    }else if(option == 4){
+        getX3MLFile('uploadForm3','fileUpload3','addedContent3','uploadServletRDF1');
+    }
+}
+
+function getX3MLFile(formId,fileId,contentId,servletName) {
+    let myForm = document.getElementById(formId);
     let formData = new FormData(myForm);
 
-    const fileInput = document.getElementById('fileUpload');
+    const fileInput = document.getElementById(fileId);
     const file = fileInput.files[0];
 
     if (!file) {
-        document.getElementById('addedContent').innerHTML = "Error: No file selected.";
+        document.getElementById(contentId).innerHTML = "Error: No file selected.";
         return;
     }
 
@@ -71,13 +84,13 @@ function getX3MLFile() {
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            document.getElementById('addedContent').innerHTML = "File uploaded successfully!";
+            document.getElementById(contentId).innerHTML = "File uploaded successfully!";
             console.log(xhr.responseText);
         } else {
-            document.getElementById('addedContent').innerHTML = "Request failed. Returned status of " + xhr.status;
+            document.getElementById(contentId).innerHTML = "Request failed. Returned status of " + xhr.status;
         }
     };
 
-    xhr.open("POST", "uploadServlet", true);
+    xhr.open("POST", servletName, true);
     xhr.send(formData);
 }

@@ -4,9 +4,33 @@
         <servlet-name>uploadServlet</servlet-name>
         <servlet-class>servlets.UploadServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>uploadServletRDF</servlet-name>
+        <servlet-class>servlets.UploadServletRDF</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>uploadServlet1</servlet-name>
+        <servlet-class>servlets.UploadServlet1</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>uploadServletRDF1</servlet-name>
+        <servlet-class>servlets.UploadServletRDF1</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>uploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadServletRDF</servlet-name>
+        <url-pattern>/UploadServletRDF</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadServlet1</servlet-name>
+        <url-pattern>/UploadServlet1</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadServletRDF1</servlet-name>
+        <url-pattern>/UploadServletRDF1</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
