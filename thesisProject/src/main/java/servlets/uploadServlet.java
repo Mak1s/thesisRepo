@@ -1,5 +1,6 @@
 package servlets;
 
+import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import mainClasses.JSON_Converter;
 
 @WebServlet("/uploadServlet")
 @MultipartConfig
@@ -48,29 +48,30 @@ public class uploadServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        
+
         // Handle the file upload
-        Part filePart = request.getPart("fileUpload"); // "fileUpload" is the name attribute in the form
+        Part filePart = request.getPart("fileUpload");
         String fileName = filePart.getSubmittedFileName();
-        
+
         // Define the path to save the uploaded file
         String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) uploadDir.mkdir();
-        
+
         // Save the file to the server
         File file = new File(uploadPath + File.separator + fileName);
         try (InputStream fileContent = filePart.getInputStream()) {
             Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
+
+         List<String> fileContentLines = Files.readAllLines(file.toPath());
+        String fileContent = String.join("\n", fileContentLines);
         
-        // Return JSON response
-        JSON_Converter c = new JSON_Converter();
-        String JSON = c.getJSONFromAjax(request.getReader());
-        PrintWriter out = response.getWriter();
-        
-        out.write(JSON);
-        response.setStatus(HttpServletResponse.SC_OK);
+        // Return JSON response        
+        try (PrintWriter out = response.getWriter()) {
+            out.write("File uploaded successfully, fileName: " + fileName + "\n Contents : "+fileContent);
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
     }
 
     @Override

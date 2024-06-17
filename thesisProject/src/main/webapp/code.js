@@ -55,75 +55,29 @@ function getValueProperty(){
 function logout() {
     window.location.href = 'login.html'; 
 }
-
-function getX3MLFile(){
+function getX3MLFile() {
     let myForm = document.getElementById('uploadForm');
     let formData = new FormData(myForm);
+
     const fileInput = document.getElementById('fileUpload');
     const file = fileInput.files[0];
-    var jsonData=JSON.stringify(file);
-    if(!file){
-        document.getElementById('addedContent').innerHTML="Error";
+
+    if (!file) {
+        document.getElementById('addedContent').innerHTML = "Error: No file selected.";
         return;
     }
+
     var xhr = new XMLHttpRequest();
 
     xhr.onload = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const responseData = JSON.parse(jsonData);
-            $('#addedContent').html("File uploaded successfully!<br> File Data");
-            $('#addedContent').append(createTableFromJSON(responseData));
-            console.log(responseData);
-        } else if (xhr.status !== 200) {
-            document.getElementById("addedContent").innerHTML = "Request failed. Returned status of " + xhr.status + "<br>";
+        if (xhr.status === 200) {
+            document.getElementById('addedContent').innerHTML = "File uploaded successfully!";
+            console.log(xhr.responseText);
+        } else {
+            document.getElementById('addedContent').innerHTML = "Request failed. Returned status of " + xhr.status;
         }
     };
 
-    // Create a new FormData object to send the file 
-    let combinedFormData = new FormData();
-    if (file) {
-        combinedFormData.append('fileUpload', file); // Add the file
-    }
-    console.log(jsonData);
-
-    xhr.open("GET", "uploadServlet");
-    xhr.send(jsonData);
+    xhr.open("POST", "uploadServlet", true);
+    xhr.send(formData);
 }
-/*
-function getX3MLFile(){
-    let myForm = document.getElementById('uploadForm');
-    let formData = new FormData(myForm);
-    const fileInput = document.getElementById('fileUpload');
-    const file = fileInput.files[0];
-    
-    
-    var jsonData=JSON.stringify(file);
-    if(!file){
-        document.getElementById('addedContent').innerHTML="Error";
-        return;
-    }
-    var xhr = new XMLHttpRequest();
-
-    xhr.onload = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const responseData = JSON.parse(jsonData);
-            $('#addedContent').html("File uploaded successfully!<br> File Data");
-            $('#addedContent').append(createTableFromJSON(responseData));
-            console.log(responseData);
-        } else if (xhr.status !== 200) {
-            document.getElementById("addedContent").innerHTML = "Request failed. Returned status of " + xhr.status + "<br>";
-        }
-    };
-
-    // Create a new FormData object to send the file 
-    let combinedFormData = new FormData();
-    if (file) {
-        combinedFormData.append('fileUpload', file); // Add the file
-    }
-   console.log(jsonData);
-
-    xhr.open("GET", "uploadServlet");
-    xhr.send(jsonData);
-     
-}
-*/
