@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -65,11 +66,28 @@ public class uploadServlet extends HttpServlet {
         }
 
          List<String> fileContentLines = Files.readAllLines(file.toPath());
+         /*
         String fileContent = String.join("\n", fileContentLines);
         
         // Return JSON response        
         try (PrintWriter out = response.getWriter()) {
             out.write("File uploaded successfully, fileName: " + fileName + "\n Contents : "+fileContent);
+            response.setStatus(HttpServletResponse.SC_OK);
+        }*/
+         String specificString = "<type>"; // Replace with the string you are looking for
+
+        List<String> filteredLines = new ArrayList<>();
+        for (String line : fileContentLines) {
+            if (line.contains(specificString)) {
+                filteredLines.add(line);
+            }
+        }
+
+
+        // Optionally, you can join and store the filtered lines in a string if needed
+        String filteredContent = String.join("\n", filteredLines);
+        try (PrintWriter out = response.getWriter()) {
+            out.write("File uploaded successfully, fileName: " + fileName + "\n Contents : "+filteredContent);
             response.setStatus(HttpServletResponse.SC_OK);
         }
     }
