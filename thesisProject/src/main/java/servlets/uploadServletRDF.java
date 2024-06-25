@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -20,6 +21,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import mainClasses.JSON_Converter;
+import mainClasses.ModelLoader;
 
 /**
  *
@@ -70,7 +73,6 @@ public class uploadServletRDF extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
- 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -78,40 +80,47 @@ public class uploadServletRDF extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        // Handle the file upload
-        Part filePart = request.getPart("fileUpload1");
-        String fileName = filePart.getSubmittedFileName();
+        PrintWriter out = response.getWriter();
+        try {
+            // Handle the file upload
+            Part filePart = request.getPart("fileUpload1");
+            String fileName = filePart.getSubmittedFileName();
 
-        // Define the path to save the uploaded file
-        String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) uploadDir.mkdir();
+            // Define the path to save the uploaded file
+            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) uploadDir.mkdir();
 
-        // Save the file to the server
-        File file = new File(uploadPath + File.separator + fileName);
-        try (InputStream fileContent = filePart.getInputStream()) {
-            Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        }
-
-         List<String> fileContentLines = Files.readAllLines(file.toPath());
-        String specificString = "<relationship>"; // Replace with the string you are looking for
-
-        List<String> filteredLines = new ArrayList<>();
-        for (String line : fileContentLines) {
-            if (line.contains(specificString)) {
-                filteredLines.add(line);
+            // Save the file to the server
+            File file = new File(uploadPath + File.separator + fileName);
+            try (InputStream fileContent = filePart.getInputStream()) {
+                Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
-        }
 
+            // Load the RDF model from the uploaded file
+            ModelLoader modelLoader = new ModelLoader(file.getAbsolutePath());
 
-        // Optionally, you can join and store the filtered lines in a string if needed
-        String filteredContent = String.join("\n", filteredLines);
-        try (PrintWriter out = response.getWriter()) {
-            out.write("File uploaded successfully, fileName: " + fileName + "\n Contents : "+filteredContent);
+            // Get classes and properties from the model
+            Collection<String> classes = modelLoader.listClasses();
+            Collection<String> properties = modelLoader.listProperties();
+
+            // Convert to JSON using JSON_Converter
+            JSON_Converter jsonConverter = new JSON_Converter();
+            String jsonResponse = jsonConverter.convertToJSON(classes, properties);
+
+            // Send JSON response
+            out.write(jsonResponse);
+            System.out.println(jsonResponse);
             response.setStatus(HttpServletResponse.SC_OK);
+
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.write("{\"error\":\"" + e.getMessage() + "\"}");
+            e.printStackTrace(); // Log the exception to server logs
+        } finally {
+            out.close();
         }
     }
-
     /**
      * Returns a short description of the servlet.
      *

@@ -5,8 +5,12 @@
  */
 package mainClasses;
 
+import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -22,8 +26,14 @@ public class JSON_Converter {
 	}
 	String data = buffer.toString();
 	return data;
-}
-
+    }
+    public String convertToJSON(Collection<String> classes, Collection<String> properties) {
+        Map<String, Collection<String>> jsonMap = new HashMap<>();
+        jsonMap.put("classes", classes);
+        jsonMap.put("properties", properties);
+        Gson gson = new Gson();
+        return gson.toJson(jsonMap);
+    }
     
     
 }
