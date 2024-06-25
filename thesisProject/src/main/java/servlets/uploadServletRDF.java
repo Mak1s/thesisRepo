@@ -79,7 +79,7 @@ public class uploadServletRDF extends HttpServlet {
         
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-
+        String delimeter="[=]";
         PrintWriter out = response.getWriter();
         try {
             // Handle the file upload
@@ -96,21 +96,35 @@ public class uploadServletRDF extends HttpServlet {
             try (InputStream fileContent = filePart.getInputStream()) {
                 Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
-
+            
+            List<String> fileContentLines = Files.readAllLines(file.toPath());
+      
+         String specificString = "xmlns:crm"; 
+         String[] str=new String[1000];
+        
+        for (String line : fileContentLines) {
+            if (line.contains(specificString)) {
+                str=line.split(delimeter);    
+            }
+        }
+        out.write(str[1]);
+            
             // Load the RDF model from the uploaded file
-            ModelLoader modelLoader = new ModelLoader(file.getAbsolutePath());
-
+            ModelLoader modelLoader = new ModelLoader(str[1]);
+            modelLoader.listClasses().forEach(c->out.write(c));
+            Collection<String> properties= modelLoader.listProperties();
+            
+            
+            /*
             // Get classes and properties from the model
             Collection<String> classes = modelLoader.listClasses();
             Collection<String> properties = modelLoader.listProperties();
-
             // Convert to JSON using JSON_Converter
             JSON_Converter jsonConverter = new JSON_Converter();
             String jsonResponse = jsonConverter.convertToJSON(classes, properties);
-
+            
             // Send JSON response
-            out.write(jsonResponse);
-            System.out.println(jsonResponse);
+            out.write(jsonResponse);*/
             response.setStatus(HttpServletResponse.SC_OK);
 
         } catch (Exception e) {
