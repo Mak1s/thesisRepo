@@ -79,9 +79,9 @@ public class uploadServletRDF extends HttpServlet {
         
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        String delimeter="[=]";
         PrintWriter out = response.getWriter();
         try {
+            
             // Handle the file upload
             Part filePart = request.getPart("fileUpload1");
             String fileName = filePart.getSubmittedFileName();
@@ -97,34 +97,16 @@ public class uploadServletRDF extends HttpServlet {
                 Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
             
-            List<String> fileContentLines = Files.readAllLines(file.toPath());
-      
-         String specificString = "xmlns:crm"; 
-         String[] str=new String[1000];
-        
-        for (String line : fileContentLines) {
-            if (line.contains(specificString)) {
-                str=line.split(delimeter);    
-            }
-        }
-        out.write(str[1]);
-            
+       
+       
+        out.write(fileName);
+
             // Load the RDF model from the uploaded file
-            ModelLoader modelLoader = new ModelLoader(str[1]);
-            modelLoader.listClasses().forEach(c->out.write(c));
-            Collection<String> properties= modelLoader.listProperties();
+            ModelLoader modelLoader = new ModelLoader("C:\\Users\\gerry\\Documents\\NetBeansProjects\\thesisProject\\src\\main\\java\\servlets\\CIDOC_CRM_v7.1.1.rdfs");
+            modelLoader.listClasses().forEach( c -> out.write(c));
+            modelLoader.listProperties().forEach( p -> out.write(p));
+            out.write("ModelLoader initialized.\n");
             
-            
-            /*
-            // Get classes and properties from the model
-            Collection<String> classes = modelLoader.listClasses();
-            Collection<String> properties = modelLoader.listProperties();
-            // Convert to JSON using JSON_Converter
-            JSON_Converter jsonConverter = new JSON_Converter();
-            String jsonResponse = jsonConverter.convertToJSON(classes, properties);
-            
-            // Send JSON response
-            out.write(jsonResponse);*/
             response.setStatus(HttpServletResponse.SC_OK);
 
         } catch (Exception e) {
