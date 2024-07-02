@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import database.tables.EditUserTable;
-
+import database.tables.EditProjectTable;
 
 public class InitDatabase {
 
@@ -37,7 +37,9 @@ public class InitDatabase {
       
         EditUserTable user = new EditUserTable();
         user.createUserTable();
-
+        
+        EditProjectTable project=new EditProjectTable();
+        project.createProjectTable();
 
 
 
