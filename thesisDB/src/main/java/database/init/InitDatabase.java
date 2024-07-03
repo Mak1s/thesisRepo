@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import database.tables.EditUserTable;
 import database.tables.EditProjectTable;
+import database.tables.EditFileTable;
+import database.tables.EditClassOnlyTable;
+import database.tables.EditClassPropertyTable;
 
 public class InitDatabase {
 
@@ -41,7 +44,14 @@ public class InitDatabase {
         EditProjectTable project=new EditProjectTable();
         project.createProjectTable();
 
-
+        EditFileTable file=new EditFileTable();
+        file.createFileTable();
+        
+        EditClassOnlyTable classonly=new EditClassOnlyTable();
+        classonly.createClassOnlyTable();
+        
+        EditClassPropertyTable classproperty=new EditClassPropertyTable();
+        classproperty.createClassPropertyTable();
 
 
     }

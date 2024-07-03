@@ -10,8 +10,16 @@ package mainClasses;
  * @author gerry
  */
 public class ClassOnly {
-    int pid;
+    int pid,typeID;
     String classFrom,classTo;
+    
+    public int getTypeID(){
+        return typeID;
+    }
+    
+    public void setTypeID(int typeID){
+        this.typeID=typeID;
+    }
     
     public int getPid(){
         return pid;
