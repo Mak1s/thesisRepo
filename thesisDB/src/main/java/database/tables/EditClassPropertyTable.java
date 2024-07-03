@@ -28,12 +28,12 @@ public class EditClassPropertyTable {
                 + "    propertyFrom VARCHAR(30) not Null,"
                 + "    propertyTo VARCHAR(30) not Null,"  
                 + "    additionalClass VARCHAR(30) not Null,"
-                + "    URI VARCHAR(400) not Null,"  
+                + "    URI BLOB not Null,"  
                 + "    FOREIGN KEY ( pid) REFERENCES Project(pid),"
                 + " PRIMARY KEY ( typeID))";
 
         stmt.execute(query);
-        query = "INSERT INTO ClassOnly (typeID ,pid,classFrom,classTo,propertyFrom,propertyTo,additionalClass,URI) VALUES('1','1','E22-Man-Made', 'E22-Human-made','P1_is_id','P1_is_recognized','E55_Type','instance_generator name=\"URIwithType\">\n" +
+        query = "INSERT INTO ClassProperty (typeID ,pid,classFrom,classTo,propertyFrom,propertyTo,additionalClass,URI) VALUES('1','1','E22-Man-Made', 'E22-Human-made','P1_is_id','P1_is_recognized','E55_Type','instance_generator name=\"URIwithType\">\n" +
 "                              <arg name=\"type\" type=\"constant\">type</arg>\n" +
 "                              <arg name=\"id\" type=\"xpath\">name()</arg>\n" +
 "                           </instance_generator>\n" +
