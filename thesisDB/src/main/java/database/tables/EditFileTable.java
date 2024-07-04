@@ -22,12 +22,14 @@ public class EditFileTable {
 
         String query = "CREATE TABLE File "
                 + "(fid INTEGER not NULL AUTO_INCREMENT, "
+                + "    pid INTEGER not Null,"
                 + "    type BOOLEAN not Null,"
                 + "    contents BLOB not Null,"
+                + "    FOREIGN KEY ( pid) REFERENCES Project(pid),"
                 + " PRIMARY KEY (fid))";
 
         stmt.execute(query);
-        query = "INSERT INTO File (fid ,type,contents) VALUES('1','0','<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        query = "INSERT INTO File (fid ,pid,type,contents) VALUES('1','1','0','<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 "<x3ml xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
 "      source_type=\"xpath\"\n" +
 "      version=\"1.0\"\n" +
@@ -240,7 +242,7 @@ public class EditFileTable {
 "   </mappings>\n" +
 "</x3ml>')";
         stmt.execute(query);
-        query = "INSERT INTO File (fid ,type,contents) VALUES('2','1','rdf')";
+        query = "INSERT INTO File (fid ,pid,type,contents) VALUES('2','1','1','rdf')";
         stmt.execute(query);
         stmt.close();
     }

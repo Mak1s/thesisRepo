@@ -10,7 +10,7 @@ package mainClasses;
  * @author gerry
  */
 public class File {
-    int fid;
+    int fid,pid;
     boolean type;
     String contents;
     
@@ -20,6 +20,14 @@ public class File {
     
     public void setFid(int fid){
         this.fid=fid;
+    }
+
+    public int getPid(){
+        return pid;
+    }
+    
+    public void setPid(int pid){
+        this.pid=pid;
     }
     
     public boolean getType(){

@@ -10,7 +10,7 @@ package mainClasses;
  * @author gerry
  */
 public class Class_Property {
-    int pid;
+    int pid,typeID;
     String classFrom,classTo,additionalClass,propertyFrom,propertyTo,URI;
     
     
@@ -22,6 +22,14 @@ public class Class_Property {
         this.pid=pid;
     }
 
+    public int getTypeID(){
+        return typeID;
+    }
+    
+    public void setTypeID(int typeID){
+        this.typeID=typeID;
+    }
+    
     public String getClassFrom(){
         return classFrom;
     }
