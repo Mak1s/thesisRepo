@@ -15,27 +15,53 @@ const selectElementClassProperty2 = document.getElementById('classPropertyOption
 selectElementClassProperty2.addEventListener('change', function(event) {
     console.log(`Selected value for class and property: ${event.target.value}`);
 });
-
+        
 function togleVisibility(option) {
     var div = document.getElementById('class');
-    var div2= document.getElementById('classProperty');
-    var div3= document.getElementById('buttons');
-    if (option==1){
-        div.style.display = 'flex'; 
-        div2.style.display = 'none';
-    } else if (option==2){
-                div.style.display = 'none'; 
-                div2.style.display = 'flex'; 
- 
-    }else if(option==3){
-        div3.style.display = 'flex'; 
-    }else if(option==4){
-        div.style.display = 'none';
-        div2.style.display = 'none';
-        div3.style.display = 'none';
-    }
+    var div2 = document.getElementById('classProperty');
+    var div3 = document.getElementById('buttons');
+    var div4 = document.getElementById('import');
+    var div5 = document.getElementById('load');
 
+    console.log("Option selected: ", option);
+
+    switch(option) {
+        case 1:
+            div.style.display = 'flex';
+            div2.style.display = 'none';
+        
+            break;
+        case 2:
+            div.style.display = 'none';
+            div2.style.display = 'flex';
+            
+            break;
+        case 3:
+            div3.style.display = 'flex';
+            div4.style.display = 'none';
+            div5.style.display = 'none';
+        
+            break;
+        case 4:
+            div.style.display = 'none';
+            div2.style.display = 'none';
+            div3.style.display = 'none';
+            div4.style.display = 'none';
+            div5.style.display='flex';
+            break;
+        case 5:
+            div.style.display = 'none';
+            div2.style.display = 'none';
+            div3.style.display = 'none';
+            div4.style.display = 'flex';
+            div5.style.display= 'none';
+            break;
+        default:
+            console.log("Invalid option");
+            break;
+    }
 }
+
 function getValueClass(){
     const inputElement = document.getElementById('classTO');
     const value = inputElement.value;
@@ -55,6 +81,12 @@ function getValueProperty(){
 function logout() {
     window.location.href = 'login.html'; 
 }
+
+function profile(){
+    window.location.href = 'profile.html'; 
+}
+
+
 
 function formChooser(option){
     if(option ==1){
@@ -86,6 +118,7 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
         if (xhr.status === 200) {
             document.getElementById(contentId).innerHTML = "File uploaded successfully!";
             console.log(xhr.responseText);
+            
         } else {
             document.getElementById(contentId).innerHTML = "Request failed. Returned status of " + xhr.status;
         }
