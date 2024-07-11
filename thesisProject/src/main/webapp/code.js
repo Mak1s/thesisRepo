@@ -90,6 +90,10 @@ function index(){
     window.location.href="index.html";
 }
 
+function nextstep1(){
+    document.getElementById("next1").style.display="flex";
+    document.getElementById("before1").style.display="none";
+}
 
 function formChooser(option){
     if(option ==1){
