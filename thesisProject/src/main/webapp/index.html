@@ -16,8 +16,9 @@
                     <h1 id="titlos">Translation System</h1>
                 </div>
                 <div class="col-sm-4 text-right text-light">
-                    <button class="btn btn-light" onclick="logout()">Logout</button>
+                    <button class="btn btn-light" onclick="index()">Home</button>
                     <button class="btn btn-light" onclick="profile()">Profile</button>
+                    <button class="btn btn-light" onclick="logout()">Logout</button>
                     
                 </div>    
             </div>
@@ -34,7 +35,22 @@
             </div>
         </div>
         <div class="row border border-dark " id="import" style="display: none;"> 
-            <div class="col-sm-4">kakkak</div>
+            <div class="col-sm-6 mb-5">
+                <form id="uploadForm" enctype="multipart/form-data" >
+                    <div class="form-group">
+                        <label for="fileUpload">Choose file with changes: &nbsp; &nbsp; &nbsp;*</label><br>
+                        <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
+                    </div>        
+                    <button type="submit" class="btn btn-dark" onclick="formChooser(1); return false;">Upload</button>
+                </form>
+                <div class="col-sm-4" id="addedContent">
+                    <!--blank-->
+                </div>
+            </div>
+            <div class="col-sm-6 mb-5">
+                Click to use these changes to more files:<br>
+                <button class="btn btn-dark ">Use changes</button>
+            </div>
         </div>
         <div class="row border border-dark " id="load" style="display: none;"> 
             <div class="col-sm-12">

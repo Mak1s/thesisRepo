@@ -86,6 +86,9 @@ function profile(){
     window.location.href = 'profile.html'; 
 }
 
+function index(){
+    window.location.href="index.html";
+}
 
 
 function formChooser(option){
