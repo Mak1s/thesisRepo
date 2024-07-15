@@ -110,7 +110,7 @@
         </div>
         <div class="row border border-dark " id="class" style="display: none;"> 
             <div class="row" id="before1">
-            <div class="col-sm-6 mb-5">
+            <div class="col-sm-6 ">
                 <form id="uploadForm" enctype="multipart/form-data" >
                     <div class="form-group">
                         <label for="fileUpload">Choose .x3ml file to transform &nbsp; &nbsp; &nbsp;*</label><br>
@@ -138,7 +138,7 @@
             </div>
                 </div>
             <div id="next1" style="display:none;">
-            <div class="col-sm-6">
+            <div class="col-sm-6 m-5">
                 <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="classOptions" name="classOptions">
                     <option value="E1_CRM_Entity">E1_CRM_Entity</option>
@@ -225,14 +225,14 @@
                     
                 </select>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="classTO" type="text" placeholder="E99_Identfies_As">
                 <button type="submit" class="btn btn-dark" onclick="getValueClass()">Change</button>
             </div>
          </div>
         </div>
-        <div class="row border border-dark" id="classProperty" style="display: none;">
+        <div class="border border-dark" id="classProperty" style="display: none;">
             <div id="before2">
             <div class="col-sm-6" >
                 <form id="uploadForm2" enctype="multipart/form-data" > 
@@ -258,12 +258,13 @@
                 <div class="col-sm-4" id="addedContent3">
                     <!--blank-->
                 </div>
+                <button type="submit" class="btn btn-dark" onclick="nextstep2()">Next Step</button>
+            
             </div>
-            <button type="submit" class="btn btn-dark" onclick="nextstep2()">Next Step</button>
             </div>
-            <div id="next2" style="display:none;">
-                <div class="row">
-                <div class="col-sm-6 mb-3">
+            <div class="col container" id="next2" style="display:none;">
+             <div class="row">
+                <div class="col-sm-12 m-5">
                 <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="classPropertyOptions" name="classPropertyOptions">
                     <option value="E1_CRM_Entity">E1_CRM_Entity</option>
@@ -350,14 +351,14 @@
                     
                 </select>
             </div>
-            <div class="col-sm-6 mb-3">
+            <div class="col-sm-8 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="classPropertyTO" type="text" placeholder="E99_Identfies_As">
                 <button type="submit" class="btn btn-dark" onclick="getValueClassProperty()">Change</button>
             </div> 
-                </div>
-            <div class="row">
-            <div class="col-sm-6 mb-3">
+            </div>
+         <div class="row">
+            <div class="col-sm-12 m-5">
                 <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="propertiesOptions" name="propertiesOptions">
                     <option value="P1_is_identified_by_(identifies)">P1_is_identified_by_(identifies)</option>
@@ -522,15 +523,15 @@
                     <option value="P198_holds_or_supports_(is_held_or_supported_by)">P198_holds_or_supports_(is_held_or_supported_by)</option>
                 </select>
             </div>
-            <div class="col-sm-6 mb-3">
+            <div class="col-sm-6 m-5">
                 <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="propertyTO" type="text" placeholder="P90_has_value">
                 <button type="submit" class="btn btn-dark" onclick="getValueProperty()">Change</button>
             </div>
-            </div> 
             </div>
-        </div>
-        <!-- jQuery -->
+            </div>
+            </div> 
+                   <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <!-- Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
