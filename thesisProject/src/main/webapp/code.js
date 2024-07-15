@@ -29,12 +29,14 @@ function togleVisibility(option) {
         case 1:
             div.style.display = 'flex';
             div2.style.display = 'none';
-        
+            document.getElementById("next1").style.display="none";
+            document.getElementById("before1").style.display="flex";
             break;
         case 2:
             div.style.display = 'none';
             div2.style.display = 'flex';
-            
+            document.getElementById("next2").style.display="none";
+            document.getElementById("before2").style.display="flex";
             break;
         case 3:
             div3.style.display = 'flex';
@@ -93,6 +95,11 @@ function index(){
 function nextstep1(){
     document.getElementById("next1").style.display="flex";
     document.getElementById("before1").style.display="none";
+}
+
+function nextstep2(){
+    document.getElementById("next2").style.display="flex";
+    document.getElementById("before2").style.display="none";
 }
 
 function formChooser(option){

@@ -233,7 +233,8 @@
          </div>
         </div>
         <div class="row border border-dark" id="classProperty" style="display: none;">
-            <div class="col-sm-6">
+            <div id="before2">
+            <div class="col-sm-6" >
                 <form id="uploadForm2" enctype="multipart/form-data" > 
                     <div class="form-group">
                             <label for="fileUpload2">Choose .x3ml file to transform &nbsp; &nbsp; &nbsp;*</label><br>
@@ -245,6 +246,7 @@
                     <!--blank-->
                 </div>
             </div>
+           
             <div class="col-sm-6">
                  <form id="uploadForm3" enctype="multipart/form-data">
                     <div class="form-group">
@@ -257,8 +259,11 @@
                     <!--blank-->
                 </div>
             </div>
-
-            <div class="col-sm-6">
+            <button type="submit" class="btn btn-dark" onclick="nextstep2()">Next Step</button>
+            </div>
+            <div id="next2" style="display:none;">
+                <div class="row">
+                <div class="col-sm-6 mb-3">
                 <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="classPropertyOptions" name="classPropertyOptions">
                     <option value="E1_CRM_Entity">E1_CRM_Entity</option>
@@ -345,12 +350,14 @@
                     
                 </select>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 mb-3">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="classPropertyTO" type="text" placeholder="E99_Identfies_As">
                 <button type="submit" class="btn btn-dark" onclick="getValueClassProperty()">Change</button>
-            </div>
-            <div class="col-sm-6">
+            </div> 
+                </div>
+            <div class="row">
+            <div class="col-sm-6 mb-3">
                 <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="propertiesOptions" name="propertiesOptions">
                     <option value="P1_is_identified_by_(identifies)">P1_is_identified_by_(identifies)</option>
@@ -515,10 +522,12 @@
                     <option value="P198_holds_or_supports_(is_held_or_supported_by)">P198_holds_or_supports_(is_held_or_supported_by)</option>
                 </select>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 mb-3">
                 <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="propertyTO" type="text" placeholder="P90_has_value">
                 <button type="submit" class="btn btn-dark" onclick="getValueProperty()">Change</button>
+            </div>
+            </div> 
             </div>
         </div>
         <!-- jQuery -->
