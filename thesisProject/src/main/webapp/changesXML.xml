@@ -1,0 +1,17 @@
+<changes>
+    <class>
+        <classBefore>E22-Man-Made</classBefore>     <classAfter>E22-Human-Made</classAfter>
+    </class>
+    <property>
+        <propertyBefore>P1_is_id</propertyBefore>   <propertyAfter>P1_is_recognized</propertyAfter>
+    </property>
+    <class_property>
+        <classBefore>E22-Man-Made</classBefore>     <classAfter>E22-Human-Made</classAfter>
+        <propertyBefore>P1_is_id</propertyBefore>   <propertyAfter>P1_is_recognized</propertyAfter>
+    </class_property>
+    <class_property_class>
+        <classBefore>E22-Man-Made</classBefore>     <classAfter>E22-Human-Made</classAfter>
+        <propertyBefore>P1_is_id</propertyBefore>   <propertyAfter>P1_is_recognized</propertyAfter>
+        <extraClass>E55_Type</extraClass>
+    </class_property_class>
+</changes>

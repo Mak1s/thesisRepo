@@ -1,0 +1,17 @@
+{"changes":[
+    {"class":
+        {"classBefore":"E22-Man-Made","classAfter":"E22-Human-Made"}
+    },
+    {"property":
+        {"propertyBefore":"P1_is_id","propertyAfter":"P1_is_recognized"}
+    },
+    {"class_property":
+        {"classBefore":"E22-Man-Made","classAfter":"E22-Human-Made",
+        "propertyBefore":"P1_is_id","propertyAfter":"P1_is_recognized"}
+    },
+    {"class_property_class":
+        {"classBefore":"E22-Man-Made","classAfter":"E22-Human-Made",
+        "propertyBefore":"P1_is_id","propertyAfter":"P1_is_recognized",
+        "extraClass":"E55_Type"}
+    }
+]}
