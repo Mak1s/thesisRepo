@@ -25,13 +25,13 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-sm-12">
-                <button type="button" class="btn btn-dark" onclick="togleVisibility(3)">New project</button>
-                <button type="button" class="btn btn-dark" onclick="togleVisibility(4)">Load</button>
-                <button type="button" class="btn btn-dark" onclick="togleVisibility(5)">Import</button>
+                <button type="button" class="btn btn-dark" id="newproject" onclick="showOption3()">New project</button>
+                <button type="button" class="btn btn-dark" onclick="showOption4()">Load</button>
+                <button type="button" class="btn btn-dark" onclick="showOption5()">Import</button>
             </div>
             <div class="row justify-content-center" id="buttons" style="display: none;">
-                <button type="button" class="btn btn-dark" onclick="togleVisibility(1)">Change Class only</button>
-                <button type="button" class="btn btn-dark" onclick="togleVisibility(2)">Change Class and Property</button>
+                <button type="button" class="btn btn-dark" onclick="showOption1()">Change Class only</button>
+                <button type="button" class="btn btn-dark" onclick="showOption2()">Change Class and Property</button>
             </div>
         </div>
         <div class="row border border-dark " id="import" style="display: none;"> 

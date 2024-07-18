@@ -25,13 +25,32 @@
     
             <div class="row border border-dark " id="profile"> 
             <div class="col-sm-12">
-                <div class="container mt-5">
+                <div class="container mt-5" id="edit" style="display : none;">
+                   <div class="row">
+                   <button class="btn-dark "><span>Name of work</span></button>
+                   <button class="btn-dark "><span>Visibility</span></button> 
+                   <button class="btn-dark "><span>Properties</span></button>
+                   <button class="btn-dark " onclick="back()"><span><-</span></button>
+                   </div>
+                </div>
+                <div class="container mt-5" id="view">
                     <div class="custom-card p-3 bg-dark text-light">
                         <div class="custom-header">
                             Name of work in the DB with some info
                         </div>
                         <div class="d-flex justify-content-between custom-actions mt-2">
-                            <button class="btn-light "><span>Edit</span></button>
+                            <button class="btn-light " onclick="edit()"><span>Edit</span></button>
+                            <button class="btn-light " id="editclass"><span>Edit class only</span></button>
+                            <button class="btn-light "><span>Edit class/ontology</span></button>
+                            <button class="btn-light "><span>View work</span></button>
+                        </div>
+                    </div>
+                    <div class="custom-card p-3 mt-3 bg-dark text-light">
+                        <div class="custom-header">
+                            Name of work in the DB with some info
+                        </div>
+                        <div class="d-flex justify-content-between custom-actions mt-2">
+                            <button class="btn-light " onclick="edit()"><span>Edit</span></button>
                             <button class="btn-light "><span>Edit class only</span></button>
                             <button class="btn-light "><span>Edit class/ontology</span></button>
                             <button class="btn-light "><span>View work</span></button>
@@ -42,7 +61,7 @@
                             Name of work in the DB with some info
                         </div>
                         <div class="d-flex justify-content-between custom-actions mt-2">
-                            <button class="btn-light "><span>Edit</span></button>
+                            <button class="btn-light " onclick="edit()"><span>Edit</span></button>
                             <button class="btn-light "><span>Edit class only</span></button>
                             <button class="btn-light "><span>Edit class/ontology</span></button>
                             <button class="btn-light "><span>View work</span></button>
@@ -53,18 +72,7 @@
                             Name of work in the DB with some info
                         </div>
                         <div class="d-flex justify-content-between custom-actions mt-2">
-                            <button class="btn-light "><span>Edit</span></button>
-                            <button class="btn-light "><span>Edit class only</span></button>
-                            <button class="btn-light "><span>Edit class/ontology</span></button>
-                            <button class="btn-light "><span>View work</span></button>
-                        </div>
-                    </div>
-                    <div class="custom-card p-3 mt-3 bg-dark text-light">
-                        <div class="custom-header">
-                            Name of work in the DB with some info
-                        </div>
-                        <div class="d-flex justify-content-between custom-actions mt-2">
-                            <button class="btn-light "><span>Edit</span></button>
+                            <button class="btn-light " onclick="edit()"><span>Edit</span></button>
                             <button class="btn-light "><span>Edit class only</span></button>
                             <button class="btn-light "><span>Edit class/ontology</span></button>
                             <button class="btn-light "><span>View work</span></button>
@@ -75,7 +83,7 @@
                             Name of work in the DB with some info
                         </div>
                         <div class="d-flex justify-content-between custom-actions mt-2">
-                            <button class="btn-light "><span>Edit</span></button>
+                            <button class="btn-light " onclick="edit()"><span>Edit</span></button>
                             <button class="btn-light "><span>Edit class only</span></button>
                             <button class="btn-light "><span>Edit class/ontology</span></button>
                             <button class="btn-light "><span>View work</span></button>
