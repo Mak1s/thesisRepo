@@ -95,6 +95,9 @@ const selectElementClass = document.getElementById('classOptions');
 if(selectElementClass){
 selectElementClass.addEventListener('change', function(event) {
     console.log(`Selected value for class only: ${event.target.value}`);
+    if(document.getElementById("changedContent")){
+        document.getElementById("changedContent").innerHTML=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
+    }
 });
 }
 
@@ -184,6 +187,9 @@ function getValueClass(){
     const inputElement = document.getElementById('classTO');
     const value = inputElement.value;
     console.log('Input field value ClassOnly:', value);
+     if(document.getElementById("changedContent")){
+        document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
+    }
 }
 function getValueClassProperty(){
     const inputElement = document.getElementById('classPropertyTO');
