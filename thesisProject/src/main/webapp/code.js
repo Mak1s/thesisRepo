@@ -96,7 +96,7 @@ if(selectElementClass){
 selectElementClass.addEventListener('change', function(event) {
     console.log(`Selected value for class only: ${event.target.value}`);
     if(document.getElementById("changedContent")){
-        document.getElementById("changedContent").innerHTML=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
+        document.getElementById("changedContent").innerHTML+=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
     }
 });
 }
@@ -106,6 +106,9 @@ const selectElementClassProperty = document.getElementById('propertiesOptions');
 if(selectElementClassProperty){
 selectElementClassProperty.addEventListener('change', function(event) {
     console.log(`Selected value for class and property: ${event.target.value}`);
+    if(document.getElementById("changedContent")){
+        document.getElementById("changedContent").innerHTML+=`<p>&nbsp;&nbsp;Property from: ${event.target.value}</p>`;
+    }
 });
 }
 
@@ -114,6 +117,9 @@ const selectElementClassProperty2 = document.getElementById('classPropertyOption
 if(selectElementClassProperty2){
 selectElementClassProperty2.addEventListener('change', function(event) {
     console.log(`Selected value for class and property: ${event.target.value}`);
+    if(document.getElementById("changedContent")){
+        document.getElementById("changedContent").innerHTML+=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
+    }
 });
 }        
 // Function to show option 1
@@ -195,11 +201,17 @@ function getValueClassProperty(){
     const inputElement = document.getElementById('classPropertyTO');
     const value = inputElement.value;
     console.log('Input field value Class Of ClassProperty:', value);
+    if(document.getElementById("changedContent")){
+        document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
+    }
 }
 function getValueProperty(){
     const inputElement = document.getElementById('propertyTO');
     const value = inputElement.value;
     console.log('Input field value PropertyOnly:', value);
+    if(document.getElementById("changedContent")){
+        document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>";
+    }
 }
 
 function logout() {
