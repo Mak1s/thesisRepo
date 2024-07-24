@@ -4,22 +4,42 @@ var modal2=document.getElementById("viewModal");
 var btn = document.getElementById("editclass");
 var btn1= document.getElementById("editclassontology");
 var btn2 = document.getElementById("viewwork");
-
+var btn3 =document.getElementById("editclass1");
+var btn4= document.getElementById("editclassontology1");
+var btn5 =document.getElementById("viewwork1");
+var one,two,three,four;
         var span = document.getElementsByClassName("close")[0];
         var span1 = document.getElementsByClassName("close1")[0];
         var span2 =document.getElementsByClassName("close2")[0];
 
        
         btn.onclick = function() {
+            one=true;
+            two =false;
             modal.style.display = "block";
         }
         
         btn1.onclick = function() {
+            three=true;
+            four=false;
             modal1.style.display = "block";
         }
         btn2.onclick= function() {
             modal2.style.display = "block";
         }
+        
+        btn3.onclick = function() {
+            one=false;
+            two=true;
+            modal.style.display = "block";
+        }
+        
+        btn4.onclick = function() {
+            three=false;
+            four=true;
+            modal1.style.display = "block";
+        }
+
         
         span.onclick = function() {
             modal.style.display = "none";
@@ -95,7 +115,9 @@ const selectElementClass = document.getElementById('classOptions');
 if(selectElementClass){
 selectElementClass.addEventListener('change', function(event) {
     console.log(`Selected value for class only: ${event.target.value}`);
-    if(document.getElementById("changedContent")){
+    if(two){
+        document.getElementById("changedContent1").innerHTML+=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;        
+    }else if(one){
         document.getElementById("changedContent").innerHTML+=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
     }
 });
@@ -106,9 +128,12 @@ const selectElementClassProperty = document.getElementById('propertiesOptions');
 if(selectElementClassProperty){
 selectElementClassProperty.addEventListener('change', function(event) {
     console.log(`Selected value for class and property: ${event.target.value}`);
-    if(document.getElementById("changedContent")){
+    if(three){
         document.getElementById("changedContent").innerHTML+=`<p>&nbsp;&nbsp;Property from: ${event.target.value}</p>`;
+    }else if(four){
+        document.getElementById("changedContent1").innerHTML+=`<p>&nbsp;&nbsp;Property from: ${event.target.value}</p>`;
     }
+
 });
 }
 
@@ -117,8 +142,10 @@ const selectElementClassProperty2 = document.getElementById('classPropertyOption
 if(selectElementClassProperty2){
 selectElementClassProperty2.addEventListener('change', function(event) {
     console.log(`Selected value for class and property: ${event.target.value}`);
-    if(document.getElementById("changedContent")){
+    if(three){
         document.getElementById("changedContent").innerHTML+=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
+    }else if(four){
+        document.getElementById("changedContent1").innerHTML+=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
     }
 });
 }        
@@ -193,24 +220,30 @@ function getValueClass(){
     const inputElement = document.getElementById('classTO');
     const value = inputElement.value;
     console.log('Input field value ClassOnly:', value);
-     if(document.getElementById("changedContent")){
+     if(one){
         document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
+    }else if(two){
+        document.getElementById("changedContent1").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
     }
 }
 function getValueClassProperty(){
     const inputElement = document.getElementById('classPropertyTO');
     const value = inputElement.value;
     console.log('Input field value Class Of ClassProperty:', value);
-    if(document.getElementById("changedContent")){
+    if(three){
         document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
+    }else if(four){
+        document.getElementById("changedContent1").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
     }
 }
 function getValueProperty(){
     const inputElement = document.getElementById('propertyTO');
     const value = inputElement.value;
     console.log('Input field value PropertyOnly:', value);
-    if(document.getElementById("changedContent")){
+    if(three){
         document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>";
+    }else if(four){
+        document.getElementById("changedContent1").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
     }
 }
 
