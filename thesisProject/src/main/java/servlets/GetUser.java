@@ -75,14 +75,15 @@ public class GetUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        JSON_Converter jc = new JSON_Converter();
-        String JSON = jc.getJSONFromAjax(request.getReader());
-
-        try ( PrintWriter out = response.getWriter()) {
+            response.setCharacterEncoding("UTF-8");
+       
+            JSON_Converter jc = new JSON_Converter();
+            String JSON = jc.getJSONFromAjax(request.getReader());
+            try ( PrintWriter out = response.getWriter()) {
+            
             EditUserTable users = new EditUserTable();
             users.addUserFromJSON(JSON);
-            response.getWriter().write(JSON);
+            out.write(JSON);
             response.setStatus(200);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(GetUser.class.getName()).log(Level.SEVERE, null, ex);

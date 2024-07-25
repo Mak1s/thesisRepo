@@ -21,9 +21,9 @@ import mainClasses.User;
  */
 public class EditUserTable {
     
-    public void addUserFromJSON(String json) throws ClassNotFoundException{
-         User user=jsonToUser(json);
-         addNewUser(user);
+    public void addUserFromJSON(String json) throws ClassNotFoundException, SQLException{
+        User user=jsonToUser(json);
+        addNewUser(user);
     }
     
     public User jsonToUser(String json){
@@ -65,14 +65,12 @@ public class EditUserTable {
             Statement stmt = con.createStatement();
 
             String insertQuery = "INSERT INTO "
-                    + " User (userID ,FName,LName,username,password)"
+                    + " User (FName,LName,username,password)"
                     + " VALUES ("
-                    + "'2',"
                     + "'" + user.getFName() + "',"
                     + "'" + user.getLName() + "',"
                     + "'" + user.getUsername() + "',"
                     + "'" + user.getPassword() + "',"
-                   
                     + ")";
             //stmt.execute(table);
             System.out.println(insertQuery);
