@@ -72,31 +72,34 @@ public class servlet_login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        Logger.getLogger(GetUser.class.getName()).log(Level.INFO, "Received username: " + username);
-        HttpSession session = request.getSession(true);
-        try ( PrintWriter out = response.getWriter()) {
-            EditUserTable user_table = new EditUserTable();
-            if (user_table.databaseUserToJSON(username, password) == null) {
-                
-                response.setStatus(401);
-            } else {
-                
-                session.setAttribute("loggedIn", username);
-                response.setStatus(200);
-            }
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    request.setCharacterEncoding("UTF-8");  
 
-        } catch (SQLException ex) {
-            Logger.getLogger(servlet_login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(servlet_login.class.getName()).log(Level.SEVERE, null, ex);
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+
+    Logger.getLogger(servlet_login.class.getName()).log(Level.INFO, "Received username: " + username);
+    Logger.getLogger(servlet_login.class.getName()).log(Level.INFO, "Received password: " + password);
+    
+    HttpSession session = request.getSession(true);
+    try (PrintWriter out = response.getWriter()) {
+        EditUserTable user_table = new EditUserTable();
+        if (user_table.databaseUserToJSON(username, password) == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            out.write("Invalid credentials");
+        } else {
+            session.setAttribute("loggedIn", username);
+            response.setStatus(HttpServletResponse.SC_OK);
+            out.write("Login successful");
         }
+    } catch (SQLException | ClassNotFoundException ex) {
+        Logger.getLogger(servlet_login.class.getName()).log(Level.SEVERE, null, ex);
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        
     }
+}
     
 
     /**
