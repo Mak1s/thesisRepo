@@ -39,7 +39,9 @@ var one,two,three,four;
             four=true;
             modal1.style.display = "block";
         }
-
+        btn5.onclick = function() {
+            modal2.style.display = "block";
+        }
         
         span.onclick = function() {
             modal.style.display = "none";
@@ -221,7 +223,7 @@ function getValueClass(){
     const value = inputElement.value;
     console.log('Input field value ClassOnly:', value);
      if(one){
-        document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
+        document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button>";
     }else if(two){
         document.getElementById("changedContent1").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
     }
@@ -241,10 +243,14 @@ function getValueProperty(){
     const value = inputElement.value;
     console.log('Input field value PropertyOnly:', value);
     if(three){
-        document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>";
+        document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"+"<button class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button>";
     }else if(four){
-        document.getElementById("changedContent1").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
+        document.getElementById("changedContent1").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>";
     }
+}
+
+function removeChanges(){
+    document.getElementById("changedContent").style.display= "none";
 }
 
 function logout() {
