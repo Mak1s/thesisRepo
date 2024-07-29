@@ -20,7 +20,8 @@ import mainClasses.User;
  * @author gerry
  */
 public class EditUserTable {
-    
+    private static final Logger LOGGER = Logger.getLogger(EditUserTable.class.getName());
+
     public void addUserFromJSON(String json) throws ClassNotFoundException, SQLException{
         User user=jsonToUser(json);
         addNewUser(user);
@@ -30,6 +31,7 @@ public class EditUserTable {
          Gson gson = new Gson();
 
         User user = gson.fromJson(json, User.class);
+        LOGGER.log(Level.INFO, "Converted User: " + user);
         return user;
     }
     
@@ -64,19 +66,15 @@ public class EditUserTable {
 
             Statement stmt = con.createStatement();
 
-            String insertQuery = "INSERT INTO "
-                    + " User (FName,LName,username,password)"
-                    + " VALUES ("
-                    + "'" + user.getFName() + "',"
-                    + "'" + user.getLName() + "',"
-                    + "'" + user.getUsername() + "',"
-                    + "'" + user.getPassword() + "',"
-                    + ")";
-            //stmt.execute(table);
-            System.out.println(insertQuery);
+           String insertQuery = "INSERT INTO User (FName, LName, username, password) VALUES ("
+               + "'" + user.getFName() + "', "
+                + "'" + user.getLName() + "', "
+                + "'" + user.getUsername() + "', "
+                + "'" + user.getPassword() + "'"
+                + ")";
+            
             stmt.executeUpdate(insertQuery);
-            System.out.println("# The user was successfully added in the database.");
-
+            
             /* Get the member id from the database and set it to the member */
             stmt.close();
 

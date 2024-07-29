@@ -53,7 +53,7 @@ public class EditUserTable {
                 + " PRIMARY KEY ( userID))";
 
         stmt.execute(query);
-        query = "INSERT INTO User (userID ,FName,LName,username,password) VALUES('1','Gerasimos','Logiotatopoulos', 'makis2001', '123@abc')";
+       query = "INSERT INTO User (userID ,FName,LName,username,password) VALUES('1','Gerasimos','Logiotatopoulos', 'makis2001', '123@abc')";
         stmt.execute(query);
         stmt.close();
         
@@ -65,13 +65,12 @@ public class EditUserTable {
             Statement stmt = con.createStatement();
 
             String insertQuery = "INSERT INTO "
-                    + " User (userID ,FName,LName,username,password)"
+                    + " User (FName,LName,username,password)"
                     + " VALUES ("
-                    + "'2',"
                     + "'" + user.getFName() + "',"
                     + "'" + user.getLName() + "',"
                     + "'" + user.getUsername() + "',"
-                    + "'" + user.getPassword() + "',"
+                    + "'" + user.getPassword() + "'"
                    
                     + ")";
             //stmt.execute(table);
