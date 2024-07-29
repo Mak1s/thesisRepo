@@ -18,24 +18,19 @@
     </div>
     <div class="d-flex justify-content-center">
         <div class="col-sm-8 border border-dark p-4">
-            <form id="myForm">
-                <div class="form-group ">
-                    <dt>
-                        <label for="exampleInputEmail1 ">Email address</label>
-                    </dt>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                </div>
-                <div class="form-group ">
-                    <dt>
-                        <label for="exampleInputPassword1">Password</label>
-                    </dt>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
+            <form id="myForm" action="#" onsubmit="login_post();return false;">
+                <label>Username</label>
+                <input id="username" name="username" type="text" required><br>
+             
+                <label>Password</label>
+                <input id="password" name="password" type="password" onchange="" required>
+                    
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-dark mx-2" onclick="navigateTo('index.html')">Login</button>
+                    <button type="submit" class="btn btn-dark mx-2">Login</button>
                     <button type="submit" class="btn btn-dark mx-2" onclick="navigateTo('register.html')">Register</button>
                 </div>
             </form>
+             <div id="msg"></div>
         </div>
     </div>
 
