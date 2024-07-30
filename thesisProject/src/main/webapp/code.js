@@ -118,9 +118,9 @@ if(selectElementClass){
 selectElementClass.addEventListener('change', function(event) {
     console.log(`Selected value for class only: ${event.target.value}`);
     if(two){
-        document.getElementById("changedContent1").innerHTML+=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;        
+        document.getElementById("changedContent1").innerHTML+=`<p id="classfrom1">&nbsp;&nbsp;Class from: ${event.target.value}</p>`;        
     }else if(one){
-        document.getElementById("changedContent").innerHTML+=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
+        document.getElementById("changedContent").innerHTML+=`<p id="classfrom">&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
     }
 });
 }
@@ -131,9 +131,9 @@ if(selectElementClassProperty){
 selectElementClassProperty.addEventListener('change', function(event) {
     console.log(`Selected value for class and property: ${event.target.value}`);
     if(three){
-        document.getElementById("changedContent").innerHTML+=`<p>&nbsp;&nbsp;Property from: ${event.target.value}</p>`;
+        document.getElementById("changedContent").innerHTML+=`<p id="propertyfrom">&nbsp;&nbsp;Property from: ${event.target.value}</p>`;
     }else if(four){
-        document.getElementById("changedContent1").innerHTML+=`<p>&nbsp;&nbsp;Property from: ${event.target.value}</p>`;
+        document.getElementById("changedContent1").innerHTML+=`<p id="propertyfrom1">&nbsp;&nbsp;Property from: ${event.target.value}</p>`;
     }
 
 });
@@ -145,9 +145,9 @@ if(selectElementClassProperty2){
 selectElementClassProperty2.addEventListener('change', function(event) {
     console.log(`Selected value for class and property: ${event.target.value}`);
     if(three){
-        document.getElementById("changedContent").innerHTML+=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
+        document.getElementById("changedContent").innerHTML+=`<p id="classpropertyfrom">&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
     }else if(four){
-        document.getElementById("changedContent1").innerHTML+=`<p>&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
+        document.getElementById("changedContent1").innerHTML+=`<p id="classpropertyfrom1">&nbsp;&nbsp;Class from: ${event.target.value}</p>`;
     }
 });
 }        
@@ -223,9 +223,9 @@ function getValueClass(){
     const value = inputElement.value;
     console.log('Input field value ClassOnly:', value);
      if(one){
-        document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button>";
+        document.getElementById("changedContent").innerHTML+="<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }else if(two){
-        document.getElementById("changedContent1").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
+        document.getElementById("changedContent1").innerHTML+="<p id=\"classto1\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn1\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
 }
 function getValueClassProperty(){
@@ -233,9 +233,9 @@ function getValueClassProperty(){
     const value = inputElement.value;
     console.log('Input field value Class Of ClassProperty:', value);
     if(three){
-        document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
+        document.getElementById("changedContent").innerHTML+="<p id=\"classpropertyto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p><br>";
     }else if(four){
-        document.getElementById("changedContent1").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>";
+        document.getElementById("changedContent1").innerHTML+="<p id=\"classpropertyto1\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p><br>";
     }
 }
 function getValueProperty(){
@@ -243,14 +243,36 @@ function getValueProperty(){
     const value = inputElement.value;
     console.log('Input field value PropertyOnly:', value);
     if(three){
-        document.getElementById("changedContent").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"+"<button class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button>";
+        document.getElementById("changedContent").innerHTML+="<p id=\"propertyto\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"+"<button id=\"propertytobtn\" class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }else if(four){
-        document.getElementById("changedContent1").innerHTML+="<p>&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>";
+        document.getElementById("changedContent1").innerHTML+="<p id=\"propertyto1\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"+"<button id=\"propertytobtn1\" class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
 }
 
 function removeChanges(){
-    document.getElementById("changedContent").style.display= "none";
+    if(document.getElementById("classtobtn")){
+            document.getElementById("classto").style.display= "none";
+            document.getElementById("classfrom").style.display= "none";
+            document.getElementById("classtobtn").style.display= "none";
+            
+    }else if(document.getElementById("classtobtn1")){
+            document.getElementById("classto1").style.display= "none";
+            document.getElementById("classfrom1").style.display= "none";
+            document.getElementById("classtobtn1").style.display= "none";
+    }else if(document.getElementById("propertytobtn")){
+            document.getElementById("propertyto").style.display= "none";
+            document.getElementById("propertyfrom").style.display= "none";
+            document.getElementById("classpropertyto").style.display= "none";
+            document.getElementById("classpropertyfrom").style.display= "none";
+            document.getElementById("propertytobtn").style.display= "none";            
+    }else if(document.getElementById("propertytobtn1")){
+            document.getElementById("propertyto1").style.display= "none";
+            document.getElementById("propertyfrom1").style.display= "none";
+            document.getElementById("classpropertyto1").style.display= "none";
+            document.getElementById("classpropertyfrom1").style.display= "none";
+            document.getElementById("propertytobtn1").style.display= "none";
+    }
+
 }
 
 function logout() {
