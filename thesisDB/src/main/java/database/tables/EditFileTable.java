@@ -5,16 +5,40 @@
  */
 package database.tables;
 
+import com.google.gson.Gson;
 import database.DB_Connection;
+import java.nio.charset.StandardCharsets;
+import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.rowset.serial.SerialBlob;
+import mainClasses.File;
 
 /**
  *
  * @author gerry
  */
 public class EditFileTable {
+       private static final Logger LOGGER = Logger.getLogger(EditFileTable.class.getName());
+      
+ /*   public void addFileFromJSON(String json) throws ClassNotFoundException, SQLException{
+        File file=jsonToFile(json);
+        addNewFile(file);
+    }
+    
+    public File jsonToFile(String json){
+         Gson gson = new Gson();
+
+        File file = gson.fromJson(json, File.class);
+        LOGGER.log(Level.INFO, "Converted User: " + file);
+        return file;
+    }*/
+       
     public void createFileTable() throws SQLException, ClassNotFoundException {
 
         Connection con = DB_Connection.getConnection();
@@ -23,7 +47,7 @@ public class EditFileTable {
         String query = "CREATE TABLE File "
                 + "(fid INTEGER not NULL AUTO_INCREMENT, "
                 + "    pid INTEGER not Null,"
-                + "    type BOOLEAN not Null,"
+                + "    type INTEGER not Null,"
                 + "    contents BLOB not Null,"
                 + "    FOREIGN KEY ( pid) REFERENCES Project(pid),"
                 + " PRIMARY KEY (fid))";
@@ -246,4 +270,36 @@ public class EditFileTable {
         stmt.execute(query);
         stmt.close();
     }
+public void addNewFile(int type, List<String> contents) throws ClassNotFoundException {
+    Connection con = null;
+    PreparedStatement pstmt = null;
+    try {
+        con = DB_Connection.getConnection();
+
+        String concatenatedString = String.join("\n", contents);
+        byte[] byteArray = concatenatedString.getBytes(StandardCharsets.UTF_8);
+        Blob blob = con.createBlob();
+        blob.setBytes(1, byteArray);
+
+        String insertQuery = "INSERT INTO File (pid, type, contents) VALUES (?, ?, ?)";
+        pstmt = con.prepareStatement(insertQuery);
+        pstmt.setInt(1, 1); // Assuming '1' is the 'pid' value
+        pstmt.setInt(2, type);
+        pstmt.setBlob(3, blob);
+
+        pstmt.executeUpdate();
+        LOGGER.log(Level.INFO, "File added successfully!");
+
+    } catch (SQLException ex) {
+        Logger.getLogger(EditFileTable.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        // Close resources
+        try {
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
 }

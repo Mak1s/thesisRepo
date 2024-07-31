@@ -11,7 +11,7 @@ package mainClasses;
  */
 public class File {
     int fid,pid;
-    boolean type;
+    int type;
     String contents;
     
     public int getFid(){
@@ -30,11 +30,11 @@ public class File {
         this.pid=pid;
     }
     
-    public boolean getType(){
+    public int getType(){
         return type;
     }
     
-    public void setType(boolean type){
+    public void setType(int type){
         this.type=type;
     }
     
