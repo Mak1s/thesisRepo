@@ -1,5 +1,7 @@
 package servlets;
 
+import com.google.gson.Gson;
+import database.tables.EditFileTable;
 import java.util.List;
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +9,10 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -49,12 +54,15 @@ public class uploadServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-
+       
         // Handle the file upload
-        Part filePart = request.getPart("fileUpload");
+        Part filePart = request.getPart("fileUpload0");
         String fileName = filePart.getSubmittedFileName();
+       
+        EditFileTable editFile=new EditFileTable();
+        
 
-        // Define the path to save the uploaded file
+     // Define the path to save the uploaded file
         String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) uploadDir.mkdir();
@@ -66,15 +74,8 @@ public class uploadServlet extends HttpServlet {
         }
 
          List<String> fileContentLines = Files.readAllLines(file.toPath());
-         /*
-        String fileContent = String.join("\n", fileContentLines);
-        
-        // Return JSON response        
-        try (PrintWriter out = response.getWriter()) {
-            out.write("File uploaded successfully, fileName: " + fileName + "\n Contents : "+fileContent);
-            response.setStatus(HttpServletResponse.SC_OK);
-        }*/
-         String specificString = "<type>"; // Replace with the string you are looking for
+      
+         String specificString = "<type>"; 
 
         List<String> filteredLines = new ArrayList<>();
         for (String line : fileContentLines) {
@@ -83,12 +84,15 @@ public class uploadServlet extends HttpServlet {
             }
         }
 
-
-        // Optionally, you can join and store the filtered lines in a string if needed
         String filteredContent = String.join("\n", filteredLines);
         try (PrintWriter out = response.getWriter()) {
+       
+            editFile.addNewFile(0,fileContentLines);
+           
             out.write("File uploaded successfully, fileName: " + fileName + "\n Contents : "+filteredContent);
             response.setStatus(HttpServletResponse.SC_OK);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(uploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
