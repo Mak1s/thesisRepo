@@ -308,7 +308,7 @@ function back(){
 }
 function formChooser(option){
     if(option ==1){
-        getX3MLFile('uploadForm','fileUpload','addedContent','uploadServlet');
+        getX3MLFile('uploadForm0','fileUpload0','addedContent0','uploadServlet');
     }else if(option ==2){
         getX3MLFile('uploadForm1','fileUpload1','addedContent1','uploadServletRDF');
     }else if(option ==3){
@@ -324,16 +324,18 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
 
     const fileInput = document.getElementById(fileId);
     const file = fileInput.files[0];
-
+   
     if (!file) {
+              
         document.getElementById(contentId).innerHTML = "Error: No file selected.";
         return;
     }
 
     var xhr = new XMLHttpRequest();
-
+ 
     xhr.onload = function () {
         if (xhr.status === 200) {
+   
             document.getElementById(contentId).innerHTML = "File uploaded successfully!";
             console.log(xhr.responseText);
             
@@ -341,7 +343,7 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
             document.getElementById(contentId).innerHTML = "Request failed. Returned status of " + xhr.status;
         }
     };
-
+  
     xhr.open("POST", servletName, true);
     xhr.send(formData);
 }
