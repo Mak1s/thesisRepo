@@ -335,10 +335,12 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
  
     xhr.onload = function () {
         if (xhr.status === 200) {
-   
             document.getElementById(contentId).innerHTML = "File uploaded successfully!";
-            console.log(xhr.responseText);
-            
+           
+            let apanthsh= xhr.responseText; 
+            let first=(removeSubstr(apanthsh,"<type>crm:"));
+            let klash=(removeSubstr(first,"</type>"));
+            console.log(klash);
         } else {
             document.getElementById(contentId).innerHTML = "Request failed. Returned status of " + xhr.status;
         }
@@ -346,4 +348,9 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
   
     xhr.open("POST", servletName, true);
     xhr.send(formData);
+
+}
+function removeSubstr(str, substring) { 
+  const regex = new RegExp(substring, 'g');
+  return str.replace(regex, '');
 }

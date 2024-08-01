@@ -88,9 +88,9 @@ public class uploadServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
        
             editFile.addNewFile(0,fileContentLines);
-           
-            out.write("File uploaded successfully, fileName: " + fileName + "\n Contents : "+filteredContent);
+            out.write(filteredContent);
             response.setStatus(HttpServletResponse.SC_OK);
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(uploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
