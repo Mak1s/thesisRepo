@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import database.tables.EditFileTable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,6 +80,8 @@ public class uploadServletRDF extends HttpServlet {
         
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        EditFileTable editFile= new EditFileTable();
+        
         PrintWriter out = response.getWriter();
         try {
             
@@ -96,13 +99,14 @@ public class uploadServletRDF extends HttpServlet {
             try (InputStream fileContent = filePart.getInputStream()) {
                 Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
-            
+           List<String> fileContentLines = Files.readAllLines(file.toPath());
+              editFile.addNewFile(1,fileContentLines);
        
        
         out.write(fileName);
 
             // Load the RDF model from the uploaded file
-            ModelLoader modelLoader = new ModelLoader("C:\\Users\\gerry\\Documents\\NetBeansProjects\\thesisProject\\src\\main\\java\\servlets\\CIDOC_CRM_v7.1.1.rdfs");
+            ModelLoader modelLoader = new ModelLoader(file.getAbsolutePath());
             modelLoader.listClasses().forEach( c -> out.write(c));
             modelLoader.listProperties().forEach( p -> out.write(p));
             out.write("ModelLoader initialized.\n");

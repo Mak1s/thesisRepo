@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import database.tables.EditFileTable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import mainClasses.ModelLoader;
 
 /**
  *
@@ -71,48 +73,53 @@ public class uploadServletRDF1 extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
  
-    @Override
+@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        EditFileTable editFile= new EditFileTable();
+        
+        PrintWriter out = response.getWriter();
+        try {
+            
+            // Handle the file upload
+            Part filePart = request.getPart("fileUpload3");
+            String fileName = filePart.getSubmittedFileName();
 
-        // Handle the file upload
-        Part filePart = request.getPart("fileUpload3");
-        String fileName = filePart.getSubmittedFileName();
+            // Define the path to save the uploaded file
+            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) uploadDir.mkdir();
 
-        // Define the path to save the uploaded file
-        String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) uploadDir.mkdir();
-
-        // Save the file to the server
-        File file = new File(uploadPath + File.separator + fileName);
-        try (InputStream fileContent = filePart.getInputStream()) {
-            Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        }
-
-         List<String> fileContentLines = Files.readAllLines(file.toPath());
-        String specificString = "<relationship>"; // Replace with the string you are looking for
-
-        List<String> filteredLines = new ArrayList<>();
-        for (String line : fileContentLines) {
-            if (line.contains(specificString)) {
-                filteredLines.add(line);
+            // Save the file to the server
+            File file = new File(uploadPath + File.separator + fileName);
+            try (InputStream fileContent = filePart.getInputStream()) {
+                Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
-        }
+           List<String> fileContentLines = Files.readAllLines(file.toPath());
+              editFile.addNewFile(1,fileContentLines);
+       
+       
+        out.write(fileName);
 
-
-        // Optionally, you can join and store the filtered lines in a string if needed
-        String filteredContent = String.join("\n", filteredLines);
-        try (PrintWriter out = response.getWriter()) {
-            out.write("File uploaded successfully, fileName: " + fileName + "\n Contents : "+filteredContent);
+            // Load the RDF model from the uploaded file
+            ModelLoader modelLoader = new ModelLoader(file.getAbsolutePath());
+            modelLoader.listClasses().forEach( c -> out.write(c));
+            modelLoader.listProperties().forEach( p -> out.write(p));
+            out.write("ModelLoader initialized.\n");
+            
             response.setStatus(HttpServletResponse.SC_OK);
-        }
-    }
 
-    /**
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.write("{\"error\":\"" + e.getMessage() + "\"}");
+            e.printStackTrace(); // Log the exception to server logs
+        } finally {
+            out.close();
+        }
+    }    /**
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description

@@ -26,19 +26,7 @@ import mainClasses.File;
 public class EditFileTable {
        private static final Logger LOGGER = Logger.getLogger(EditFileTable.class.getName());
       
- /*   public void addFileFromJSON(String json) throws ClassNotFoundException, SQLException{
-        File file=jsonToFile(json);
-        addNewFile(file);
-    }
-    
-    public File jsonToFile(String json){
-         Gson gson = new Gson();
 
-        File file = gson.fromJson(json, File.class);
-        LOGGER.log(Level.INFO, "Converted User: " + file);
-        return file;
-    }*/
-       
     public void createFileTable() throws SQLException, ClassNotFoundException {
 
         Connection con = DB_Connection.getConnection();
@@ -48,7 +36,7 @@ public class EditFileTable {
                 + "(fid INTEGER not NULL AUTO_INCREMENT, "
                 + "    pid INTEGER not Null,"
                 + "    type INTEGER not Null,"
-                + "    contents BLOB not Null,"
+                + "    contents LONGBLOB not Null,"
                 + "    FOREIGN KEY ( pid) REFERENCES Project(pid),"
                 + " PRIMARY KEY (fid))";
 
