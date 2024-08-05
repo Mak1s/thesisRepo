@@ -7,6 +7,8 @@ var btn2 = document.getElementById("viewwork");
 var btn3 =document.getElementById("editclass1");
 var btn4= document.getElementById("editclassontology1");
 var btn5 =document.getElementById("viewwork1");
+var cl= " ";
+
 var one,two,three,four;
         var span = document.getElementsByClassName("close")[0];
         var span1 = document.getElementsByClassName("close1")[0];
@@ -290,12 +292,14 @@ function index(){
 function nextstep1(){
     document.getElementById("next1").style.display="flex";
     document.getElementById("before1").style.display="none";
+    getX3MLClasses();
    
 }
 
 function nextstep2(){
     document.getElementById("next2").style.display="flex";
     document.getElementById("before2").style.display="none";
+    getX3MLClasses1();
 }
 
 function edit(){
@@ -341,6 +345,8 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
             let first=(removeSubstr(apanthsh,"<type>crm:"));
             let klash=(removeSubstr(first,"</type>"));
             console.log(klash);
+            cl=cl+klash;
+            console.log(cl);
         } else {
             document.getElementById(contentId).innerHTML = "Request failed. Returned status of " + xhr.status;
         }
@@ -353,4 +359,19 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
 function removeSubstr(str, substring) { 
   const regex = new RegExp(substring, 'g');
   return str.replace(regex, '');
+}
+
+function getX3MLClasses(){
+    const lines = cl.split('\n');
+    const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
+        for( var i=0;i<trimmedLines.length;i++){
+            document.getElementById("classOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
+        }    cl="";
+}
+function getX3MLClasses1(){
+    const lines = cl.split('\n');
+    const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
+        for( var i=0;i<trimmedLines.length;i++){
+            document.getElementById("classPropertyOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
+        }    cl="";
 }
