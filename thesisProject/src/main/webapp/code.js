@@ -8,7 +8,7 @@ var btn3 =document.getElementById("editclass1");
 var btn4= document.getElementById("editclassontology1");
 var btn5 =document.getElementById("viewwork1");
 var cl= " ";
-
+var pr= " ";
 var one,two,three,four;
         var span = document.getElementsByClassName("close")[0];
         var span1 = document.getElementsByClassName("close1")[0];
@@ -342,11 +342,29 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
             document.getElementById(contentId).innerHTML = "File uploaded successfully!";
            
             let apanthsh= xhr.responseText; 
-            let first=(removeSubstr(apanthsh,"<type>crm:"));
-            let klash=(removeSubstr(first,"</type>"));
-            console.log(klash);
-            cl=cl+klash;
-            console.log(cl);
+            if(servletName=="uploadServlet" || servletName=="uploadServlet1" ){
+                console.log("eimai o servlet:"+servletName);                
+                console.log(apanthsh);
+                let first=(removeSubstr(apanthsh,"<type>crm:"));
+                let second=(removeSubstr(apanthsh,"<relationship>crm:"));
+                let klash=(removeSubstr(first,"</type>"));
+                let property=(removeSubstr(second,"</relationship>"));
+                console.log(klash);
+                console.log(property);
+                cl=cl+klash;
+                pr=pr+property;
+                cl=cl+pr;
+                console.log(cl);
+                console.log(pr);
+
+            }else{
+                console.log("eimai o allos servlet:"+servletName);
+                console.log(apanthsh);
+
+                let first = (removeSubstr(apanthsh,"CIDOC_CRM_v7.1.1.rdfs"));
+                let all=(removeSubstr(first,"http://www.cidoc-crm.org/cidoc-crm/"));
+                console.log(all);
+            }
         } else {
             document.getElementById(contentId).innerHTML = "Request failed. Returned status of " + xhr.status;
         }
@@ -358,20 +376,26 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
 }
 function removeSubstr(str, substring) { 
   const regex = new RegExp(substring, 'g');
-  return str.replace(regex, '');
+  return str.replace(regex, '\n');
 }
 
 function getX3MLClasses(){
     const lines = cl.split('\n');
     const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
         for( var i=0;i<trimmedLines.length;i++){
-            document.getElementById("classOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
+           if(trimmedLines[i][0]=="E"){
+                document.getElementById("classOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
+            }
         }    cl="";
 }
 function getX3MLClasses1(){
     const lines = cl.split('\n');
     const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
         for( var i=0;i<trimmedLines.length;i++){
-            document.getElementById("classPropertyOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
-        }    cl="";
+            if(trimmedLines[i][0]=="E"){
+                document.getElementById("classPropertyOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
+            }else if(trimmedLines[i][0]=="P"){
+                document.getElementById("propertiesOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
+            }
+        }    cl="";pr="";
 }

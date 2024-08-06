@@ -75,7 +75,8 @@ public class uploadServlet1 extends HttpServlet {
 
          List<String> fileContentLines = Files.readAllLines(file.toPath());
       
-         String specificString = "<type>"; 
+          String specificString = "<type>"; 
+         String specificString1="<relationship>";
 
         List<String> filteredLines = new ArrayList<>();
         for (String line : fileContentLines) {
@@ -83,14 +84,22 @@ public class uploadServlet1 extends HttpServlet {
                 filteredLines.add(line);
             }
         }
+        List<String> filteredLines1 = new ArrayList<>();
+        for (String line : fileContentLines) {
+            if (line.contains(specificString1)) {
+                filteredLines1.add(line);
+            }
+        }
 
+        
         String filteredContent = String.join("\n", filteredLines);
+        String filteredContent1=String.join("\n", filteredLines1);
         try (PrintWriter out = response.getWriter()) {
        
             editFile.addNewFile(0,fileContentLines);
-           
-            out.write(filteredContent);
+            out.write(filteredContent+filteredContent1);
             response.setStatus(HttpServletResponse.SC_OK);
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(uploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

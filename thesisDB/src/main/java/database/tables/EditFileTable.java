@@ -36,7 +36,7 @@ public class EditFileTable {
                 + "(fid INTEGER not NULL AUTO_INCREMENT, "
                 + "    pid INTEGER not Null,"
                 + "    type INTEGER not Null,"
-                + "    contents LONGBLOB not Null,"
+                + "    contents MEDIUMBLOB not Null,"
                 + "    FOREIGN KEY ( pid) REFERENCES Project(pid),"
                 + " PRIMARY KEY (fid))";
 
