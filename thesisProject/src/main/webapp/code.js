@@ -385,6 +385,8 @@ function getX3MLClasses(){
         for( var i=0;i<trimmedLines.length;i++){
            if(trimmedLines[i][0]=="E"){
                 document.getElementById("classOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
+                document.getElementById("lst-autocomplete").innerHTML+="<option value="+trimmedLines[i]+">"+"</option>";
+                
             }
         }    cl="";
 }
@@ -394,8 +396,10 @@ function getX3MLClasses1(){
         for( var i=0;i<trimmedLines.length;i++){
             if(trimmedLines[i][0]=="E"){
                 document.getElementById("classPropertyOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
+                document.getElementById("lst-autocomplete1").innerHTML+="<option value="+trimmedLines[i]+">"+"</option>";
             }else if(trimmedLines[i][0]=="P"){
                 document.getElementById("propertiesOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
+                document.getElementById("lst-autocomplete2").innerHTML+="<option value="+trimmedLines[i]+">"+"</option>";
             }
         }    cl="";pr="";
 }
