@@ -9,6 +9,7 @@ var btn4= document.getElementById("editclassontology1");
 var btn5 =document.getElementById("viewwork1");
 var cl= " ";
 var pr= " ";
+var all= " ";
 var one,two,three,four;
         var span = document.getElementsByClassName("close")[0];
         var span1 = document.getElementsByClassName("close1")[0];
@@ -362,8 +363,9 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
                 console.log(apanthsh);
 
                 let first = (removeSubstr(apanthsh,"CIDOC_CRM_v7.1.1.rdfs"));
-                let all=(removeSubstr(first,"http://www.cidoc-crm.org/cidoc-crm/"));
-                console.log(all);
+                let clpr=(removeSubstr(first,"http://www.cidoc-crm.org/cidoc-crm/"));
+                console.log(clpr);
+                all=all+clpr;
             }
         } else {
             document.getElementById(contentId).innerHTML = "Request failed. Returned status of " + xhr.status;
@@ -381,25 +383,38 @@ function removeSubstr(str, substring) {
 
 function getX3MLClasses(){
     const lines = cl.split('\n');
+    const allLines=all.split('\n');
     const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
-        for( var i=0;i<trimmedLines.length;i++){
+    const allTrimmed= allLines.map(line => line.trim()).filter(line => line.length > 0);
+    for( var i=0;i<trimmedLines.length;i++){
            if(trimmedLines[i][0]=="E"){
                 document.getElementById("classOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
-                document.getElementById("lst-autocomplete").innerHTML+="<option value="+trimmedLines[i]+">"+"</option>";
-                
+           }
+        }
+        for( var i=0;i<allTrimmed.length;i++){
+           if(allTrimmed[i][0]=="E"){
+                document.getElementById("lst-autocomplete").innerHTML+="<option value="+allTrimmed[i]+">"+"</option>";
             }
-        }    cl="";
+        }cl=""; all="";
+        
 }
 function getX3MLClasses1(){
     const lines = cl.split('\n');
+    const allLines=all.split('\n');
     const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
+    const allTrimmed= allLines.map(line => line.trim()).filter(line => line.length > 0);
         for( var i=0;i<trimmedLines.length;i++){
             if(trimmedLines[i][0]=="E"){
                 document.getElementById("classPropertyOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
-                document.getElementById("lst-autocomplete1").innerHTML+="<option value="+trimmedLines[i]+">"+"</option>";
             }else if(trimmedLines[i][0]=="P"){
                 document.getElementById("propertiesOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
-                document.getElementById("lst-autocomplete2").innerHTML+="<option value="+trimmedLines[i]+">"+"</option>";
             }
-        }    cl="";pr="";
+        }
+         for( var i=0;i<allTrimmed.length;i++){
+            if(allTrimmed[i][0]=="E"){
+                document.getElementById("lst-autocomplete1").innerHTML+="<option value="+allTrimmed[i]+">"+"</option>";
+            }else if(allTrimmed[i][0]=="P"){
+                document.getElementById("lst-autocomplete2").innerHTML+="<option value="+allTrimmed[i]+">"+"</option>";
+            }
+        } cl="";pr="";all="";
 }
