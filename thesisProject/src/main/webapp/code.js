@@ -219,6 +219,7 @@ function showOption5() {
     div5.style.display = 'none';
 }
 
+// Original function removed, as each option is handled by its respective function
 
 function getValueClass(){
     const inputElement = document.getElementById('classTO');
@@ -262,7 +263,32 @@ function getValueClassProperty(){
 }
 function getValueProperty(){
     const inputElement = document.getElementById('propertyTO');
+    const inputElement1 = document.getElementById('classPropertyTO');
+    const selectElement = document.getElementById('classPropertyOptions');
+    const selectElement1 = document.getElementById('propertiesOptions');
+    const selectValue = selectElement.value;
+    const selectValue1 = selectElement1.value;
     const value = inputElement.value;
+    const value1 = inputElement1.value;
+    const changes={
+        "classBefore":selectValue,
+        "classAfter":value1,
+        "propertyBefore":selectValue1,
+        "propertyAfter":value
+    };
+    const jsonString = JSON.stringify(changes);
+    console.log(jsonString);
+     const blob = new Blob([jsonString], { type: 'application/json' });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'changes.json';
+    document.body.appendChild(a);
+
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
     console.log('Input field value PropertyOnly:', value);
     if(three){
         document.getElementById("changedContent").innerHTML+="<p id=\"propertyto\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"+"<button id=\"propertytobtn\" class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
