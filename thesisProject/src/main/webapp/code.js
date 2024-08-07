@@ -219,18 +219,37 @@ function showOption5() {
     div5.style.display = 'none';
 }
 
-// Original function removed, as each option is handled by its respective function
 
 function getValueClass(){
     const inputElement = document.getElementById('classTO');
+    const selectElement = document.getElementById('classOptions');
+    const selectValue = selectElement.value;
     const value = inputElement.value;
-    console.log('Input field value ClassOnly:', value);
-     if(one){
+    const changes={
+        "classBefore":selectValue,
+        "classAfter":value
+    };
+    const jsonString = JSON.stringify(changes);
+    console.log(jsonString);
+     const blob = new Blob([jsonString], { type: 'application/json' });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'changes.json';
+    document.body.appendChild(a);
+
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    if(one){
         document.getElementById("changedContent").innerHTML+="<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }else if(two){
         document.getElementById("changedContent1").innerHTML+="<p id=\"classto1\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn1\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
 }
+
 function getValueClassProperty(){
     const inputElement = document.getElementById('classPropertyTO');
     const value = inputElement.value;
