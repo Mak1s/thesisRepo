@@ -7,8 +7,11 @@ package database.tables;
 
 import database.DB_Connection;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,4 +37,25 @@ public class EditClassOnlyTable {
         stmt.close();
         
     }   
+    public void addClasses(String classFrom, String classTo) throws ClassNotFoundException {
+        try {
+            Connection con = DB_Connection.getConnection();
+
+            Statement stmt = con.createStatement();
+
+           String insertQuery = "INSERT INTO ClassOnly (pid , classFrom, classTo) VALUES ("
+                + "'" + 1+ "', "
+                + "'" + classFrom+ "', "
+                + "'" + classTo + "'"
+                + ")";
+            
+            stmt.executeUpdate(insertQuery);
+            
+            /* Get the member id from the database and set it to the member */
+            stmt.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EditClassOnlyTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

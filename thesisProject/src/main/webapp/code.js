@@ -249,6 +249,7 @@ function getValueClass(){
     }else if(two){
         document.getElementById("changedContent1").innerHTML+="<p id=\"classto1\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn1\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
+    classOnlyPost(jsonString);
 }
 
 function getValueClassProperty(){
@@ -462,4 +463,18 @@ function getX3MLClasses1(){
                 document.getElementById("lst-autocomplete2").innerHTML+="<option value="+allTrimmed[i]+">"+"</option>";
             }
         } cl="";pr="";all="";
+}
+function classOnlyPost(jsonString){
+    var data = JSON.stringify(jsonString);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            console.log("OK");
+        }else if(xhttp.status === 403){
+            return 1;
+        } 
+    };
+    xhttp.open("POST","classOnlyPost");
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(data);   
 }

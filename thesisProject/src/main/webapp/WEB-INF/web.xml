@@ -24,6 +24,10 @@
         <servlet-name>servlet_login</servlet-name>
         <servlet-class>servlets.servlet_login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>classOnlyPost</servlet-name>
+        <servlet-class>servlets.classOnlyPost</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>uploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>servlet_login</servlet-name>
         <url-pattern>/servlet_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>classOnlyPost</servlet-name>
+        <url-pattern>/classOnlyPost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
