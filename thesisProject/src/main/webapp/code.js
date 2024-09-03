@@ -1,3 +1,4 @@
+let changesArr= new Array();
 var modal = document.getElementById("myModal");
 var modal1=document.getElementById("ontoModal");
 var modal2=document.getElementById("viewModal");
@@ -221,7 +222,7 @@ function showOption5() {
 
 // Original function removed, as each option is handled by its respective function
 
-function getValueClass(){
+function addChange(){
     const inputElement = document.getElementById('classTO');
     const selectElement = document.getElementById('classOptions');
     const selectValue = selectElement.value;
@@ -231,8 +232,25 @@ function getValueClass(){
         "classAfter":value
     };
     const jsonString = JSON.stringify(changes);
-    console.log(jsonString);
-     const blob = new Blob([jsonString], { type: 'application/json' });
+    changesArr.push(jsonString);
+    document.getElementById("changes").innerHTML+="<p id=\"classfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
+            "<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"
+            +"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
+
+    console.log(changesArr);
+}
+function getValueClass(){
+   /* const inputElement = document.getElementById('classTO');
+    const selectElement = document.getElementById('classOptions');
+    const selectValue = selectElement.value;
+    const value = inputElement.value;
+    const changes={
+        "classBefore":selectValue,
+        "classAfter":value
+    };
+    const jsonString = JSON.stringify(changes);
+    console.log(jsonString);*/
+     const blob = new Blob([changesArr], { type: 'application/json' });
 
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -245,11 +263,33 @@ function getValueClass(){
     URL.revokeObjectURL(url);
     
     if(one){
+        const inputElement = document.getElementById('classTO');
+    const selectElement = document.getElementById('classOptions');
+    const selectValue = selectElement.value;
+    const value = inputElement.value;
+    const changes={
+        "classBefore":selectValue,
+        "classAfter":value
+    };
+    const jsonString = JSON.stringify(changes);
+    console.log(jsonString);
         document.getElementById("changedContent").innerHTML+="<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }else if(two){
+        const inputElement = document.getElementById('classTO');
+    const selectElement = document.getElementById('classOptions');
+    const selectValue = selectElement.value;
+    const value = inputElement.value;
+    const changes={
+        "classBefore":selectValue,
+        "classAfter":value
+    };
+    const jsonString = JSON.stringify(changes);
+    console.log(jsonString);
         document.getElementById("changedContent1").innerHTML+="<p id=\"classto1\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn1\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
-    classOnlyPost(jsonString);
+    for(var i=0;i<changesArr.length;i++){
+        classOnlyPost(changesArr[i]);
+    }
 }
 
 function getValueClassProperty(){
@@ -296,6 +336,7 @@ function getValueProperty(){
     }else if(four){
         document.getElementById("changedContent1").innerHTML+="<p id=\"propertyto1\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"+"<button id=\"propertytobtn1\" class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
+  //  classPropertyPost(jsonString);
 }
 
 function removeChanges(){
@@ -478,3 +519,18 @@ function classOnlyPost(jsonString){
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(data);   
 }
+/*
+function classPropertyPost(jsonString){
+    var data = JSON.stringify(jsonString);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            console.log("OK");
+        }else if(xhttp.status === 403){
+            return 1;
+        } 
+    };
+    xhttp.open("POST","classPropertyPost");
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(data);   
+}*/

@@ -148,11 +148,18 @@
             <div class="col-sm-6 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="classTO" type="text" list="lst-autocomplete" placeholder="E99_Identfies_As">
-                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Change</button>
-
+                <button type="submit" class="btn btn-dark" onclick="addChange()">Change</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
+                
+                <div class="row" id="changedContent">
+                            
+                   </div>
                 <datalist id="lst-autocomplete">
                 </datalist>
             </div>
+                <div id="changes">
+                    
+                </div>
          </div>
         </div>
         <div class="border border-dark" id="classProperty" style="display: none;">
