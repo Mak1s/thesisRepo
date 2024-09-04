@@ -233,9 +233,9 @@ function addChange(){
     };
     const jsonString = JSON.stringify(changes);
     changesArr.push(jsonString);
-    document.getElementById("changes").innerHTML+="<p id=\"classfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
+    document.getElementById("changes").innerHTML+="<div class=\"border border-dark\"><p id=\"classfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
             "<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"
-            +"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
+            +"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
 
     console.log(changesArr);
 }
@@ -287,6 +287,9 @@ function getValueClass(){
     console.log(jsonString);
         document.getElementById("changedContent1").innerHTML+="<p id=\"classto1\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn1\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
+}
+
+function setChanges(){
     for(var i=0;i<changesArr.length;i++){
         classOnlyPost(changesArr[i]);
     }
