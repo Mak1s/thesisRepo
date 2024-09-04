@@ -9,6 +9,8 @@ import database.DB_Connection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -43,5 +45,30 @@ public class EditClassPropertyTable {
         stmt.execute(query);
         stmt.close();
         
+    }
+     public void addClassesProperty(String classFrom, String classTo,String propertyFrom, String propertyTo) throws ClassNotFoundException {
+        try {
+            Connection con = DB_Connection.getConnection();
+
+            Statement stmt = con.createStatement();
+
+           String insertQuery = "INSERT INTO ClassProperty (pid , classFrom, classTo ,propertyFrom,propertyTo,additionalClass,URI) VALUES ("
+                + "'" + 1+ "', "
+                + "'" + classFrom+ "', "
+                + "'" + classTo + "', "
+                + "'" + propertyFrom + "', "
+                + "'" + propertyTo + "', "
+                   + "'" + classTo + "', "
+                   + "'" + null + "'"
+                + ")";
+            
+            stmt.executeUpdate(insertQuery);
+            
+            /* Get the member id from the database and set it to the member */
+            stmt.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EditClassPropertyTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

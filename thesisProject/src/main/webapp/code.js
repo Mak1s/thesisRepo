@@ -339,7 +339,7 @@ function getValueProperty(){
     }else if(four){
         document.getElementById("changedContent1").innerHTML+="<p id=\"propertyto1\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"+"<button id=\"propertytobtn1\" class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
-  //  classPropertyPost(jsonString);
+    classPropertyPost(jsonString);
 }
 
 function removeChanges(){
@@ -522,7 +522,7 @@ function classOnlyPost(jsonString){
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(data);   
 }
-/*
+
 function classPropertyPost(jsonString){
     var data = JSON.stringify(jsonString);
     var xhttp = new XMLHttpRequest();
@@ -536,4 +536,4 @@ function classPropertyPost(jsonString){
     xhttp.open("POST","classPropertyPost");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(data);   
-}*/
+}
