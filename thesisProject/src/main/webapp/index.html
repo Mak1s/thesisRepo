@@ -26,13 +26,15 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-sm-12">
-                <button type="button" class="btn btn-dark" id="newproject" onclick="showOption3()">New project</button>
+                <button type="button" class="btn btn-dark" id="newproject" onclick="showOption1()">New project</button>
                 <button type="button" class="btn btn-dark" onclick="showOption4()">Load</button>
                 <button type="button" class="btn btn-dark" onclick="showOption5()">Import</button>
             </div>
             <div class="row justify-content-center" id="buttons" style="display: none;">
-                <button type="button" class="btn btn-dark" onclick="showOption1()">Change Class only</button>
-                <button type="button" class="btn btn-dark" onclick="showOption2()">Change Class and Property</button>
+                <button type="button" class="btn btn-dark" onclick="nextstep1()">Change Class </button>
+                <button type="button" class="btn btn-dark" onclick="showOption">Change Property</button>
+                <button type="button" class="btn btn-dark" onclick="showOption">Change Class and Property</button>
+                
             </div>
         </div>
         <div class="row border border-dark " id="import" style="display: none;"> 
@@ -136,10 +138,10 @@
                 <div class="col-sm-4" id="addedContent1">
                     <!--blank-->
                 </div>
-                 <button type="submit" class="btn btn-dark" onclick="nextstep1()">Next Step</button>
+                 <button type="submit" class="btn btn-dark" onclick="showOption3()">Next Step</button>
             </div>
                 </div>
-            <div id="next1" style="display:none;">
+            <div id="next1" class="border-dark" style="display:none;">
             <div class="col-sm-6 m-5">
                 <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="classOptions" name="classOptions">
@@ -152,8 +154,7 @@
             <div class="col-sm-6 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="classTO" type="text" list="lst-autocomplete" placeholder="E99_Identfies_As">
-                <button type="submit" class="btn btn-dark" onclick="addChange()">Change</button>
-                <button type="submit" class="btn btn-dark" onclick="setChanges()">Set Changes</button>
+                <button type="submit" class="btn btn-dark" onclick="addChange()">Set Changes</button>
                 <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
                 
                 <div class="row" id="changedContent">
@@ -164,6 +165,7 @@
             </div>
                 
          </div>
+            <div id="new"></div>
         </div>
         <div class="border border-dark" id="classProperty" style="display: none;">
             <div id="before2">
@@ -205,7 +207,9 @@
             <div class="col-sm-8 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="classPropertyTO" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
-                <button type="submit" class="btn btn-dark" onclick="getValueClassProperty()">Change</button>
+                <button type="submit" class="btn btn-dark" onclick="addChange()">Change Only Class</button>
+                <button type="submit" class="btn btn-dark" onclick="setChanges()">Set Changes</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
                 <datalist id="lst-autocomplete1">
                 </datalist>
 
@@ -220,7 +224,11 @@
             <div class="col-sm-6 m-5">
                 <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="propertyTO" type="text" list="lst-autocomplete2" placeholder="P90_has_value">
-                <button type="submit" class="btn btn-dark" onclick="getValueProperty()">Change</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueProperty()">Change Class and Property</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueProperty()">Change Only Property</button>
+                <button type="submit" class="btn btn-dark" onclick="setChanges()">Set Changes</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
+
                 <datalist id="lst-autocomplete2">
                 </datalist>
     

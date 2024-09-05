@@ -1,4 +1,5 @@
 let changesArr= new Array();
+var totalChanges4Class=0;
 var modal = document.getElementById("myModal");
 var modal1=document.getElementById("ontoModal");
 var modal2=document.getElementById("viewModal");
@@ -166,16 +167,6 @@ function showOption1() {
     document.getElementById("before1").style.display = "flex";
 }
 
-// Function to show option 2
-function showOption2() {
-    var div = document.getElementById('class');
-    var div2 = document.getElementById('classProperty');
-    
-    div.style.display = 'none';
-    div2.style.display = 'flex';
-    document.getElementById("next2").style.display = "none";
-    document.getElementById("before2").style.display = "flex";
-}
 
 // Function to show option 3
 function showOption3() {
@@ -221,10 +212,22 @@ function showOption5() {
 }
 
 // Original function removed, as each option is handled by its respective function
-
+var newChangedElement="";
+var newChangedElement2="";
 function addChange(){
-    const inputElement = document.getElementById('classTO');
-    const selectElement = document.getElementById('classOptions');
+    totalChanges4Class++;
+    var inputElement = "";
+    
+    var selectElement="";
+    if(totalChanges4Class<=1){
+        selectElement = document.getElementById('classOptions');
+        inputElement = document.getElementById('classTO');
+        console.log(totalChanges4Class);
+    }else{
+        console.log(totalChanges4Class);
+        selectElement = document.getElementById(newChangedElement);
+        inputElement = document.getElementById(newChangedElement2);
+    }
     const selectValue = selectElement.value;
     const value = inputElement.value;
     const changes={
@@ -232,12 +235,13 @@ function addChange(){
         "classAfter":value
     };
     const jsonString = JSON.stringify(changes);
-    changesArr.push(jsonString);
+   
     document.getElementById("changes").innerHTML+="<div class=\"border border-dark\"><p id=\"classfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
             "<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"
             +"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
 
-    console.log(changesArr);
+    console.log(jsonString);
+    classOnlyPost(jsonString);
 }
 function getValueClass(){
    /* const inputElement = document.getElementById('classTO');
@@ -263,8 +267,17 @@ function getValueClass(){
     URL.revokeObjectURL(url);
     
     if(one){
-        const inputElement = document.getElementById('classTO');
-    const selectElement = document.getElementById('classOptions');
+        var inputElement ="";
+        var selectElement="";
+   if(totalChanges4Class<=1){
+        selectElement = document.getElementById('classOptions');
+        inputElement = document.getElementById('classTO');
+        console.log(totalChanges4Class);
+    }else{
+        console.log(totalChanges4Class);
+        selectElement = document.getElementById(newChangedElement);
+        inputElement - document.getElementById(newChangedElement2);
+    }
     const selectValue = selectElement.value;
     const value = inputElement.value;
     const changes={
@@ -275,8 +288,17 @@ function getValueClass(){
     console.log(jsonString);
         document.getElementById("changedContent").innerHTML+="<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }else if(two){
-        const inputElement = document.getElementById('classTO');
-    const selectElement = document.getElementById('classOptions');
+        var inputElement = "";
+       var selectElement="";
+   if(totalChanges4Class<=1){
+        selectElement = document.getElementById('classOptions');
+        inputElement =document.getElementById('classTO');
+        console.log(totalChanges4Class);
+    }else{
+        console.log(totalChanges4Class);
+        selectElement = document.getElementById(newChangedElement);
+        inputElement = document.getElementById(newChangedElement2);
+    }
     const selectValue = selectElement.value;
     const value = inputElement.value;
     const changes={
@@ -289,11 +311,6 @@ function getValueClass(){
     }
 }
 
-function setChanges(){
-    for(var i=0;i<changesArr.length;i++){
-        classOnlyPost(changesArr[i]);
-    }
-}
 
 function getValueClassProperty(){
     const inputElement = document.getElementById('classPropertyTO');
@@ -381,10 +398,66 @@ function index(){
 }
 
 function nextstep1(){
-    document.getElementById("next1").style.display="flex";
-    document.getElementById("before1").style.display="none";
-    getX3MLClasses();
-   
+    if(document.getElementById("next1").style.display==="none"){
+        document.getElementById("next1").style.display="flex";
+        document.getElementById("before1").style.display="none";
+        getX3MLClasses();  
+    } else {
+        document.getElementById("before1").style.display="none";
+       
+        // Generate a unique id for each dynamically created select element
+        const uniqueId = 'classOptions' + Math.random().toString(36).substr(2, 9);
+        const uniqueId2 = 'classTO' + Math.random().toString(36).substr(2, 9);
+        newChangedElement=uniqueId;
+        newChangedElement2=uniqueId2;
+        const divContent = `
+        <div id="next1" class="border-dark" style="display:flex;">
+            <div class="col-sm-6 m-5">
+                <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
+                <select id="${uniqueId}" name="classOptions"></select>
+                <div id="changes"></div>
+            </div>
+            <div class="col-sm-6 m-5">
+                <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
+                <input class="form-control" id="${uniqueId2}" type="text" list="lst-autocomplete" placeholder="E99_Identifies_As">
+                <button type="submit" class="btn btn-dark" onclick="addChange()">Set Changes</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
+                
+                <div class="row" id="changedContent"></div>
+                <datalist id="lst-autocomplete"></datalist>
+            </div>
+        </div>
+        `;  
+
+        document.getElementById("new").innerHTML += divContent;
+        
+        // Populate the new select element
+        const newSelectElement = document.getElementById(uniqueId);
+        const newSelectElement2 =document.getElementById(uniqueId2);
+        populateClassOptions(newSelectElement); 
+        populateAllClass(newSelectElement2);
+    }
+}
+
+function populateClassOptions(selectElement) {
+    console.log("MPhka");
+
+    for (let i = 0; i < cl.length; i++) {
+        console.log("MPhka");
+        if (cl[i][0] === "E") {
+            selectElement.innerHTML+="<option value="+cl[i]+">"+cl[i]+"</option>";
+            console.log(cl[i]);
+        }
+    }
+    //cl = ""; 
+}
+
+function populateAllClass(selectElement){
+    for( var i=0;i<all.length;i++){
+           if(all[i][0]==="E"){
+                selectElement.innerHTML+="<option value="+all[i]+">"+"</option>";
+            }
+        }
 }
 
 function nextstep2(){
@@ -470,8 +543,8 @@ function removeSubstr(str, substring) {
   const regex = new RegExp(substring, 'g');
   return str.replace(regex, '\n');
 }
-
 function getX3MLClasses(){
+
     const lines = cl.split('\n');
     const allLines=all.split('\n');
     const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
@@ -485,7 +558,8 @@ function getX3MLClasses(){
            if(allTrimmed[i][0]=="E"){
                 document.getElementById("lst-autocomplete").innerHTML+="<option value="+allTrimmed[i]+">"+"</option>";
             }
-        }cl=""; all="";
+        }cl=trimmedLines;
+        all=allTrimmed;
         
 }
 function getX3MLClasses1(){
