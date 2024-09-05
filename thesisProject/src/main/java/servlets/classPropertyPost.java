@@ -5,7 +5,8 @@
  */
 package servlets;
 
-import database.tables.EditClassOnlyTable;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import database.tables.EditClassPropertyTable;
 import java.io.BufferedReader;
 import java.io.File;
@@ -80,7 +81,7 @@ public class classPropertyPost extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-  response.setContentType("application/json");
+        response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         Logger LOGGER = Logger.getLogger(classOnlyPost.class.getName());
         LOGGER.log(Level.INFO,"eimai servlet ");
@@ -109,16 +110,12 @@ public class classPropertyPost extends HttpServlet {
             String[] entry = pair.split(":", 2);
             String key = entry[0].trim().replace("\"", "").replace("{", "").replace("}", "");
             String value = entry[1].trim().replace("\"", "").replace("}", "");  
-            String key1 =entry[2].trim().replace("\"", "").replace("{", "").replace("}", "");
-            String value1 = entry[3].trim().replace("\"", "").replace("}", "");  
+            
             
             LOGGER.log(Level.INFO, "key: " + key);
             LOGGER.log(Level.INFO, "value: " + value);
             
-            LOGGER.log(Level.INFO, "key1: " + key1);
-            LOGGER.log(Level.INFO, "value1: " + value1);
             map.put(key, value);
-            map.put(key1, value1);
         }
 
         String classBefore = map.get("classBefore");
@@ -136,7 +133,7 @@ public class classPropertyPost extends HttpServlet {
         try {
             classProperty.addClassesProperty(classBefore, classAfter, propertyBefore, propertyAfter);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(classOnlyPost.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(classPropertyPost.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
