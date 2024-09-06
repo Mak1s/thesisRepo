@@ -32,8 +32,8 @@
             </div>
             <div class="row justify-content-center" id="buttons" style="display: none;">
                 <button type="button" class="btn btn-dark" onclick="nextstep1()">Change Class </button>
-                <button type="button" class="btn btn-dark" onclick="showOption">Change Property</button>
-                <button type="button" class="btn btn-dark" onclick="showOption">Change Class and Property</button>
+                <button type="button" class="btn btn-dark" onclick="">Change Property</button>
+                <button type="button" class="btn btn-dark" onclick="nextstep2()">Change Class and Property</button>
                 
             </div>
         </div>
@@ -167,36 +167,7 @@
          </div>
             <div id="new"></div>
         </div>
-        <div class="border border-dark" id="classProperty" style="display: none;">
-            <div id="before2">
-            <div class="col-sm-6" >
-                <form id="uploadForm2" enctype="multipart/form-data" > 
-                    <div class="form-group">
-                            <label for="fileUpload2">Choose .x3ml file to transform &nbsp; &nbsp; &nbsp;*</label><br>
-                            <input type="file" class="form-control-file" id="fileUpload2" name="fileUpload2">
-                    </div>        
-                    <button type="submit" class="btn btn-dark" onclick="formChooser(3); return false;">Upload</button>
-                </form>
-                <div class="col-sm-4" id="addedContent2">
-                    <!--blank-->
-                </div>
-            </div>
-           
-            <div class="col-sm-6">
-                 <form id="uploadForm3" enctype="multipart/form-data">
-                    <div class="form-group">
-                            <label for="fileUpload3">Choose .rdf file to transform &nbsp; &nbsp; &nbsp;*</label><br>
-                            <input type="file" class="form-control-file" id="fileUpload3" name="fileUpload3">
-                    </div>        
-                    <button type="submit" class="btn btn-dark" onclick="formChooser(4); return false;">Upload</button>
-                </form>
-                <div class="col-sm-4" id="addedContent3">
-                    <!--blank-->
-                </div>
-                <button type="submit" class="btn btn-dark" onclick="nextstep2()">Next Step</button>
-            
-            </div>
-            </div>
+        
             <div class="col container" id="next2" style="display:none;">
              <div class="row">
                 <div class="col-sm-12 m-5">
@@ -207,9 +178,6 @@
             <div class="col-sm-8 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="classPropertyTO" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
-                <button type="submit" class="btn btn-dark" onclick="addChange()">Change Only Class</button>
-                <button type="submit" class="btn btn-dark" onclick="setChanges()">Set Changes</button>
-                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
                 <datalist id="lst-autocomplete1">
                 </datalist>
 
@@ -224,9 +192,7 @@
             <div class="col-sm-6 m-5">
                 <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="propertyTO" type="text" list="lst-autocomplete2" placeholder="P90_has_value">
-                <button type="submit" class="btn btn-dark" onclick="getValueProperty()">Change Class and Property</button>
-                <button type="submit" class="btn btn-dark" onclick="getValueProperty()">Change Only Property</button>
-                <button type="submit" class="btn btn-dark" onclick="setChanges()">Set Changes</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueProperty()">Set Changes</button>
                 <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
 
                 <datalist id="lst-autocomplete2">
@@ -235,7 +201,7 @@
             </div>
             </div>
             </div>
-            </div> 
+          
                    <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <!-- Popper.js -->

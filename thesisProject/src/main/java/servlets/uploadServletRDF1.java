@@ -85,7 +85,7 @@ public class uploadServletRDF1 extends HttpServlet {
         try {
             
             // Handle the file upload
-            Part filePart = request.getPart("fileUpload3");
+            Part filePart = request.getPart("fileUpload1");
             String fileName = filePart.getSubmittedFileName();
 
             // Define the path to save the uploaded file

@@ -56,7 +56,7 @@ public class uploadServlet1 extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
        
         // Handle the file upload
-        Part filePart = request.getPart("fileUpload2");
+        Part filePart = request.getPart("fileUpload0");
         String fileName = filePart.getSubmittedFileName();
        
         EditFileTable editFile=new EditFileTable();

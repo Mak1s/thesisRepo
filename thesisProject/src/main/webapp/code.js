@@ -462,7 +462,9 @@ function populateAllClass(selectElement){
 
 function nextstep2(){
     document.getElementById("next2").style.display="flex";
-    document.getElementById("before2").style.display="none";
+    document.getElementById("before1").style.display="none";
+     getX3MLFile('uploadForm0','fileUpload0','addedContent0','uploadServlet1');   
+     getX3MLFile('uploadForm1','fileUpload1','addedContent1','uploadServletRDF1');
     getX3MLClasses1();
 }
 
