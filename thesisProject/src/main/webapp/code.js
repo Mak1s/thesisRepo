@@ -1,5 +1,6 @@
 let changesArr= new Array();
 var totalChanges4Class=0;
+var totalChanges4Class_Properties=0;
 var modal = document.getElementById("myModal");
 var modal1=document.getElementById("ontoModal");
 var modal2=document.getElementById("viewModal");
@@ -214,6 +215,7 @@ function showOption5() {
 // Original function removed, as each option is handled by its respective function
 var newChangedElement="";
 var newChangedElement2="";
+
 function addChange(){
     totalChanges4Class++;
     var inputElement = "";
@@ -243,6 +245,45 @@ function addChange(){
     console.log(jsonString);
     classOnlyPost(jsonString);
 }
+var newChangedElement3="";
+var newChangedElement4="";
+var newChangedElement5="";
+var newChangedElement6="";
+
+function addChange2(){
+    totalChanges4Class_Properties++;
+    var inputElement = "";
+    var inputElement1 = "";
+    var selectElement ="";
+    var selectElement1="";
+    
+    if(totalChanges4Class_Properties<=1){
+         inputElement = document.getElementById('propertyTO');
+         inputElement1 = document.getElementById('classPropertyTO');
+         selectElement = document.getElementById('classPropertyOptions');
+         selectElement1 = document.getElementById('propertiesOptions');
+    
+    }else{
+        inputElement = document.getElementById(newChangedElement6);
+         inputElement1 = document.getElementById(newChangedElement4);
+         selectElement = document.getElementById(newChangedElement3);
+         selectElement1 = document.getElementById(newChangedElement5);
+    }
+    const selectValue = selectElement.value;
+    const selectValue1 = selectElement1.value;
+    const value = inputElement.value;
+    const value1 = inputElement1.value;
+    const changes={
+        "classBefore":selectValue,
+        "classAfter":value1,
+        "propertyBefore":selectValue1,
+        "propertyAfter":value
+    };
+    const jsonString = JSON.stringify(changes);
+    console.log(jsonString);
+    classPropertyPost(jsonString);
+}
+
 function getValueClass(){
    /* const inputElement = document.getElementById('classTO');
     const selectElement = document.getElementById('classOptions');
@@ -323,7 +364,7 @@ function getValueClassProperty(){
     }
 }
 function getValueProperty(){
-    const inputElement = document.getElementById('propertyTO');
+/*    const inputElement = document.getElementById('propertyTO');
     const inputElement1 = document.getElementById('classPropertyTO');
     const selectElement = document.getElementById('classPropertyOptions');
     const selectElement1 = document.getElementById('propertiesOptions');
@@ -338,8 +379,8 @@ function getValueProperty(){
         "propertyAfter":value
     };
     const jsonString = JSON.stringify(changes);
-    console.log(jsonString);
-     const blob = new Blob([jsonString], { type: 'application/json' });
+    console.log(jsonString);*/
+     const blob = new Blob([changesArr], { type: 'application/json' });
 
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -356,7 +397,7 @@ function getValueProperty(){
     }else if(four){
         document.getElementById("changedContent1").innerHTML+="<p id=\"propertyto1\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"+"<button id=\"propertytobtn1\" class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
-    classPropertyPost(jsonString);
+    //classPropertyPost(jsonString);
 }
 
 function removeChanges(){
@@ -440,16 +481,13 @@ function nextstep1(){
 }
 
 function populateClassOptions(selectElement) {
-    console.log("MPhka");
-
+    console.log("populate class options with :"+cl);
     for (let i = 0; i < cl.length; i++) {
-        console.log("MPhka");
         if (cl[i][0] === "E") {
             selectElement.innerHTML+="<option value="+cl[i]+">"+cl[i]+"</option>";
-            console.log(cl[i]);
+            console.log("klash"+cl[i]);
         }
     }
-    //cl = ""; 
 }
 
 function populateAllClass(selectElement){
@@ -461,13 +499,89 @@ function populateAllClass(selectElement){
 }
 
 function nextstep2(){
-    document.getElementById("next2").style.display="flex";
-    document.getElementById("before1").style.display="none";
-     getX3MLFile('uploadForm0','fileUpload0','addedContent0','uploadServlet1');   
-     getX3MLFile('uploadForm1','fileUpload1','addedContent1','uploadServletRDF1');
-    getX3MLClasses1();
+    if(document.getElementById("next2").style.display==="none"){
+        document.getElementById("next2").style.display="flex";
+        document.getElementById("before1").style.display="none";
+        getX3MLClasses1();
+    }else{
+        document.getElementById("before1").style.display="none";
+        const uniqueId = 'classPropertyOptions' + Math.random().toString(36).substr(2,9);
+        const uniqueId2 = 'classPropertyTO' + Math.random().toString(36).substr(2,9);
+        const uniqueId3 = 'propertiesOptions' + Math.random().toString(36).substr(2,9);
+        const uniqueId4 = 'propertyTO' + Math.random().toString(36).substr(2,9);
+        newChangedElement3 =uniqueId;
+        newChangedElement4 =uniqueId2;
+        newChangedElement5 =uniqueId3;
+        newChangedElement6 =uniqueId4;
+
+        const divContent=`<div class="col container" id="next2" style="display:flex;">
+             <div class="row">
+                <div class="col-sm-12 m-5">
+                <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
+                <select id="${uniqueId}" name="classPropertyOptions">
+                </select>
+            </div>
+            <div class="col-sm-8 m-5">
+                <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
+                <input class="form-control" id="${uniqueId2}" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
+                <datalist id="lst-autocomplete1">
+                </datalist>
+
+            </div> 
+            </div>
+         <div class="row">
+            <div class="col-sm-12 m-5">
+                <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
+                <select id="${uniqueId3}" name="propertiesOptions">
+              </select>
+            </div>
+            <div class="col-sm-6 m-5">
+                <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
+                <input class="form-control" id="${uniqueId4}" type="text" list="lst-autocomplete2" placeholder="P90_has_value">
+                <button type="submit" class="btn btn-dark" onclick="addChange2()">Set Changes</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
+
+                <datalist id="lst-autocomplete2">
+                </datalist>
+    
+            </div>
+            </div>
+            </div>
+            `;
+        document.getElementById("new1").innerHTML+=divContent;
+        const newSelectElement = document.getElementById(uniqueId);
+        const newSelectElement1 = document.getElementById(uniqueId2);
+        const newSelectElement2 = document.getElementById(uniqueId3);
+        const newSelectElement3 = document.getElementById(uniqueId4);
+        populateClassOptions(newSelectElement);
+        console.log("return1");
+        populateAllClass(newSelectElement1);
+        console.log("return2");
+        populatePropertiesOptions(newSelectElement2);
+        console.log("return3");
+        populateAllPropertiesOptions(newSelectElement3);
+        console.log("return4");
+    }
+}
+function populatePropertiesOptions(selectElement) {
+    console.log("populate properties options with :"+pr);
+    for (let i = 0; i < pr.length; i++) {
+        if (pr[i][0] === "P") {
+            console.log("eimia PPPP"+pr[i]);
+            selectElement.innerHTML+="<option value="+pr[i]+">"+pr[i]+"</option>";  
+        }
+    }
 }
 
+function populateAllPropertiesOptions(selectElement){
+        for (let i = 0; i < all.length; i++) {
+        console.log("MPhka");
+        if (all[i][0] === "P") {
+            selectElement.innerHTML+="<option value="+all[i]+">"+"</option>";
+            console.log(all[i]);
+        }
+    }
+}
 function edit(){
     document.getElementById("view").style.display="none";
     document.getElementById("edit").style.display="flex";
@@ -564,26 +678,50 @@ function getX3MLClasses(){
         all=allTrimmed;
         
 }
-function getX3MLClasses1(){
+
+function getX3MLClasses1() {
     const lines = cl.split('\n');
-    const allLines=all.split('\n');
+    const allLines = all.split('\n');
+    
+    var allFileClasses = [];
+    var allFileProperties = [];
+    var allProperties = [];
+
+    // Trim and filter lines to include only non-empty ones
     const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
-    const allTrimmed= allLines.map(line => line.trim()).filter(line => line.length > 0);
-        for( var i=0;i<trimmedLines.length;i++){
-            if(trimmedLines[i][0]=="E"){
-                document.getElementById("classPropertyOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
-            }else if(trimmedLines[i][0]=="P"){
-                document.getElementById("propertiesOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
-            }
+    const allTrimmed = allLines.map(line => line.trim()).filter(line => line.length > 0);
+
+    for (var i = 0; i < trimmedLines.length; i++) {
+        // Only add valid class entries (those starting with "E")
+        if (trimmedLines[i][0] === "E") {
+            console.log("Class found in trimmedLines: " + trimmedLines[i]); // Debug full value
+            document.getElementById("classPropertyOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + trimmedLines[i] + "</option>";
+            allFileClasses.push(trimmedLines[i]);  // Add to class array
+        } else if (trimmedLines[i][0] === "P") {
+            console.log("Property found in trimmedLines: " + trimmedLines[i]); // Debug full value
+            document.getElementById("propertiesOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + trimmedLines[i] + "</option>";
+            allFileProperties.push(trimmedLines[i]);  // Add to property array
         }
-         for( var i=0;i<allTrimmed.length;i++){
-            if(allTrimmed[i][0]=="E"){
-                document.getElementById("lst-autocomplete1").innerHTML+="<option value="+allTrimmed[i]+">"+"</option>";
-            }else if(allTrimmed[i][0]=="P"){
-                document.getElementById("lst-autocomplete2").innerHTML+="<option value="+allTrimmed[i]+">"+"</option>";
-            }
-        } cl="";pr="";all="";
+    }
+
+    for (var i = 0; i < allTrimmed.length; i++) {
+        if (allTrimmed[i][0] === "E") {
+            document.getElementById("lst-autocomplete1").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
+        } else if (allTrimmed[i][0] === "P") {
+            document.getElementById("lst-autocomplete2").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
+            allProperties.push(allTrimmed[i]);  // Add to autocomplete properties array
+        }
+    }
+
+    // Assign filtered values back to global variables
+    cl = allFileClasses; 
+    pr = allFileProperties;
+    all = allProperties;
+
+    console.log("Classes (cl):", cl);  // Log to see the full list of classes
+    console.log("Properties (pr):", pr);  // Log to see the full list of properties
 }
+
 function classOnlyPost(jsonString){
     var data = JSON.stringify(jsonString);
     var xhttp = new XMLHttpRequest();
