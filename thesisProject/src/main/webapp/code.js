@@ -1,6 +1,7 @@
 let changesArr= new Array();
 var totalChanges4Class=0;
 var totalChanges4Class_Properties=0;
+var totalChanges4Properties=0;
 var modal = document.getElementById("myModal");
 var modal1=document.getElementById("ontoModal");
 var modal2=document.getElementById("viewModal");
@@ -219,14 +220,16 @@ var newChangedElement2="";
 function addChange(){
     totalChanges4Class++;
     var inputElement = "";
-    
+    var changesEl="";
     var selectElement="";
     if(totalChanges4Class<=1){
+        changesEl=document.getElementById('changes');
         selectElement = document.getElementById('classOptions');
         inputElement = document.getElementById('classTO');
         console.log(totalChanges4Class);
     }else{
         console.log(totalChanges4Class);
+        changesEl= document.getElementById(newChanges);
         selectElement = document.getElementById(newChangedElement);
         inputElement = document.getElementById(newChangedElement2);
     }
@@ -238,7 +241,7 @@ function addChange(){
     };
     const jsonString = JSON.stringify(changes);
    
-    document.getElementById("changes").innerHTML+="<div class=\"border border-dark\"><p id=\"classfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
+    changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"classfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
             "<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"
             +"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
 
@@ -249,6 +252,8 @@ var newChangedElement3="";
 var newChangedElement4="";
 var newChangedElement5="";
 var newChangedElement6="";
+var newChangedElement7="";
+var newChangedElement8="";
 
 function addChange2(){
     totalChanges4Class_Properties++;
@@ -280,6 +285,38 @@ function addChange2(){
         "propertyAfter":value
     };
     const jsonString = JSON.stringify(changes);
+    console.log(jsonString);
+    classPropertyPost(jsonString);
+}
+
+function addChange3(){
+        totalChanges4Properties++;
+    var inputElement = "";
+    var changesEl="";
+    var selectElement="";
+    if(totalChanges4Properties<=1){
+        changesEl=document.getElementById('changes1');
+        selectElement = document.getElementById('PpropertiesOptions');
+        inputElement = document.getElementById('PpropertyTO');
+        console.log(totalChanges4Properties);
+    }else{
+        console.log(totalChanges4Properties);
+        changesEl= document.getElementById(newChanges1);
+        selectElement = document.getElementById(newChangedElement7);
+        inputElement = document.getElementById(newChangedElement8);
+    }
+    const selectValue = selectElement.value;
+    const value = inputElement.value;
+    const changes={
+        "propertyBefore":selectValue,
+        "propertyAfter":value
+    };
+    const jsonString = JSON.stringify(changes);
+   
+    changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"propertyfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Property from: "+selectValue+"</p>"+
+            "<p id=\"propertyto\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"
+            +"<button id=\"propertytobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
+
     console.log(jsonString);
     classPropertyPost(jsonString);
 }
@@ -437,7 +474,8 @@ function profile(){
 function index(){
     window.location.href="index.html";
 }
-
+var newChanges="";
+var newChanges1="";
 function nextstep1(){
     if(document.getElementById("next1").style.display==="none"){
         document.getElementById("next1").style.display="flex";
@@ -449,14 +487,16 @@ function nextstep1(){
         // Generate a unique id for each dynamically created select element
         const uniqueId = 'classOptions' + Math.random().toString(36).substr(2, 9);
         const uniqueId2 = 'classTO' + Math.random().toString(36).substr(2, 9);
+        const uniqueChanges ='changes' + Math.random().toString(36).substr(2, 9);
         newChangedElement=uniqueId;
         newChangedElement2=uniqueId2;
+        newChanges= uniqueChanges;
         const divContent = `
         <div id="next1" class="border-dark" style="display:flex;">
             <div class="col-sm-6 m-5">
                 <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="${uniqueId}" name="classOptions"></select>
-                <div id="changes"></div>
+                <div id="${uniqueChanges}"></div>
             </div>
             <div class="col-sm-6 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
@@ -582,6 +622,53 @@ function populateAllPropertiesOptions(selectElement){
         }
     }
 }
+
+function nextstep3(){
+    if(document.getElementById("next3").style.display==="none"){
+        document.getElementById("next3").style.display="flex";
+        document.getElementById("before1").style.display="none";
+        getX3MLClasses1();
+    }else{
+        document.getElementById("before1").style.display="none";
+        const uniqueId = 'PpropertiesOptions' + Math.random().toString(36).substr(2, 9);
+        const uniqueId2 = 'PpropertyTO' + Math.random().toString(36).substr(2, 9);
+        const uniqueChanges ='changes' + Math.random().toString(36).substr(2, 9);
+        newChangedElement7=uniqueId;
+        newChangedElement8=uniqueId2;
+        newChanges1= uniqueChanges;
+        const divContent=`<div class="col container" id="next3" style="display:flex;">
+          <div class="row">
+            <div class="col-sm-12 m-5">
+                <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
+                <select id="${uniqueId}" name="propertiesOptions">
+              </select>
+            </div>
+            <div class="col-sm-6 m-5">
+                <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
+                <input class="form-control" id="${uniqueId2}" type="text" list="lst-autocomplete2" placeholder="P90_has_value">
+                <button type="submit" class="btn btn-dark" onclick="addChange3()">Set Changes</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
+
+                <datalist id="lst-autocomplete3">
+                </datalist>
+    
+            </div>
+            </div>
+         <div id="${uniqueChanges}">
+                    
+            </div>
+        </div>`;
+        document.getElementById("new2").innerHTML+=divContent;
+        const newSelectElement = document.getElementById(uniqueId);
+        const newSelectElement1 = document.getElementById(uniqueId2);
+        populatePropertiesOptions(newSelectElement);
+        console.log("return1");
+        populateAllPropertiesOptions(newSelectElement1);
+        console.log("return2");
+
+    }
+}
+
 function edit(){
     document.getElementById("view").style.display="none";
     document.getElementById("edit").style.display="flex";
@@ -700,6 +787,8 @@ function getX3MLClasses1() {
         } else if (trimmedLines[i][0] === "P") {
             console.log("Property found in trimmedLines: " + trimmedLines[i]); // Debug full value
             document.getElementById("propertiesOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + trimmedLines[i] + "</option>";
+            document.getElementById("PpropertiesOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + trimmedLines[i] + "</option>";
+
             allFileProperties.push(trimmedLines[i]);  // Add to property array
         }
     }
@@ -709,6 +798,8 @@ function getX3MLClasses1() {
             document.getElementById("lst-autocomplete1").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
         } else if (allTrimmed[i][0] === "P") {
             document.getElementById("lst-autocomplete2").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
+            document.getElementById("lst-autocomplete3").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
+
             allProperties.push(allTrimmed[i]);  // Add to autocomplete properties array
         }
     }
