@@ -99,6 +99,7 @@ function updateUrlOnClick() {
             // Append a query parameter to indicate the click action
             const newPath = basePath + '?newproject';
 
+
             // Navigate to the new URL using window.location.href
             window.location.href = newPath;
             
@@ -175,7 +176,7 @@ function showOption3() {
     var div3 = document.getElementById('buttons');
     var div4 = document.getElementById('import');
     var div5 = document.getElementById('load');
-    
+    getX3MLClasses1();
     div3.style.display = 'flex';
     div4.style.display = 'none';
     div5.style.display = 'none';
@@ -478,7 +479,12 @@ function nextstep1(){
     if(document.getElementById("next1").style.display==="none"){
         document.getElementById("next1").style.display="flex";
         document.getElementById("before1").style.display="none";
-        getX3MLClasses();  
+        document.getElementById("next2").style.display="none";
+        document.getElementById("next3").style.display="none";
+        document.getElementById("new1").style.display="none";
+        document.getElementById("new2").style.display="none";
+        
+     //   getX3MLClasses();  
     } else {
         document.getElementById("before1").style.display="none";
        
@@ -507,6 +513,7 @@ function nextstep1(){
             </div>
         </div>
         `;  
+        document.getElementById("new").style= "flex";
 
         document.getElementById("new").innerHTML += divContent;
         
@@ -540,7 +547,12 @@ function nextstep2(){
     if(document.getElementById("next2").style.display==="none"){
         document.getElementById("next2").style.display="flex";
         document.getElementById("before1").style.display="none";
-        getX3MLClasses1();
+        document.getElementById("next1").style.display="none";
+        document.getElementById("next3").style.display="none";
+        document.getElementById("new").style.display="none";
+        document.getElementById("new2").style.display="none";
+        
+     //   getX3MLClasses1();
     }else{
         document.getElementById("before1").style.display="none";
         const uniqueId = 'classPropertyOptions' + Math.random().toString(36).substr(2,9);
@@ -557,12 +569,12 @@ function nextstep2(){
         newChanges2=uniqueChanges;
         const divContent=`<div class="col container" id="next2" style="display:flex;">
              <div class="row">
-                <div class="col-sm-12 m-5">
+                <div class="col-sm-6 m-5">
                 <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="${uniqueId}" name="classPropertyOptions">
                 </select>
             </div>
-            <div class="col-sm-8 m-5">
+            <div class="col-sm-6 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="${uniqueId2}" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
                 <datalist id="lst-autocomplete1">
@@ -571,7 +583,7 @@ function nextstep2(){
             </div> 
             </div>
          <div class="row">
-            <div class="col-sm-12 m-5">
+            <div class="col-sm-6 m-5">
                 <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="${uniqueId3}" name="propertiesOptions">
               </select>
@@ -586,6 +598,7 @@ function nextstep2(){
                 </datalist>
     
             </div>
+        <br>
             <div class="col-sm-8 m-5">
                 <p>Choose additional class to add(OPTIONAL): &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="${uniqueId5}" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
@@ -596,6 +609,7 @@ function nextstep2(){
             </div>
             </div>
             `;
+        document.getElementById("new1").style= "flex";
         document.getElementById("new1").innerHTML+=divContent;
         const newSelectElement = document.getElementById(uniqueId);
         const newSelectElement1 = document.getElementById(uniqueId2);
@@ -637,7 +651,12 @@ function nextstep3(){
     if(document.getElementById("next3").style.display==="none"){
         document.getElementById("next3").style.display="flex";
         document.getElementById("before1").style.display="none";
-        getX3MLClasses1();
+        document.getElementById("next2").style.display="none";
+        document.getElementById("next1").style.display="none";
+        document.getElementById("new").style.display="none";
+        document.getElementById("new1").style.display="none";
+
+       // getX3MLClasses1();
     }else{
         document.getElementById("before1").style.display="none";
         const uniqueId = 'PpropertiesOptions' + Math.random().toString(36).substr(2, 9);
@@ -648,7 +667,7 @@ function nextstep3(){
         newChanges1= uniqueChanges;
         const divContent=`<div class="col container" id="next3" style="display:flex;">
           <div class="row">
-            <div class="col-sm-12 m-5">
+            <div class="col-sm-6 m-5">
                 <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="${uniqueId}" name="propertiesOptions">
               </select>
@@ -668,6 +687,8 @@ function nextstep3(){
                     
             </div>
         </div>`;
+        
+        document.getElementById("new2").style= "flex";
         document.getElementById("new2").innerHTML+=divContent;
         const newSelectElement = document.getElementById(uniqueId);
         const newSelectElement1 = document.getElementById(uniqueId2);
@@ -756,8 +777,8 @@ function removeSubstr(str, substring) {
   const regex = new RegExp(substring, 'g');
   return str.replace(regex, '\n');
 }
+/*
 function getX3MLClasses(){
-
     const lines = cl.split('\n');
     const allLines=all.split('\n');
     const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
@@ -774,12 +795,11 @@ function getX3MLClasses(){
         }cl=trimmedLines;
         all=allTrimmed;
         
-}
+}*/
 
 function getX3MLClasses1() {
     const lines = cl.split('\n');
-    const allLines = all.split('\n');
-    
+    const allLines=all.split('\n');
     var allFileClasses = [];
     var allFileProperties = [];
     var allProperties = [];
@@ -792,6 +812,7 @@ function getX3MLClasses1() {
         // Only add valid class entries (those starting with "E")
         if (trimmedLines[i][0] === "E") {
             console.log("Class found in trimmedLines: " + trimmedLines[i]); // Debug full value
+            document.getElementById("classOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
             document.getElementById("classPropertyOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + trimmedLines[i] + "</option>";
             allFileClasses.push(trimmedLines[i]);  // Add to class array
         } else if (trimmedLines[i][0] === "P") {
@@ -805,6 +826,8 @@ function getX3MLClasses1() {
 
     for (var i = 0; i < allTrimmed.length; i++) {
         if (allTrimmed[i][0] === "E") {
+            document.getElementById("lst-autocomplete").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
+            
             document.getElementById("lst-autocomplete1").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
         } else if (allTrimmed[i][0] === "P") {
             document.getElementById("lst-autocomplete2").innerHTML += "<option value=" + allTrimmed[i] + "></option>";

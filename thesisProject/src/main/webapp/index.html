@@ -170,12 +170,12 @@
         
             <div class="col container" id="next2" style="display:none;">
              <div class="row">
-                <div class="col-sm-12 m-5">
+                <div class="col-sm-6 m-5">
                 <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="classPropertyOptions" name="classPropertyOptions">
                 </select>
             </div>
-            <div class="col-sm-8 m-5">
+            <div class="col-sm-6 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="classPropertyTO" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
                 <datalist id="lst-autocomplete1">
@@ -184,7 +184,7 @@
             </div> 
             </div>
          <div class="row">
-            <div class="col-sm-12 m-5">
+            <div class="col-sm-6 m-5">
                 <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="propertiesOptions" name="propertiesOptions">
               </select>
@@ -192,19 +192,22 @@
             <div class="col-sm-6 m-5">
                 <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="propertyTO" type="text" list="lst-autocomplete2" placeholder="P90_has_value">
-                <button type="submit" class="btn btn-dark" onclick="addChange2()">Set Changes</button>
-                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
-
+                
                 <datalist id="lst-autocomplete2">
                 </datalist>
     
             </div>
-            <div class="col-sm-8 m-5">
+             <br>
+            <div class="col-sm-6 m-5">
                 <p>Choose additional class to add(OPTIONAL): &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="addClassPropertyTO" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
                 <datalist id="lst-autocomplete4">
                 </datalist>
             </div>
+             <div class="col-sm-6 m-5">
+                 <button type="submit" class="btn btn-dark" onclick="addChange2()">Set Changes</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
+             </div>
             <div id="changes2">
                     
             </div>
