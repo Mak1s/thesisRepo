@@ -122,16 +122,19 @@ public class classPropertyPost extends HttpServlet {
         String classAfter = map.get("classAfter");
         String propertyBefore = map.get("propertyBefore");
         String propertyAfter = map.get("propertyAfter");
+        String additionalClass = map.get("additionalClass");
         
         LOGGER.log(Level.INFO, "be4: " + classBefore);  
         LOGGER.log(Level.INFO, "after: " + classAfter); 
         LOGGER.log(Level.INFO, "be4: " + propertyBefore);  
         LOGGER.log(Level.INFO, "after: " + propertyAfter); 
+        LOGGER.log(Level.INFO, "added: " + additionalClass); 
+        
 
         EditClassPropertyTable classProperty=new EditClassPropertyTable();
     
         try {
-            classProperty.addClassesProperty(classBefore, classAfter, propertyBefore, propertyAfter);
+            classProperty.addClassesProperty(classBefore, classAfter, propertyBefore, propertyAfter,additionalClass);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(classPropertyPost.class.getName()).log(Level.SEVERE, null, ex);
         }

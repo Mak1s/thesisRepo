@@ -254,38 +254,50 @@ var newChangedElement5="";
 var newChangedElement6="";
 var newChangedElement7="";
 var newChangedElement8="";
-
+var newChangedElement9="";
 function addChange2(){
     totalChanges4Class_Properties++;
     var inputElement = "";
     var inputElement1 = "";
     var selectElement ="";
     var selectElement1="";
-    
+    var selectElement2="";
     if(totalChanges4Class_Properties<=1){
          inputElement = document.getElementById('propertyTO');
          inputElement1 = document.getElementById('classPropertyTO');
          selectElement = document.getElementById('classPropertyOptions');
          selectElement1 = document.getElementById('propertiesOptions');
+         selectElement2= document.getElementById('addClassPropertyTO');
+         changesEl= document.getElementById('changes2');
     
     }else{
         inputElement = document.getElementById(newChangedElement6);
          inputElement1 = document.getElementById(newChangedElement4);
          selectElement = document.getElementById(newChangedElement3);
          selectElement1 = document.getElementById(newChangedElement5);
+         selectElement2 = document.getElementById(newChangedElement9);
+         changesEl= document.getElementById(newChanges2);
     }
     const selectValue = selectElement.value;
     const selectValue1 = selectElement1.value;
     const value = inputElement.value;
     const value1 = inputElement1.value;
+    const selectValue2= selectElement2.value;
     const changes={
         "classBefore":selectValue,
         "classAfter":value1,
         "propertyBefore":selectValue1,
-        "propertyAfter":value
+        "propertyAfter":value,
+        "additionalClass":selectValue2
     };
     const jsonString = JSON.stringify(changes);
     console.log(jsonString);
+    changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"classfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
+            "<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value1+"</p>"+
+            "<p id=\"propertiesfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue1+"</p>"+
+            "<p id=\"propertiesto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+
+            "<p id=\"additionalclass\">&nbsp;&nbsp;&nbsp;&nbsp;Additional Class : "+selectValue2+"</p>"
+            +"<button id=\"classpropertiestobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
     classPropertyPost(jsonString);
 }
 
@@ -401,22 +413,7 @@ function getValueClassProperty(){
     }
 }
 function getValueProperty(){
-/*    const inputElement = document.getElementById('propertyTO');
-    const inputElement1 = document.getElementById('classPropertyTO');
-    const selectElement = document.getElementById('classPropertyOptions');
-    const selectElement1 = document.getElementById('propertiesOptions');
-    const selectValue = selectElement.value;
-    const selectValue1 = selectElement1.value;
-    const value = inputElement.value;
-    const value1 = inputElement1.value;
-    const changes={
-        "classBefore":selectValue,
-        "classAfter":value1,
-        "propertyBefore":selectValue1,
-        "propertyAfter":value
-    };
-    const jsonString = JSON.stringify(changes);
-    console.log(jsonString);*/
+
      const blob = new Blob([changesArr], { type: 'application/json' });
 
     const url = URL.createObjectURL(blob);
@@ -476,6 +473,7 @@ function index(){
 }
 var newChanges="";
 var newChanges1="";
+var newChanges2="";
 function nextstep1(){
     if(document.getElementById("next1").style.display==="none"){
         document.getElementById("next1").style.display="flex";
@@ -549,11 +547,14 @@ function nextstep2(){
         const uniqueId2 = 'classPropertyTO' + Math.random().toString(36).substr(2,9);
         const uniqueId3 = 'propertiesOptions' + Math.random().toString(36).substr(2,9);
         const uniqueId4 = 'propertyTO' + Math.random().toString(36).substr(2,9);
+        const uniqueId5 ='addClassPropertyTO' + Math.random().toString(36).substr(2,9);
+        const uniqueChanges ='changes2' + Math.random().toString(36).substr(2,9);
         newChangedElement3 =uniqueId;
         newChangedElement4 =uniqueId2;
         newChangedElement5 =uniqueId3;
         newChangedElement6 =uniqueId4;
-
+        newChangedElement9 =uniqueId5;
+        newChanges2=uniqueChanges;
         const divContent=`<div class="col container" id="next2" style="display:flex;">
              <div class="row">
                 <div class="col-sm-12 m-5">
@@ -585,6 +586,13 @@ function nextstep2(){
                 </datalist>
     
             </div>
+            <div class="col-sm-8 m-5">
+                <p>Choose additional class to add(OPTIONAL): &nbsp; &nbsp; &nbsp;*</p>
+                <input class="form-control" id="${uniqueId5}" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
+                <datalist id="lst-autocomplete4">
+                </datalist>
+            </div>
+            <div id="${uniqueChanges}"></div>
             </div>
             </div>
             `;
@@ -593,6 +601,7 @@ function nextstep2(){
         const newSelectElement1 = document.getElementById(uniqueId2);
         const newSelectElement2 = document.getElementById(uniqueId3);
         const newSelectElement3 = document.getElementById(uniqueId4);
+        const newSelectElement4 = document.getElementById(uniqueId5);
         populateClassOptions(newSelectElement);
         console.log("return1");
         populateAllClass(newSelectElement1);
@@ -601,6 +610,7 @@ function nextstep2(){
         console.log("return3");
         populateAllPropertiesOptions(newSelectElement3);
         console.log("return4");
+        populateAllClass(newSelectElement4);
     }
 }
 function populatePropertiesOptions(selectElement) {

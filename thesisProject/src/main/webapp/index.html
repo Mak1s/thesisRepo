@@ -199,17 +199,26 @@
                 </datalist>
     
             </div>
+            <div class="col-sm-8 m-5">
+                <p>Choose additional class to add(OPTIONAL): &nbsp; &nbsp; &nbsp;*</p>
+                <input class="form-control" id="addClassPropertyTO" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
+                <datalist id="lst-autocomplete4">
+                </datalist>
+            </div>
+            <div id="changes2">
+                    
+            </div>
             </div>
             </div>
         <div id="new1"></div>
         <div class="col container" id="next3" style="display:none;">
           <div class="row">
-            <div class="col-sm-12 m-5">
+            <div class="col-sm-6">
                 <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="PpropertiesOptions" name="propertiesOptions">
               </select>
             </div>
-            <div class="col-sm-6 m-5">
+            <div class="col-sm-6">
                 <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="PpropertyTO" type="text" list="lst-autocomplete2" placeholder="P90_has_value">
                 <button type="submit" class="btn btn-dark" onclick="addChange3()">Set Changes</button>

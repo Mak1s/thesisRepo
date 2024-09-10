@@ -46,7 +46,7 @@ public class EditClassPropertyTable {
         stmt.close();
         
     }
-     public void addClassesProperty(String classFrom, String classTo,String propertyFrom, String propertyTo) throws ClassNotFoundException {
+     public void addClassesProperty(String classFrom, String classTo,String propertyFrom, String propertyTo, String additionalClass) throws ClassNotFoundException {
         try {
             Connection con = DB_Connection.getConnection();
 
@@ -58,7 +58,7 @@ public class EditClassPropertyTable {
                 + "'" + classTo + "', "
                 + "'" + propertyFrom + "', "
                 + "'" + propertyTo + "', "
-                   + "'" + classTo + "', "
+                   + "'" + additionalClass + "', "
                    + "'" + null + "'"
                 + ")";
             
