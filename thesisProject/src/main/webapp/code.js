@@ -483,6 +483,7 @@ function nextstep1(){
         document.getElementById("next3").style.display="none";
         document.getElementById("new1").style.display="none";
         document.getElementById("new2").style.display="none";
+         document.getElementById("new").innerHTML="";
         
      //   getX3MLClasses();  
     } else {
@@ -495,24 +496,31 @@ function nextstep1(){
         newChangedElement=uniqueId;
         newChangedElement2=uniqueId2;
         newChanges= uniqueChanges;
-        const divContent = `
-        <div id="next1" class="border-dark" style="display:flex;">
-            <div class="col-sm-6 m-5">
-                <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
-                <select id="${uniqueId}" name="classOptions"></select>
-                <div id="${uniqueChanges}"></div>
-            </div>
-            <div class="col-sm-6 m-5">
-                <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
-                <input class="form-control" id="${uniqueId2}" type="text" list="lst-autocomplete" placeholder="E99_Identifies_As">
-                <button type="submit" class="btn btn-dark" onclick="addChange()">Set Changes</button>
-                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
-                
-                <div class="row" id="changedContent"></div>
-                <datalist id="lst-autocomplete"></datalist>
-            </div>
-        </div>
-        `;  
+        const divContent = `<div id="next1" class="border-dark" style="display:flex;">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
+                        <select id="${uniqueId}" name="classOptions">
+                        </select>
+                    <div id="${uniqueChanges}">                    
+                    </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
+                        <input class="form-control" id="${uniqueId2}" type="text" list="lst-autocomplete" placeholder="E99_Identfies_As">
+                        <button type="submit" class="btn btn-dark" onclick="addChange()">Set Changes</button>
+                        <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
+
+                        <div class="row" id="changedContent">
+
+                        </div>
+                        <datalist id="lst-autocomplete">
+                        </datalist>
+                    </div>
+
+                </div>
+            </div>`;  
         document.getElementById("new").style= "flex";
 
         document.getElementById("new").innerHTML += divContent;
@@ -551,6 +559,7 @@ function nextstep2(){
         document.getElementById("next3").style.display="none";
         document.getElementById("new").style.display="none";
         document.getElementById("new2").style.display="none";
+        document.getElementById("new1").innerHTML="";
         
      //   getX3MLClasses1();
     }else{
@@ -567,13 +576,13 @@ function nextstep2(){
         newChangedElement6 =uniqueId4;
         newChangedElement9 =uniqueId5;
         newChanges2=uniqueChanges;
-        const divContent=`<div class="col container" id="next2" style="display:flex;">
-             <div class="row">
+        const divContent=`<div class=" border border-dark" id="next2" style="display:flex;">
+             <div class="row ">
                 <div class="col-sm-6 m-5">
                 <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="${uniqueId}" name="classPropertyOptions">
                 </select>
-            </div>
+                </div>
             <div class="col-sm-6 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="${uniqueId2}" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
@@ -591,24 +600,28 @@ function nextstep2(){
             <div class="col-sm-6 m-5">
                 <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="${uniqueId4}" type="text" list="lst-autocomplete2" placeholder="P90_has_value">
-                <button type="submit" class="btn btn-dark" onclick="addChange2()">Set Changes</button>
-                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
-
+                
                 <datalist id="lst-autocomplete2">
                 </datalist>
     
             </div>
-        <br>
-            <div class="col-sm-8 m-5">
+             <br>
+            <div class="col-sm-6 m-5">
                 <p>Choose additional class to add(OPTIONAL): &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="${uniqueId5}" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
                 <datalist id="lst-autocomplete4">
                 </datalist>
             </div>
-            <div id="${uniqueChanges}"></div>
+             <div class="col-sm-6 m-5">
+                 <button type="submit" class="btn btn-dark" onclick="addChange2()">Set Changes</button>
+                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
+             </div>
+            <div id="${uniqueChanges}">
+                    
             </div>
             </div>
-            `;
+            </div>
+                `;
         document.getElementById("new1").style= "flex";
         document.getElementById("new1").innerHTML+=divContent;
         const newSelectElement = document.getElementById(uniqueId);
@@ -655,6 +668,8 @@ function nextstep3(){
         document.getElementById("next1").style.display="none";
         document.getElementById("new").style.display="none";
         document.getElementById("new1").style.display="none";
+         document.getElementById("new2").innerHTML="";
+        
 
        // getX3MLClasses1();
     }else{
@@ -665,14 +680,14 @@ function nextstep3(){
         newChangedElement7=uniqueId;
         newChangedElement8=uniqueId2;
         newChanges1= uniqueChanges;
-        const divContent=`<div class="col container" id="next3" style="display:flex;">
-          <div class="row">
-            <div class="col-sm-6 m-5">
+        const divContent=`<div class="border border-dark" id="next3" style="display:flex;">
+          <div class="row ">
+            <div class="col-sm-6">
                 <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="${uniqueId}" name="propertiesOptions">
               </select>
             </div>
-            <div class="col-sm-6 m-5">
+            <div class="col-sm-6">
                 <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="${uniqueId2}" type="text" list="lst-autocomplete2" placeholder="P90_has_value">
                 <button type="submit" class="btn btn-dark" onclick="addChange3()">Set Changes</button>
@@ -682,11 +697,12 @@ function nextstep3(){
                 </datalist>
     
             </div>
-            </div>
-         <div id="${uniqueChanges}">
+              <div id="${uniqueChanges}">
                     
             </div>
-        </div>`;
+            </div>
+        </div>
+`;
         
         document.getElementById("new2").style= "flex";
         document.getElementById("new2").innerHTML+=divContent;

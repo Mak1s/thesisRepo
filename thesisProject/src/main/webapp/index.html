@@ -141,40 +141,42 @@
                  <button type="submit" class="btn btn-dark" onclick="showOption3()">Next Step</button>
             </div>
                 </div>
-            <div id="next1" class="border-dark" style="display:none;">
-            <div class="col-sm-6 m-5">
-                <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
-                <select id="classOptions" name="classOptions">
-                </select>
-            <div id="changes">
-                    
-            </div>
-
-            </div>
-            <div class="col-sm-6 m-5">
-                <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
-                <input class="form-control" id="classTO" type="text" list="lst-autocomplete" placeholder="E99_Identfies_As">
-                <button type="submit" class="btn btn-dark" onclick="addChange()">Set Changes</button>
-                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
-                
-                <div class="row" id="changedContent">
-                            
-                   </div>
-                <datalist id="lst-autocomplete">
-                </datalist>
-            </div>
-                
-         </div>
-            <div id="new"></div>
         </div>
+            <div id="next1" class="border-dark" style="display:none;">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
+                        <select id="classOptions" name="classOptions">
+                        </select>
+                    <div id="changes">                    
+                    </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
+                        <input class="form-control" id="classTO" type="text" list="lst-autocomplete" placeholder="E99_Identfies_As">
+                        <button type="submit" class="btn btn-dark" onclick="addChange()">Set Changes</button>
+                        <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
+
+                        <div class="row" id="changedContent">
+
+                        </div>
+                        <datalist id="lst-autocomplete">
+                        </datalist>
+                    </div>
+
+                </div>
+            </div>
+            <div id="new" style="display: none;"></div>
         
-            <div class="col container" id="next2" style="display:none;">
-             <div class="row">
+        
+            <div class=" border border-dark" id="next2" style="display:none;">
+             <div class="row ">
                 <div class="col-sm-6 m-5">
                 <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="classPropertyOptions" name="classPropertyOptions">
                 </select>
-            </div>
+                </div>
             <div class="col-sm-6 m-5">
                 <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="classPropertyTO" type="text" list="lst-autocomplete1" placeholder="E99_Identfies_As">
@@ -213,9 +215,9 @@
             </div>
             </div>
             </div>
-        <div id="new1"></div>
-        <div class="col container" id="next3" style="display:none;">
-          <div class="row">
+        <div id="new1" style="display: none;"></div>
+        <div class="border border-dark" id="next3" style="display:none;">
+          <div class="row ">
             <div class="col-sm-6">
                 <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
                 <select id="PpropertiesOptions" name="propertiesOptions">
@@ -236,7 +238,7 @@
             </div>
             </div>
         </div>
-        <div id="new2"></div>
+        <div id="new2" style="display: none;"></div>
                    <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <!-- Popper.js -->
