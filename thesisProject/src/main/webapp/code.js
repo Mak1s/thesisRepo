@@ -246,7 +246,9 @@ function addChange(){
             "<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"
             +"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
 
+    changesArr+=jsonString;
     console.log(jsonString);
+    console.log(changesArr);
     classOnlyPost(jsonString);
 }
 var newChangedElement3="";
@@ -299,6 +301,7 @@ function addChange2(){
             "<p id=\"propertiesto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+
             "<p id=\"additionalclass\">&nbsp;&nbsp;&nbsp;&nbsp;Additional Class : "+selectValue2+"</p>"
             +"<button id=\"classpropertiestobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
+    changesArr+=jsonString;
     classPropertyPost(jsonString);
 }
 
@@ -331,7 +334,9 @@ function addChange3(){
             +"<button id=\"propertytobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
 
     console.log(jsonString);
+    changesArr+=jsonString;
     classPropertyPost(jsonString);
+
 }
 
 function getValueClass(){
@@ -476,7 +481,12 @@ var newChanges="";
 var newChanges1="";
 var newChanges2="";
 function nextstep1(){
+    document.getElementById("button3").style.display="none";
+    document.getElementById("button1").style.display="flex";
+    document.getElementById("button2").style.display="none";
+
     if(document.getElementById("next1").style.display==="none"){
+        changesArr="";
         document.getElementById("next1").style.display="flex";
         document.getElementById("before1").style.display="none";
         document.getElementById("next2").style.display="none";
@@ -510,8 +520,7 @@ function nextstep1(){
                         <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
                         <input class="form-control" id="${uniqueId2}" type="text" list="lst-autocomplete" placeholder="E99_Identfies_As">
                         <button type="submit" class="btn btn-dark" onclick="addChange()">Set Changes</button>
-                        <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
-
+                      
                         <div class="row" id="changedContent">
 
                         </div>
@@ -552,7 +561,12 @@ function populateAllClass(selectElement){
 }
 
 function nextstep2(){
+    document.getElementById("button3").style.display="none";
+    document.getElementById("button1").style.display="none";
+    document.getElementById("button2").style.display="flex";
+
     if(document.getElementById("next2").style.display==="none"){
+        changesArr="";
         document.getElementById("next2").style.display="flex";
         document.getElementById("before1").style.display="none";
         document.getElementById("next1").style.display="none";
@@ -614,7 +628,6 @@ function nextstep2(){
             </div>
              <div class="col-sm-6 m-5">
                  <button type="submit" class="btn btn-dark" onclick="addChange2()">Set Changes</button>
-                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
              </div>
             <div id="${uniqueChanges}">
                     
@@ -661,7 +674,12 @@ function populateAllPropertiesOptions(selectElement){
 }
 
 function nextstep3(){
+    document.getElementById("button3").style.display="flex";
+    document.getElementById("button1").style.display="none";
+    document.getElementById("button2").style.display="none";
+
     if(document.getElementById("next3").style.display==="none"){
+        changesArr="";
         document.getElementById("next3").style.display="flex";
         document.getElementById("before1").style.display="none";
         document.getElementById("next2").style.display="none";
@@ -691,8 +709,7 @@ function nextstep3(){
                 <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
                 <input class="form-control" id="${uniqueId2}" type="text" list="lst-autocomplete2" placeholder="P90_has_value">
                 <button type="submit" class="btn btn-dark" onclick="addChange3()">Set Changes</button>
-                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Download Changes</button>
-
+              
                 <datalist id="lst-autocomplete3">
                 </datalist>
     
