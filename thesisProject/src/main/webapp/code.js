@@ -479,6 +479,8 @@ function removeChanges(button){
             };
         console.log(changes);
     }
+    const jsonString = JSON.stringify(changes);
+    removePost(jsonString);
     parentDiv.remove();
    
 }
@@ -905,4 +907,19 @@ function classPropertyPost(jsonString){
     xhttp.open("POST","classPropertyPost");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(data);   
+}
+
+function removePost(jsonString){
+   // var data = JSON.stringify(jsonString);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            console.log("OK");
+        }else if(xhttp.status === 403){
+            return 1;
+        } 
+    };
+    xhttp.open("POST","removePost");
+    xhttp.setRequestHeader("Content-type","application/json");
+    xhttp.send(jsonString);  
 }
