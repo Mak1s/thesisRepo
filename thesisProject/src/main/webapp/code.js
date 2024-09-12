@@ -220,6 +220,8 @@ var newChangedElement2="";
 
 function addChange(){
     totalChanges4Class++;
+    totalChanges4Properties=0;
+    totalChanges4Class_Properties=0;
     var inputElement = "";
     var changesEl="";
     var selectElement="";
@@ -241,10 +243,10 @@ function addChange(){
         "classAfter":value
     };
     const jsonString = JSON.stringify(changes);
-   
-    changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"classfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
-            "<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"
-            +"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
+    
+    changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"classBefore\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
+            "<p id=\"classAfter\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"
+            +"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges(this)\"> Remove changes</button><br></div>";
 
     changesArr+=jsonString;
     console.log(jsonString);
@@ -260,6 +262,8 @@ var newChangedElement8="";
 var newChangedElement9="";
 function addChange2(){
     totalChanges4Class_Properties++;
+    totalChanges4Properties=0;
+    totalChanges4Class=0;
     var inputElement = "";
     var inputElement1 = "";
     var selectElement ="";
@@ -295,18 +299,21 @@ function addChange2(){
     };
     const jsonString = JSON.stringify(changes);
     console.log(jsonString);
-    changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"classfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
-            "<p id=\"classto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value1+"</p>"+
-            "<p id=\"propertiesfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue1+"</p>"+
-            "<p id=\"propertiesto\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+
-            "<p id=\"additionalclass\">&nbsp;&nbsp;&nbsp;&nbsp;Additional Class : "+selectValue2+"</p>"
-            +"<button id=\"classpropertiestobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
+    
+    changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"classBefore\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
+            "<p id=\"classAfter\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value1+"</p>"+
+            "<p id=\"propertyBefore\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue1+"</p>"+
+            "<p id=\"propertyAfter\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+
+            "<p id=\"additionalClass\">&nbsp;&nbsp;&nbsp;&nbsp;Additional Class : "+selectValue2+"</p>"
+            +"<button id=\"classpropertiestobtn\"class=\"btn-light\" onclick=\"removeChanges(this)\"> Remove changes</button><br></div>";
     changesArr+=jsonString;
     classPropertyPost(jsonString);
 }
 
 function addChange3(){
         totalChanges4Properties++;
+        totalChanges4Class=0;
+        totalChanges4Class_Properties=0;
     var inputElement = "";
     var changesEl="";
     var selectElement="";
@@ -328,10 +335,10 @@ function addChange3(){
         "propertyAfter":value
     };
     const jsonString = JSON.stringify(changes);
-   
-    changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"propertyfrom\">&nbsp;&nbsp;&nbsp;&nbsp;Property from: "+selectValue+"</p>"+
-            "<p id=\"propertyto\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"
-            +"<button id=\"propertytobtn\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br></div>";
+    
+    changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"propertyBefore\">&nbsp;&nbsp;&nbsp;&nbsp;Property from: "+selectValue+"</p>"+
+            "<p id=\"propertyAfter\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"
+            +"<button id=\"propertytobtn\"class=\"btn-light\" onclick=\"removeChanges(this)\"> Remove changes</button><br></div>";
 
     console.log(jsonString);
     changesArr+=jsonString;
@@ -340,16 +347,7 @@ function addChange3(){
 }
 
 function getValueClass(){
-   /* const inputElement = document.getElementById('classTO');
-    const selectElement = document.getElementById('classOptions');
-    const selectValue = selectElement.value;
-    const value = inputElement.value;
-    const changes={
-        "classBefore":selectValue,
-        "classAfter":value
-    };
-    const jsonString = JSON.stringify(changes);
-    console.log(jsonString);*/
+   
      const blob = new Blob([changesArr], { type: 'application/json' });
 
     const url = URL.createObjectURL(blob);
@@ -437,33 +435,52 @@ function getValueProperty(){
     }else if(four){
         document.getElementById("changedContent1").innerHTML+="<p id=\"propertyto1\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"+"<button id=\"propertytobtn1\" class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
-    //classPropertyPost(jsonString);
+   
 }
 
-function removeChanges(){
-    if(document.getElementById("classtobtn")){
-            document.getElementById("classto").style.display= "none";
-            document.getElementById("classfrom").style.display= "none";
-            document.getElementById("classtobtn").style.display= "none";
-            
-    }else if(document.getElementById("classtobtn1")){
-            document.getElementById("classto1").style.display= "none";
-            document.getElementById("classfrom1").style.display= "none";
-            document.getElementById("classtobtn1").style.display= "none";
-    }else if(document.getElementById("propertytobtn")){
-            document.getElementById("propertyto").style.display= "none";
-            document.getElementById("propertyfrom").style.display= "none";
-            document.getElementById("classpropertyto").style.display= "none";
-            document.getElementById("classpropertyfrom").style.display= "none";
-            document.getElementById("propertytobtn").style.display= "none";            
-    }else if(document.getElementById("propertytobtn1")){
-            document.getElementById("propertyto1").style.display= "none";
-            document.getElementById("propertyfrom1").style.display= "none";
-            document.getElementById("classpropertyto1").style.display= "none";
-            document.getElementById("classpropertyfrom1").style.display= "none";
-            document.getElementById("propertytobtn1").style.display= "none";
+function removeChanges(button){
+    const parentDiv = button.parentElement;
+    console.log(parentDiv);
+    var cb = parentDiv.querySelector('p[id^="classBefore"]');
+    var ca = parentDiv.querySelector('p[id^="classAfter"]');
+    var pb = parentDiv.querySelector('p[id^="propertyBefore"]');
+    var pa = parentDiv.querySelector('p[id^="propertyAfter"]');
+    var ac = parentDiv.querySelector('p[id^="additionalClass"]');
+    if(cb){
+        if(pb){
+            cb = cb.textContent.trim().replace("Class from: ", "");
+            ca = ca.textContent.trim().replace("Class to: ", "");
+            pb = pb.textContent.trim().replace("Property from: ", "");
+            pa = pa.textContent.trim().replace("Property to : ", "");
+            ac = ac.textContent.trim().replace("Additional Class: ", "");
+            const changes={
+                "classBefore":cb,
+                "classAfter":ca,
+                "propertyBefore":pb,
+                "propertyAfter":pa,
+                "additionalClass":ac
+            };
+            console.log(changes);
+        }else{
+            cb = cb.textContent.trim().replace("Class from: ", "");
+            ca = ca.textContent.trim().replace("Class to: ", "");
+            const changes={
+                "classBefore":cb,
+                "classAfter":ca
+            };
+            console.log(changes);
+        }
+    }else{
+            pb = pb.textContent.trim().replace("Property from: ", "");
+            pa = pa.textContent.trim().replace("Property to : ", "");
+        const changes={
+                "propertyBefore":pb,
+                "propertyAfter":pa
+            };
+        console.log(changes);
     }
-
+    parentDiv.remove();
+   
 }
 
 function logout() {
@@ -495,7 +512,7 @@ function nextstep1(){
         document.getElementById("new2").style.display="none";
          document.getElementById("new").innerHTML="";
         
-     //   getX3MLClasses();  
+     
     } else {
         document.getElementById("before1").style.display="none";
        
@@ -575,7 +592,7 @@ function nextstep2(){
         document.getElementById("new2").style.display="none";
         document.getElementById("new1").innerHTML="";
         
-     //   getX3MLClasses1();
+   
     }else{
         document.getElementById("before1").style.display="none";
         const uniqueId = 'classPropertyOptions' + Math.random().toString(36).substr(2,9);
@@ -689,7 +706,7 @@ function nextstep3(){
          document.getElementById("new2").innerHTML="";
         
 
-       // getX3MLClasses1();
+       
     }else{
         document.getElementById("before1").style.display="none";
         const uniqueId = 'PpropertiesOptions' + Math.random().toString(36).substr(2, 9);
@@ -810,25 +827,6 @@ function removeSubstr(str, substring) {
   const regex = new RegExp(substring, 'g');
   return str.replace(regex, '\n');
 }
-/*
-function getX3MLClasses(){
-    const lines = cl.split('\n');
-    const allLines=all.split('\n');
-    const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
-    const allTrimmed= allLines.map(line => line.trim()).filter(line => line.length > 0);
-    for( var i=0;i<trimmedLines.length;i++){
-           if(trimmedLines[i][0]=="E"){
-                document.getElementById("classOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
-           }
-        }
-        for( var i=0;i<allTrimmed.length;i++){
-           if(allTrimmed[i][0]=="E"){
-                document.getElementById("lst-autocomplete").innerHTML+="<option value="+allTrimmed[i]+">"+"</option>";
-            }
-        }cl=trimmedLines;
-        all=allTrimmed;
-        
-}*/
 
 function getX3MLClasses1() {
     const lines = cl.split('\n');
