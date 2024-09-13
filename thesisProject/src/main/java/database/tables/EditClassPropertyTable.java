@@ -7,6 +7,7 @@ package database.tables;
 
 import database.DB_Connection;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -66,6 +67,40 @@ public class EditClassPropertyTable {
             
             /* Get the member id from the database and set it to the member */
             stmt.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EditClassPropertyTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void removeClassProperty(String classFrom) throws ClassNotFoundException{
+        try {
+            Connection con = DB_Connection.getConnection();
+
+             String deleteQuery = "DELETE FROM ClassProperty WHERE classFrom = ?";
+             PreparedStatement pstmt = con.prepareStatement(deleteQuery);
+        
+             pstmt.setString(1, classFrom);
+             pstmt.executeUpdate();
+        
+             pstmt.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EditClassPropertyTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+        public void removeProperty(String propertyFrom) throws ClassNotFoundException{
+        try {
+            Connection con = DB_Connection.getConnection();
+
+             String deleteQuery = "DELETE FROM ClassProperty WHERE propertyFrom = ?";
+             PreparedStatement pstmt = con.prepareStatement(deleteQuery);
+        
+             pstmt.setString(1, propertyFrom);
+             pstmt.executeUpdate();
+        
+             pstmt.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(EditClassPropertyTable.class.getName()).log(Level.SEVERE, null, ex);

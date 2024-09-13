@@ -58,4 +58,21 @@ public class EditClassOnlyTable {
             Logger.getLogger(EditClassOnlyTable.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void remove(String classFrom) throws ClassNotFoundException{
+        try {
+            Connection con = DB_Connection.getConnection();
+
+             String deleteQuery = "DELETE FROM ClassOnly WHERE classFrom = ?";
+             PreparedStatement pstmt = con.prepareStatement(deleteQuery);
+        
+             pstmt.setString(1, classFrom);
+             pstmt.executeUpdate();
+        
+             pstmt.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EditClassOnlyTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

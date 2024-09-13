@@ -461,6 +461,8 @@ function removeChanges(button){
                 "additionalClass":ac
             };
             console.log(changes);
+            removePost(changes);
+            
         }else{
             cb = cb.textContent.trim().replace("Class from: ", "");
             ca = ca.textContent.trim().replace("Class to: ", "");
@@ -469,6 +471,8 @@ function removeChanges(button){
                 "classAfter":ca
             };
             console.log(changes);
+            removePost(changes);
+
         }
     }else{
             pb = pb.textContent.trim().replace("Property from: ", "");
@@ -478,9 +482,9 @@ function removeChanges(button){
                 "propertyAfter":pa
             };
         console.log(changes);
+        removePost(changes);
+
     }
-    const jsonString = JSON.stringify(changes);
-    removePost(jsonString);
     parentDiv.remove();
    
 }
@@ -910,7 +914,9 @@ function classPropertyPost(jsonString){
 }
 
 function removePost(jsonString){
-   // var data = JSON.stringify(jsonString);
+    var data = JSON.stringify(jsonString);
+    console.log(data);
+    console.log(typeof(data));
     var xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
@@ -921,5 +927,5 @@ function removePost(jsonString){
     };
     xhttp.open("POST","removePost");
     xhttp.setRequestHeader("Content-type","application/json");
-    xhttp.send(jsonString);  
+    xhttp.send(data);  
 }
