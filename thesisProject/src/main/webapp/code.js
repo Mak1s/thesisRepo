@@ -1,4 +1,4 @@
-let changesArr= new Array();
+let changesArr= [];
 var totalChanges4Class=0;
 var totalChanges4Class_Properties=0;
 var totalChanges4Properties=0;
@@ -242,16 +242,17 @@ function addChange(){
         "classBefore":selectValue,
         "classAfter":value
     };
-    const jsonString = JSON.stringify(changes);
+    changesArr.push(changes);
+  //  const jsonString = JSON.stringify(changes);
     
     changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"classBefore\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
             "<p id=\"classAfter\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"
             +"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges(this)\"> Remove changes</button><br></div>";
 
-    changesArr+=jsonString;
-    console.log(jsonString);
+    //changesArr.push(jsonString);
+   // console.log(jsonString);
     console.log(changesArr);
-    classOnlyPost(jsonString);
+    classOnlyPost(changes);
 }
 var newChangedElement3="";
 var newChangedElement4="";
@@ -297,8 +298,7 @@ function addChange2(){
         "propertyAfter":value,
         "additionalClass":selectValue2
     };
-    const jsonString = JSON.stringify(changes);
-    console.log(jsonString);
+    changesArr.push(changes);
     
     changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"classBefore\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
             "<p id=\"classAfter\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value1+"</p>"+
@@ -306,8 +306,7 @@ function addChange2(){
             "<p id=\"propertyAfter\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+
             "<p id=\"additionalClass\">&nbsp;&nbsp;&nbsp;&nbsp;Additional Class : "+selectValue2+"</p>"
             +"<button id=\"classpropertiestobtn\"class=\"btn-light\" onclick=\"removeChanges(this)\"> Remove changes</button><br></div>";
-    changesArr+=jsonString;
-    classPropertyPost(jsonString);
+    classPropertyPost(changes);
 }
 
 function addChange3(){
@@ -334,21 +333,22 @@ function addChange3(){
         "propertyBefore":selectValue,
         "propertyAfter":value
     };
-    const jsonString = JSON.stringify(changes);
+    changesArr.push(changes);
+   // const jsonString = JSON.stringify(changes);
     
     changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"propertyBefore\">&nbsp;&nbsp;&nbsp;&nbsp;Property from: "+selectValue+"</p>"+
             "<p id=\"propertyAfter\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"
             +"<button id=\"propertytobtn\"class=\"btn-light\" onclick=\"removeChanges(this)\"> Remove changes</button><br></div>";
 
-    console.log(jsonString);
-    changesArr+=jsonString;
-    classPropertyPost(jsonString);
+   // console.log(jsonString);
+   // changesArr.push(jsonString);
+    classPropertyPost(changes);
 
 }
 
 function getValueClass(){
-   
-     const blob = new Blob([changesArr], { type: 'application/json' });
+    const jsonString= JSON.stringify(changesArr);
+    const blob = new Blob([jsonString], { type: 'application/json' });
 
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -509,7 +509,7 @@ function nextstep1(){
     document.getElementById("button2").style.display="none";
 
     if(document.getElementById("next1").style.display==="none"){
-        changesArr="";
+        changesArr.length=0;
         document.getElementById("next1").style.display="flex";
         document.getElementById("before1").style.display="none";
         document.getElementById("next2").style.display="none";
@@ -589,7 +589,7 @@ function nextstep2(){
     document.getElementById("button2").style.display="flex";
 
     if(document.getElementById("next2").style.display==="none"){
-        changesArr="";
+        changesArr.length=0;
         document.getElementById("next2").style.display="flex";
         document.getElementById("before1").style.display="none";
         document.getElementById("next1").style.display="none";
@@ -702,7 +702,7 @@ function nextstep3(){
     document.getElementById("button2").style.display="none";
 
     if(document.getElementById("next3").style.display==="none"){
-        changesArr="";
+        changesArr.length=0;
         document.getElementById("next3").style.display="flex";
         document.getElementById("before1").style.display="none";
         document.getElementById("next2").style.display="none";
