@@ -68,51 +68,79 @@ public class mainTranslation {
     }
 
     public static void main(String[] args) {
-        File inputFile = new File("reflection.txt");
-        File inputFile1 = new File("changess.json");
-        File outputFile = new File("reflection_out.txt");
 
+        File inputFile = new File("reflection.txt");
+        File jsonFile = new File("changess.json");
+        File outputFile = new File("reflection_out.txt");
         Gson gson = new Gson();
 
-        // Check if the input files exist
-        if (!inputFile.exists() || !inputFile1.exists()) {
-            System.out.println("File not found: " + inputFile.getAbsolutePath() + " or " + inputFile1.getAbsolutePath());
+        if (!inputFile.exists() || !jsonFile.exists()) {
+            System.out.println("File not found: " + inputFile.getAbsolutePath() + " or " + jsonFile.getAbsolutePath());
             return;
         }
 
-        String fileX3ML = "";
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
-            String line;
+        try {
             StringBuilder fileContent = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    fileContent.append(line).append("\n");
+                }
+            }
 
             JsonData[] dataArray;
-            try (BufferedReader reader2 = new BufferedReader(new FileReader(inputFile1))) {
+            try (BufferedReader reader2 = new BufferedReader(new FileReader(jsonFile))) {
                 dataArray = gson.fromJson(reader2, JsonData[].class);
             }
 
-           
-            while ((line = reader.readLine()) != null) {
-                fileX3ML += line + "\n";
+            String fullFileContent = fileContent.toString();
 
-                
-                for (JsonData data : dataArray) {
-                    if (line.contains(data.getClassBefore())) {
-                      
-                        line = line.replace(data.getClassBefore(), data.getClassAfter());
-                    }else if(line.contains(data.getPropertyBefore())){
-                        line = line.replace(data.getPropertyBefore(), data.getPropertyAfter());
+            for (JsonData data : dataArray) {
+                System.out.println("Processing classBefore: " + data.getClassBefore());
+                System.out.println("Processing propertyBefore: " + data.getPropertyBefore());
+                fullFileContent = fullFileContent.replace(data.getClassBefore(), data.getClassAfter());
+                fullFileContent = fullFileContent.replace(data.getPropertyBefore(), data.getPropertyAfter());
+                System.out.println("Changed to classAfter: "+ data.getClassAfter());
+                System.out.println("Changed to propertyAfter: "+ data.getPropertyAfter());
+                if (data.getAdditionalClass() != null && !data.getAdditionalClass().isEmpty()) {
+                    String specificString = "<entity>\n" +
+                            "                     <type>crm:" + data.getClassAfter() + "</type>\n" +
+                            "                     <instance_generator name=\"LocalTermURI\">\n" +
+                            "                        <arg name=\"hierarchy\" type=\"constant\">person</arg>\n" +
+                            "                        <arg name=\"term\" type=\"xpath\">../creator_viaf/text()</arg>\n" +
+                            "                     </instance_generator>\n" +
+                            "                     <label_generator name=\"CompositeLabel\">\n" +
+                            "                        <arg name=\"term1\" type=\"xpath\">text()</arg>\n" +
+                            "                        <arg name=\"term2\" type=\"xpath\">../creator_lname/text()</arg>\n" +
+                            "                     </label_generator>\n" +
+                            "                  </entity>";
+
+                    String replacementString = "<entity>\n" +
+                            "                     <type>crm:" + data.getClassAfter() + "</type>\n" +
+                            "                     <instance_generator name=\"LocalTermURI\">\n" +
+                            "                        <arg name=\"hierarchy\" type=\"constant\">person</arg>\n" +
+                            "                        <arg name=\"term\" type=\"xpath\">../creator_viaf/text()</arg>\n" +
+                            "                     </instance_generator>\n" +
+                            "                     <label_generator name=\"CompositeLabel\">\n" +
+                            "                        <arg name=\"term1\" type=\"xpath\">text()</arg>\n" +
+                            "                        <arg name=\"term2\" type=\"xpath\">../creator_lname/text()</arg>\n" +
+                            "                     </label_generator>\n" +
+                            "                  </entity>" +
+                            "                   <additional>\n" +
+                            "                        <entity>\n" +
+                            "                           <type>crm:" + data.getAdditionalClass() + "</type>\n" +
+                            "                        </entity>\n" +
+                            "                     </additional>";
+                    if (fullFileContent.contains(specificString)) {
+                        fullFileContent = fullFileContent.replace(specificString, replacementString);
+                        System.out.println("Multiline specific string replaced for class: " + data.getClassAfter());
                     }
                 }
-
-                fileContent.append(line).append("\n");
             }
-
-
             try (FileWriter writer = new FileWriter(outputFile)) {
-                writer.write(fileContent.toString());
+                writer.write(fullFileContent);
                 System.out.println("File updated successfully.");
             }
-
         } catch (IOException e) {
             System.out.println("IOException occurred: " + e.getMessage());
         }
