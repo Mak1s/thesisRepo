@@ -57,6 +57,7 @@ public class uploadServlet1 extends HttpServlet {
        
         // Handle the file upload
         Part filePart = request.getPart("fileUpload0");
+ 
         String fileName = filePart.getSubmittedFileName();
        
         EditFileTable editFile=new EditFileTable();
@@ -77,11 +78,16 @@ public class uploadServlet1 extends HttpServlet {
       
           String specificString = "<type>"; 
          String specificString1="<relationship>";
-
+         String namespace ="<namespace prefix=";
+         
         List<String> filteredLines = new ArrayList<>();
+        List<String> allNameSpaces = new ArrayList<>();
+        
         for (String line : fileContentLines) {
             if (line.contains(specificString)) {
                 filteredLines.add(line);
+            }else if(line.contains(namespace)){
+                allNameSpaces.add(line);
             }
         }
         List<String> filteredLines1 = new ArrayList<>();
@@ -97,7 +103,7 @@ public class uploadServlet1 extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
        
             editFile.addNewFile(0,fileContentLines);
-            out.write(filteredContent+filteredContent1);
+            out.write(filteredContent+filteredContent1+allNameSpaces);
             response.setStatus(HttpServletResponse.SC_OK);
             
         } catch (ClassNotFoundException ex) {

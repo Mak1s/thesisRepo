@@ -1,4 +1,8 @@
 let changesArr= [];
+var namespace="";
+var ontoName="";
+var globalPref="";
+const namespaceMap = new Map();
 var totalChanges4Class=0;
 var totalChanges4Class_Properties=0;
 var totalChanges4Properties=0;
@@ -569,7 +573,7 @@ function populateClassOptions(selectElement) {
     console.log("populate class options with :"+cl);
     for (let i = 0; i < cl.length; i++) {
         if (cl[i][0] === "E") {
-            selectElement.innerHTML+="<option value="+cl[i]+">"+cl[i]+"</option>";
+            selectElement.innerHTML+="<option value="+cl[i]+">"+globalPref+":"+cl[i]+"</option>";
             console.log("klash"+cl[i]);
         }
     }
@@ -578,7 +582,7 @@ function populateClassOptions(selectElement) {
 function populateAllClass(selectElement){
     for( var i=0;i<all.length;i++){
            if(all[i][0]==="E"){
-                selectElement.innerHTML+="<option value="+all[i]+">"+"</option>";
+                selectElement.innerHTML+="<option value="+globalPref+":"+all[i]+">"+"</option>";
             }
         }
 }
@@ -681,7 +685,7 @@ function populatePropertiesOptions(selectElement) {
     for (let i = 0; i < pr.length; i++) {
         if (pr[i][0] === "P") {
             console.log("eimia PPPP"+pr[i]);
-            selectElement.innerHTML+="<option value="+pr[i]+">"+pr[i]+"</option>";  
+            selectElement.innerHTML+="<option value="+pr[i]+">"+globalPref+":"+pr[i]+"</option>";  
         }
     }
 }
@@ -690,7 +694,7 @@ function populateAllPropertiesOptions(selectElement){
         for (let i = 0; i < all.length; i++) {
         console.log("MPhka");
         if (all[i][0] === "P") {
-            selectElement.innerHTML+="<option value="+all[i]+">"+"</option>";
+            selectElement.innerHTML+="<option value="+globalPref+":"+all[i]+">"+"</option>";
             console.log(all[i]);
         }
     }
@@ -803,6 +807,20 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
                 let second=(removeSubstr(apanthsh,"<relationship>crm:"));
                 let klash=(removeSubstr(first,"</type>"));
                 let property=(removeSubstr(second,"</relationship>"));
+                namespace=apanthsh.split("[")[1].trim();
+               
+                const regex = /prefix="(\w+)".*?uri="([^"]+)"/g;
+               
+
+                let match;
+                while ((match = regex.exec(namespace)) !== null) {
+                  const prefix = match[1];
+                  const uri = match[2];
+                  namespaceMap.set(prefix, uri); 
+                }
+                namespaceMap.forEach((uri, prefix) => {
+                  console.log(`Prefix: ${prefix} -> URI: ${uri}`);
+                });
                 console.log(klash);
                 console.log(property);
                 cl=cl+klash;
@@ -814,10 +832,22 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
             }else{
                 console.log("eimai o allos servlet:"+servletName);
                 console.log(apanthsh);
-
+                  namespaceMap.forEach((uri, prefix) => {
+                  if(apanthsh.includes(uri) && (uri==="http://www.cidoc-crm.org/cidoc-crm/")){
+                      console.log("I found "+prefix);
+                      globalPref=prefix;
+                      
+                  }else if(globalPref!="crm"){
+                      globalPref="ns1";
+                  }
+                });
                 let first = (removeSubstr(apanthsh,"CIDOC_CRM_v7.1.1.rdfs"));
                 let clpr=(removeSubstr(first,"http://www.cidoc-crm.org/cidoc-crm/"));
                 console.log(clpr);
+                ontoName=apanthsh.split("\">")[0].trim();
+                ontoName =ontoName.split("<")[1].trim();
+                console.log("from ontology namespace"+ontoName);
+                console.log("I have the prefix-> " + globalPref);
                 all=all+clpr;
             }
         } else {
@@ -849,13 +879,13 @@ function getX3MLClasses1() {
         // Only add valid class entries (those starting with "E")
         if (trimmedLines[i][0] === "E") {
             console.log("Class found in trimmedLines: " + trimmedLines[i]); // Debug full value
-            document.getElementById("classOptions").innerHTML+="<option value="+trimmedLines[i]+">"+trimmedLines[i]+"</option>";
-            document.getElementById("classPropertyOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + trimmedLines[i] + "</option>";
+            document.getElementById("classOptions").innerHTML+="<option value="+trimmedLines[i]+">"+globalPref+":"+trimmedLines[i]+"</option>";
+            document.getElementById("classPropertyOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + globalPref+":"+trimmedLines[i] + "</option>";
             allFileClasses.push(trimmedLines[i]);  // Add to class array
         } else if (trimmedLines[i][0] === "P") {
             console.log("Property found in trimmedLines: " + trimmedLines[i]); // Debug full value
-            document.getElementById("propertiesOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + trimmedLines[i] + "</option>";
-            document.getElementById("PpropertiesOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + trimmedLines[i] + "</option>";
+            document.getElementById("propertiesOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + globalPref+":"+trimmedLines[i] + "</option>";
+            document.getElementById("PpropertiesOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + globalPref+":"+trimmedLines[i] + "</option>";
 
             allFileProperties.push(trimmedLines[i]);  // Add to property array
         }
@@ -863,12 +893,12 @@ function getX3MLClasses1() {
 
     for (var i = 0; i < allTrimmed.length; i++) {
         if (allTrimmed[i][0] === "E") {
-            document.getElementById("lst-autocomplete").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
+            document.getElementById("lst-autocomplete").innerHTML += "<option value=" +globalPref+":"+allTrimmed[i] + "></option>";
             
-            document.getElementById("lst-autocomplete1").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
+            document.getElementById("lst-autocomplete1").innerHTML += "<option value=" +globalPref+":"+ allTrimmed[i] + "></option>";
         } else if (allTrimmed[i][0] === "P") {
-            document.getElementById("lst-autocomplete2").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
-            document.getElementById("lst-autocomplete3").innerHTML += "<option value=" + allTrimmed[i] + "></option>";
+            document.getElementById("lst-autocomplete2").innerHTML += "<option value=" + globalPref+":"+ allTrimmed[i] + "></option>";
+            document.getElementById("lst-autocomplete3").innerHTML += "<option value=" + globalPref+":"+ allTrimmed[i] + "></option>";
 
             allProperties.push(allTrimmed[i]);  // Add to autocomplete properties array
         }

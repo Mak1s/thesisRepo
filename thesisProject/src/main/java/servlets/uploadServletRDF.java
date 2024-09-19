@@ -100,10 +100,22 @@ public class uploadServletRDF extends HttpServlet {
                 Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
            List<String> fileContentLines = Files.readAllLines(file.toPath());
+           // Specify the string to search for
+            String searchString = "xml:base";
+            String base="";
+            // Find the line that contains the specific string
+            for (String line : fileContentLines) {
+                if (line.contains(searchString)) {
+                    base=line;
+                    break; // Optionally, stop after finding the first occurrence
+                }
+            }
+
+           
               editFile.addNewFile(1,fileContentLines);
        
        
-        out.write(fileName);
+        out.write(fileName+base);
 
             // Load the RDF model from the uploaded file
             ModelLoader modelLoader = new ModelLoader(file.getAbsolutePath());
@@ -115,10 +127,11 @@ public class uploadServletRDF extends HttpServlet {
 
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            out.write("{\"error\":\"" + e.getMessage() + "\"}");
-            e.printStackTrace(); // Log the exception to server logs
-        } finally {
-            out.close();
+            try (PrintWriter n = response.getWriter()) {
+                n.write("{\"error\":\"" + e.getMessage() + "\"}");
+            }
+            e.printStackTrace();
+       
         }
     }
     /**
