@@ -533,7 +533,7 @@ function nextstep1(){
         newChangedElement=uniqueId;
         newChangedElement2=uniqueId2;
         newChanges= uniqueChanges;
-        const divContent = `<div id="next1" class="border-dark" style="display:flex;">
+        const divContent = `<div id="next1" class="border border-dark" style="display:flex;">
                 <div class="row">
                     <div class="col-sm-6">
                         <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
@@ -741,7 +741,7 @@ function nextstep3(){
                 </datalist>
     
             </div>
-              <div id="${uniqueChanges}">
+              <div id="${uniqueChanges}"class="col-sm-8>
                     
             </div>
             </div>
