@@ -2,10 +2,14 @@ NAMESPACES:
 As we reviewed in the last meeting the goal was to have as options all the classes
 and properties of the X3ML file no matter what the prefix was. As far as this is 
 concerned I've fixed the options to be as said with all the classes and properties 
-for all the prefixes taking into account all the types of prefixes but not the option
-of a prefix not existing(adding "ns1") for not known/seen prefixes.
-The code handling the prefixes/namespaces is code.js(787-874) but the option for the 
-prefix to not be found isn't evaluated correctly.
+of the file for all the prefixes taking into account all the types of prefixes but 
+not the option of a prefix not existing(adding "ns1") for not known/seen prefixes.
+The code handling the prefixes/namespaces is code.js(787-874) and the functions 
+handling the addition of classes and properties of the file in the options of the UI
+are in code.js(populateClassOptions(selectElement),populateAllClass(selectElement),
+populatePropertiesOptions(selectElement),populateAllPropertiesOptions(selectElement),
+getAll(cl,pr,cls,prt,globalPref,globalURI)) but the option for the prefix to not be 
+found isn't evaluated correctly.
 TRANSLATION:
 I've included the backend code in the mainClasses folder in order to use it 
 to change the classes needed from the user. I acquire correctly the .x3ml file
