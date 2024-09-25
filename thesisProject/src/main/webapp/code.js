@@ -1,7 +1,15 @@
+var newChanges="";
+var newChanges1="";
+var newChanges2="";
+var iamfirst=0;
+var iamsecond=0;
 let changesArr= [];
 var namespace="";
 var ontoName="";
 var globalPref="";
+var globalURI="";
+var cls="";
+var prt="";
 const namespaceMap = new Map();
 var totalChanges4Class=0;
 var totalChanges4Class_Properties=0;
@@ -163,62 +171,53 @@ selectElementClassProperty2.addEventListener('change', function(event) {
     }
 });
 }        
-// Function to show option 1
+
 function showOption1() {
     var div = document.getElementById('class');
-    var div2 = document.getElementById('classProperty');
-    
+    var div4 = document.getElementById('import');
+    var div5 = document.getElementById('load');
     div.style.display = 'flex';
-    div2.style.display = 'none';
+    div4.style.display = 'none';
+    div5.style.display = 'none';
     document.getElementById("next1").style.display = "none";
     document.getElementById("before1").style.display = "flex";
 }
 
 
-// Function to show option 3
 function showOption3() {
     var div3 = document.getElementById('buttons');
     var div4 = document.getElementById('import');
     var div5 = document.getElementById('load');
-    getX3MLClasses1();
+    getAll(cl,pr,cls,prt,globalPref,globalURI);
     div3.style.display = 'flex';
     div4.style.display = 'none';
     div5.style.display = 'none';
 }
 
-// Function to show option 4
 function showOption4() {
-
-
     var div = document.getElementById('class');
-    var div2 = document.getElementById('classProperty');
     var div3 = document.getElementById('buttons');
     var div4 = document.getElementById('import');
     var div5 = document.getElementById('load');
     
     div.style.display = 'none';
-    div2.style.display = 'none';
     div3.style.display = 'none';
     div4.style.display = 'none';
     div5.style.display = 'flex';
 }
 
-// Function to show option 5
 function showOption5() {
     var div = document.getElementById('class');
-    var div2 = document.getElementById('classProperty');
     var div3 = document.getElementById('buttons');
     var div4 = document.getElementById('import');
     var div5 = document.getElementById('load');
     
     div.style.display = 'none';
-    div2.style.display = 'none';
     div3.style.display = 'none';
     div4.style.display = 'flex';
     div5.style.display = 'none';
 }
 
-// Original function removed, as each option is handled by its respective function
 var newChangedElement="";
 var newChangedElement2="";
 
@@ -247,17 +246,15 @@ function addChange(){
         "classAfter":value
     };
     changesArr.push(changes);
-  //  const jsonString = JSON.stringify(changes);
     
     changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"classBefore\">&nbsp;&nbsp;&nbsp;&nbsp;Class from: "+selectValue+"</p>"+
             "<p id=\"classAfter\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"
             +"<button id=\"classtobtn\"class=\"btn-light\" onclick=\"removeChanges(this)\"> Remove changes</button><br></div>";
 
-    //changesArr.push(jsonString);
-   // console.log(jsonString);
     console.log(changesArr);
     classOnlyPost(changes);
 }
+
 var newChangedElement3="";
 var newChangedElement4="";
 var newChangedElement5="";
@@ -265,7 +262,9 @@ var newChangedElement6="";
 var newChangedElement7="";
 var newChangedElement8="";
 var newChangedElement9="";
+
 function addChange2(){
+
     totalChanges4Class_Properties++;
     totalChanges4Properties=0;
     totalChanges4Class=0;
@@ -327,9 +326,11 @@ function addChange3(){
         console.log(totalChanges4Properties);
     }else{
         console.log(totalChanges4Properties);
-        changesEl= document.getElementById(newChanges1);
+        console.log(changesEl+"\n"+document.getElementById(newChanges1));
         selectElement = document.getElementById(newChangedElement7);
         inputElement = document.getElementById(newChangedElement8);
+        changesEl= document.getElementById(newChanges1);
+
     }
     const selectValue = selectElement.value;
     const value = inputElement.value;
@@ -338,14 +339,14 @@ function addChange3(){
         "propertyAfter":value
     };
     changesArr.push(changes);
-   // const jsonString = JSON.stringify(changes);
-    
+    console.log("newChanges1:", newChanges1);
+    console.log("newChangedElement7:", newChangedElement7);
+    console.log("newChangedElement8:", newChangedElement8);
+    console.log("changesEl:", changesEl);
     changesEl.innerHTML+="<div class=\"border border-dark\"><p id=\"propertyBefore\">&nbsp;&nbsp;&nbsp;&nbsp;Property from: "+selectValue+"</p>"+
             "<p id=\"propertyAfter\">&nbsp;&nbsp;&nbsp;&nbsp;Property to: "+value+"</p>"
             +"<button id=\"propertytobtn\"class=\"btn-light\" onclick=\"removeChanges(this)\"> Remove changes</button><br></div>";
 
-   // console.log(jsonString);
-   // changesArr.push(jsonString);
     classPropertyPost(changes);
 
 }
@@ -504,9 +505,6 @@ function profile(){
 function index(){
     window.location.href="index.html";
 }
-var newChanges="";
-var newChanges1="";
-var newChanges2="";
 function nextstep1(){
     document.getElementById("button3").style.display="none";
     document.getElementById("button1").style.display="flex";
@@ -525,7 +523,6 @@ function nextstep1(){
      
     } else {
         document.getElementById("before1").style.display="none";
-       
         // Generate a unique id for each dynamically created select element
         const uniqueId = 'classOptions' + Math.random().toString(36).substr(2, 9);
         const uniqueId2 = 'classTO' + Math.random().toString(36).substr(2, 9);
@@ -570,12 +567,13 @@ function nextstep1(){
 }
 
 function populateClassOptions(selectElement) {
-    console.log("populate class options with :"+cl);
+    console.log("populate class options with: " + cl);
+    if(!iamfirst){
+        cl=cl.split('\n');
+        iamfirst++;
+    }
     for (let i = 0; i < cl.length; i++) {
-        if (cl[i][0] === "E") {
-            selectElement.innerHTML+="<option value="+cl[i]+">"+globalPref+":"+cl[i]+"</option>";
-            console.log("klash"+cl[i]);
-        }
+        selectElement.innerHTML += "<option value='" + cl[i] + "'>" + cl[i] + "</option>";
     }
 }
 
@@ -682,20 +680,19 @@ function nextstep2(){
 }
 function populatePropertiesOptions(selectElement) {
     console.log("populate properties options with :"+pr);
+    if(!iamsecond){
+        pr=pr.split('\n');
+        iamsecond++;
+    }
     for (let i = 0; i < pr.length; i++) {
-        if (pr[i][0] === "P") {
-            console.log("eimia PPPP"+pr[i]);
-            selectElement.innerHTML+="<option value="+pr[i]+">"+globalPref+":"+pr[i]+"</option>";  
-        }
+            selectElement.innerHTML+="<option value="+pr[i]+">"+pr[i]+"</option>";  
     }
 }
 
 function populateAllPropertiesOptions(selectElement){
         for (let i = 0; i < all.length; i++) {
-        console.log("MPhka");
         if (all[i][0] === "P") {
             selectElement.innerHTML+="<option value="+globalPref+":"+all[i]+">"+"</option>";
-            console.log(all[i]);
         }
     }
 }
@@ -721,7 +718,7 @@ function nextstep3(){
         document.getElementById("before1").style.display="none";
         const uniqueId = 'PpropertiesOptions' + Math.random().toString(36).substr(2, 9);
         const uniqueId2 = 'PpropertyTO' + Math.random().toString(36).substr(2, 9);
-        const uniqueChanges ='changes' + Math.random().toString(36).substr(2, 9);
+        const uniqueChanges ='changes1' + Math.random().toString(36).substr(2, 9);
         newChangedElement7=uniqueId;
         newChangedElement8=uniqueId2;
         newChanges1= uniqueChanges;
@@ -741,7 +738,7 @@ function nextstep3(){
                 </datalist>
     
             </div>
-              <div id="${uniqueChanges}"class="col-sm-8>
+              <div id="${uniqueChanges}"class="col-sm-8">
                     
             </div>
             </div>
@@ -750,6 +747,7 @@ function nextstep3(){
         
         document.getElementById("new2").style= "flex";
         document.getElementById("new2").innerHTML+=divContent;
+        console.log("eftasa edw kai eimai "+document.getElementById(newChanges1));
         const newSelectElement = document.getElementById(uniqueId);
         const newSelectElement1 = document.getElementById(uniqueId2);
         populatePropertiesOptions(newSelectElement);
@@ -803,17 +801,17 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
             if(servletName=="uploadServlet" || servletName=="uploadServlet1" ){
                 console.log("eimai o servlet:"+servletName);                
                 console.log(apanthsh);
-                let first=(removeSubstr(apanthsh,"<type>crm:"));
-                let second=(removeSubstr(apanthsh,"<relationship>crm:"));
-                let klash=(removeSubstr(first,"</type>"));
-                let property=(removeSubstr(second,"</relationship>"));
-                namespace=apanthsh.split("[")[1].trim();
+                var classes = apanthsh.match(/<type>(.*?)<\/type>/g).map(match => match.replace(/<\/?type>/g, '').trim());
+                var property = apanthsh.match(/<relationship>(.*?)<\/relationship>/g).map(match => match.replace(/<\/?relationship>/g, '').trim());
+                var namespaces = apanthsh.match(/<namespace prefix=".*?" uri=".*?\/?>/g).map(match => match.trim());
+
+                namespaces=apanthsh.split("[")[1].trim();
                
                 const regex = /prefix="(\w+)".*?uri="([^"]+)"/g;
                
 
                 let match;
-                while ((match = regex.exec(namespace)) !== null) {
+                while ((match = regex.exec(namespaces)) !== null) {
                   const prefix = match[1];
                   const uri = match[2];
                   namespaceMap.set(prefix, uri); 
@@ -821,32 +819,38 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
                 namespaceMap.forEach((uri, prefix) => {
                   console.log(`Prefix: ${prefix} -> URI: ${uri}`);
                 });
-                console.log(klash);
-                console.log(property);
-                cl=cl+klash;
+                console.log("eimai klaseis"+classes);
+                console.log("eimai property"+property);
+                cl=cl+classes;
                 pr=pr+property;
-                cl=cl+pr;
+                cl=cl.replace(/,/g, '\n');
+                pr=pr.replace(/,/g, '\n');
                 console.log(cl);
                 console.log(pr);
 
             }else{
                 console.log("eimai o allos servlet:"+servletName);
                 console.log(apanthsh);
-                  namespaceMap.forEach((uri, prefix) => {
-                  if(apanthsh.includes(uri) && (uri==="http://www.cidoc-crm.org/cidoc-crm/")){
-                      console.log("I found "+prefix);
-                      globalPref=prefix;
-                      
-                  }else if(globalPref!="crm"){
-                      globalPref="ns1";
-                  }
-                });
-                let first = (removeSubstr(apanthsh,"CIDOC_CRM_v7.1.1.rdfs"));
-                let clpr=(removeSubstr(first,"http://www.cidoc-crm.org/cidoc-crm/"));
+                console.log(namespaceMap);
+                   for (const [prefix, uri] of namespaceMap) {
+                    if (apanthsh.includes(uri)) {
+                        console.log("I found " + uri);
+                        globalPref=(prefix);
+                        globalURI=(uri);
+                        break;  
+                    } else {
+                        globalPref = "ns1";
+                    }
+                }
+                cls=apanthsh.split("classes")[0];
+                prt=apanthsh.split("classes")[1];
+                console.log("all classes are :" +cls);
+                console.log("all properties are : "+prt);
+                console.log(globalPref);
+                let clpr=(removeSubstr(apanthsh,globalURI));
+                cls=removeSubstr(cls,globalURI);
+                prt=removeSubstr(prt,globalURI);
                 console.log(clpr);
-                ontoName=apanthsh.split("\">")[0].trim();
-                ontoName =ontoName.split("<")[1].trim();
-                console.log("from ontology namespace"+ontoName);
                 console.log("I have the prefix-> " + globalPref);
                 all=all+clpr;
             }
@@ -864,53 +868,65 @@ function removeSubstr(str, substring) {
   return str.replace(regex, '\n');
 }
 
-function getX3MLClasses1() {
-    const lines = cl.split('\n');
-    const allLines=all.split('\n');
+function getAll(cl,pr,cls,prt,globalPref,globalURI){
+    const simpleCl=cl.split('\n');
+    const simplePr=pr.split('\n');    
+    const allCl=cls.split('\t');
+    const allPr=prt.split('\t');
     var allFileClasses = [];
     var allFileProperties = [];
-    var allProperties = [];
+    const trimmedClasses = simpleCl.map(line => line.trim()).filter(line => line.length > 0);
+    const trimmedProperties = simplePr.map(line => line.trim()).filter(line => line.length > 0);
+    const trimmedAllClasses=allCl.map(line => line.trim()).filter(line => line.length > 0);
+    const trimmedAllProperties=allPr.map(line => line.trim()).filter(line => line.length > 0);
 
-    // Trim and filter lines to include only non-empty ones
-    const trimmedLines = lines.map(line => line.trim()).filter(line => line.length > 0);
-    const allTrimmed = allLines.map(line => line.trim()).filter(line => line.length > 0);
-
-    for (var i = 0; i < trimmedLines.length; i++) {
-        // Only add valid class entries (those starting with "E")
-        if (trimmedLines[i][0] === "E") {
-            console.log("Class found in trimmedLines: " + trimmedLines[i]); // Debug full value
-            document.getElementById("classOptions").innerHTML+="<option value="+trimmedLines[i]+">"+globalPref+":"+trimmedLines[i]+"</option>";
-            document.getElementById("classPropertyOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + globalPref+":"+trimmedLines[i] + "</option>";
-            allFileClasses.push(trimmedLines[i]);  // Add to class array
-        } else if (trimmedLines[i][0] === "P") {
-            console.log("Property found in trimmedLines: " + trimmedLines[i]); // Debug full value
-            document.getElementById("propertiesOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + globalPref+":"+trimmedLines[i] + "</option>";
-            document.getElementById("PpropertiesOptions").innerHTML += "<option value=" + trimmedLines[i] + ">" + globalPref+":"+trimmedLines[i] + "</option>";
-
-            allFileProperties.push(trimmedLines[i]);  // Add to property array
-        }
+    for(var j=0; j<trimmedClasses.length;j++){
+        document.getElementById("classOptions").innerHTML+="<option value="+trimmedClasses[j]+">"+trimmedClasses[j]+"</option>";
+        document.getElementById("classPropertyOptions").innerHTML += "<option value=" + trimmedClasses[j] + ">"+trimmedClasses[j] + "</option>";
+        allFileClasses.push(trimmedClasses[j]);
+    }
+    for(var i=0; i<trimmedAllClasses.length;i++){
+        document.getElementById("lst-autocomplete").innerHTML += "<option value=" +globalPref+":"+trimmedAllClasses[i] + "></option>";
+        document.getElementById("lst-autocomplete1").innerHTML += "<option value=" +globalPref+":"+ trimmedAllClasses[i] + "></option>";   
+    }
+    
+    for(var i=0; i< trimmedAllProperties.length;i++){
+        document.getElementById("lst-autocomplete2").innerHTML += "<option value=" + globalPref+":"+ trimmedAllProperties[i] + "></option>";
+        document.getElementById("lst-autocomplete3").innerHTML += "<option value=" + globalPref+":"+ trimmedAllProperties[i] + "></option>";
+    }
+    
+    for(var j=0; j<trimmedProperties.length;j++){
+        document.getElementById("propertiesOptions").innerHTML += "<option value=" +trimmedProperties[j] + ">" +trimmedProperties[j] + "</option>";
+        document.getElementById("PpropertiesOptions").innerHTML += "<option value=" + trimmedProperties[j] + ">" +trimmedProperties[j] + "</option>";
+        allFileProperties.push(trimmedProperties[j]);
+    }
+    if (typeof allFileClasses === 'string') {
+        cl = allFileClasses.split(',');
+    } else if (Array.isArray(allFileClasses)) {
+        cl = allFileClasses;
+    } else {
+        console.error('Unexpected type for allFileClasses:', typeof allFileClasses);
+    }
+    if (typeof allFileProperties === 'string') {
+        pr = allFileProperties.split(',');
+    } else if (Array.isArray(allFileProperties)) {
+        pr = allFileProperties;
+    } else {
+        console.error('Unexpected type for allFileProperties:', typeof allFileProperties);
     }
 
-    for (var i = 0; i < allTrimmed.length; i++) {
-        if (allTrimmed[i][0] === "E") {
-            document.getElementById("lst-autocomplete").innerHTML += "<option value=" +globalPref+":"+allTrimmed[i] + "></option>";
-            
-            document.getElementById("lst-autocomplete1").innerHTML += "<option value=" +globalPref+":"+ allTrimmed[i] + "></option>";
-        } else if (allTrimmed[i][0] === "P") {
-            document.getElementById("lst-autocomplete2").innerHTML += "<option value=" + globalPref+":"+ allTrimmed[i] + "></option>";
-            document.getElementById("lst-autocomplete3").innerHTML += "<option value=" + globalPref+":"+ allTrimmed[i] + "></option>";
+console.log("Type of cl:", typeof cl);
+console.log(cl);
+console.log("Type of pr:", typeof pr);
+console.log(pr);
 
-            allProperties.push(allTrimmed[i]);  // Add to autocomplete properties array
-        }
-    }
-
-    // Assign filtered values back to global variables
-    cl = allFileClasses; 
-    pr = allFileProperties;
-    all = allProperties;
-
-    console.log("Classes (cl):", cl);  // Log to see the full list of classes
-    console.log("Properties (pr):", pr);  // Log to see the full list of properties
+for (let i = 0; i < cl.length; i++) {
+    console.log(cl[i]);  
+}
+for (let i = 0; i < pr.length; i++) {
+    console.log(pr[i]);  
+}
+ 
 }
 
 function classOnlyPost(jsonString){
