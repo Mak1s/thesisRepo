@@ -5,9 +5,12 @@
  */
 package servlets;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -72,20 +75,43 @@ public class translationPost extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        Part x3mlPart = request.getPart("x3mlfile");
-        InputStream x3mlInputStream = x3mlPart.getInputStream();
+        response.setContentType("application/json");
 
-        
-        Part blobPart = request.getPart("newBlob");
-        InputStream blobInputStream = blobPart.getInputStream();
-       
-        
-        
-        
-        mainTranslation mt= new mainTranslation();
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        try (BufferedReader reader = request.getReader()) {
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+        }
+        String fullContent = stringBuilder.toString();
+    String[] parts = fullContent.split("</x3ml>");
+    
+    if (parts.length < 2) {
+        response.getWriter().write("{\"status\":\"error\", \"message\":\"Invalid input format\"}");
+        return;
+    }
 
-  //      mt.runTranslationApp(x3mlInputStream,blobInputStream);
+    String x3mlContent = parts[0] + "</x3ml>";
+
+    String jsonContent = parts[1].trim();
+
+Pattern pattern = Pattern.compile("\"newBlob\":\"(\\[.*?\\])\"", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(jsonContent);
+   if (matcher.find()) {
+           jsonContent=matcher.group(0);
+   }
+   
+    System.out.println("Extracted x3mlContent: " + x3mlContent);
+    System.out.println("Extracted jsonContent: " + jsonContent);
+    mainTranslation mt= new mainTranslation();
+    mt.runTranslationAppFromString(x3mlContent, jsonContent);
+
+    response.getWriter().write("{\"status\":\"success\"}");
+        
+        
+        
+
     }
 
     /**

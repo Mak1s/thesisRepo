@@ -367,9 +367,8 @@ function getValueClass(){
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-     const downloadedFileContent = jsonString;
+    const downloadedFileContent = jsonString;
 
-    const newBlob = new Blob([downloadedFileContent], { type: 'application/json' });
     
     if(one){
         var inputElement ="";
@@ -414,7 +413,7 @@ function getValueClass(){
     console.log(jsonString);
         document.getElementById("changedContent1").innerHTML+="<p id=\"classto1\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn1\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
-    translationPost(x3mlfile,newBlob);
+    translationPost(x3mlfile,downloadedFileContent);
 }
 
 
@@ -791,7 +790,7 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
 
     const fileInput = document.getElementById(fileId);
     const file = fileInput.files[0];
-    x3mlfile=document.getElementById(fileId).files[0];
+   
     if (!file) {
               
         document.getElementById(contentId).innerHTML = "Error: No file selected.";
@@ -808,6 +807,7 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
             if(servletName=="uploadServlet" || servletName=="uploadServlet1" ){
                 console.log("eimai o servlet:"+servletName);                
                 console.log(apanthsh);
+                x3mlfile=apanthsh;
                 var classes = apanthsh.match(/<type>(.*?)<\/type>/g).map(match => match.replace(/<\/?type>/g, '').trim());
                 var property = apanthsh.match(/<relationship>(.*?)<\/relationship>/g).map(match => match.replace(/<\/?relationship>/g, '').trim());
                 var namespaces = apanthsh.match(/<namespace prefix=".*?" uri=".*?\/?>/g).map(match => match.trim());
@@ -986,9 +986,10 @@ function removePost(jsonString){
 }
 
 function translationPost(x3mlfile, newBlob) {
-    const formData = new FormData();
-    formData.append('x3mlfile', x3mlfile); 
-    formData.append('newBlob', newBlob); 
+    const data = {
+        x3mlfile: x3mlfile, 
+        newBlob: newBlob   
+    };
     console.log(typeof(x3mlfile));
     console.log(typeof(newBlob));
     console.log(x3mlfile);
@@ -1006,6 +1007,6 @@ function translationPost(x3mlfile, newBlob) {
         }
     };
     xhttp.open("POST", "translationPost"); 
-    // xhttp.setRequestHeader("Content-type", "application/json"); // Not needed for FormData
-    xhttp.send(formData); 
+    xhttp.setRequestHeader("Content-type", "application/json"); // Not needed for FormData
+    xhttp.send(JSON.stringify(data)); 
 }
