@@ -36,6 +36,10 @@
         <servlet-name>removePost</servlet-name>
         <servlet-class>servlets.removePost</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>translationPost</servlet-name>
+        <servlet-class>servlets.translationPost</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>uploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>removePost</servlet-name>
         <url-pattern>/removePost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>translationPost</servlet-name>
+        <url-pattern>/translationPost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,4 +1,7 @@
+var x3mlfile= "";
 var newChanges="";
+var notfoundPref="";
+var notfound=0;
 var newChanges1="";
 var newChanges2="";
 var iamfirst=0;
@@ -360,10 +363,13 @@ function getValueClass(){
     a.href = url;
     a.download = 'changes.json';
     document.body.appendChild(a);
-
+    
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+     const downloadedFileContent = jsonString;
+
+    const newBlob = new Blob([downloadedFileContent], { type: 'application/json' });
     
     if(one){
         var inputElement ="";
@@ -408,6 +414,7 @@ function getValueClass(){
     console.log(jsonString);
         document.getElementById("changedContent1").innerHTML+="<p id=\"classto1\">&nbsp;&nbsp;&nbsp;&nbsp;Class to: "+value+"</p>"+"<button id=\"classtobtn1\"class=\"btn-light\" onclick=\"removeChanges()\"> Remove changes</button><br>";
     }
+    translationPost(x3mlfile,newBlob);
 }
 
 
@@ -784,7 +791,7 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
 
     const fileInput = document.getElementById(fileId);
     const file = fileInput.files[0];
-   
+    x3mlfile=document.getElementById(fileId).files[0];
     if (!file) {
               
         document.getElementById(contentId).innerHTML = "Error: No file selected.";
@@ -839,7 +846,9 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
                         globalURI=(uri);
                         break;  
                     } else {
-                        globalPref = "ns1";
+                        notfound++;
+                        notfoundPref = "ns1";
+                        globalPref="ns1";
                     }
                 }
                 cls=apanthsh.split("classes")[0];
@@ -974,4 +983,29 @@ function removePost(jsonString){
     xhttp.open("POST","removePost");
     xhttp.setRequestHeader("Content-type","application/json");
     xhttp.send(data);  
+}
+
+function translationPost(x3mlfile, newBlob) {
+    const formData = new FormData();
+    formData.append('x3mlfile', x3mlfile); 
+    formData.append('newBlob', newBlob); 
+    console.log(typeof(x3mlfile));
+    console.log(typeof(newBlob));
+    console.log(x3mlfile);
+    console.log(newBlob);
+    
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            console.log("Translation successful!");
+        } else if (xhttp.status === 403) {
+            console.log("Access denied.");
+            return 1;
+        } else {
+            console.log("Error occurred: " + xhttp.status);
+        }
+    };
+    xhttp.open("POST", "translationPost"); 
+    // xhttp.setRequestHeader("Content-type", "application/json"); // Not needed for FormData
+    xhttp.send(formData); 
 }
