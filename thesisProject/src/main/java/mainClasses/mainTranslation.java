@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import com.google.gson.Gson;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import servlets.classOnlyPost;
 
 public class mainTranslation {
 
@@ -71,7 +74,9 @@ public class mainTranslation {
 
     public void runTranslationAppFromString(String x3mlContent, String jsonContent) {
         File outputFile = new File("newX3ML_out.x3ml");
-
+        if (jsonContent.startsWith("newBlob:")) {
+            jsonContent = jsonContent.replaceFirst("newBlob:", "");
+        }
         Gson gson = new Gson();
 
         try {
@@ -84,32 +89,27 @@ public class mainTranslation {
             for (JsonData data : dataArray) {
                 System.out.println("Processing classBefore: " + data.getClassBefore());
                 System.out.println("Processing propertyBefore: " + data.getPropertyBefore());
-
-                // Replace class and property
-                fullFileContent = fullFileContent.replace(data.getClassBefore(), data.getClassAfter());
-                fullFileContent = fullFileContent.replace(data.getPropertyBefore(), data.getPropertyAfter());
-
-                System.out.println("Changed to classAfter: " + data.getClassAfter());
-                System.out.println("Changed to propertyAfter: " + data.getPropertyAfter());
-
+                if(data.getClassBefore()!=null){
+                    fullFileContent = fullFileContent.replace(data.getClassBefore(), data.getClassAfter());
+                    System.out.println("Changed to classAfter: " + data.getClassAfter());
+                }
+                if(data.getPropertyBefore()!=null){
+                        fullFileContent = fullFileContent.replace(data.getPropertyBefore(), data.getPropertyAfter());
+                        System.out.println("Changed to propertyAfter: " + data.getPropertyAfter());
+                }
+    
                 // Handle additional class replacements if specified
                 if (data.getAdditionalClass() != null && !data.getAdditionalClass().isEmpty()) {
-                    String specificString = "<entity>\n" +
-                            "                     <type>crm:" + data.getClassAfter() + "</type>\n" +
-                            "                     <instance_generator name=\"LocalTermURI\">\n" +
-                            "                        <arg name=\"hierarchy\" type=\"constant\">person</arg>\n" +
-                            "                        <arg name=\"term\" type=\"xpath\">../creator_viaf/text()</arg>\n" +
-                            "                     </instance_generator>\n" +
-                            "                     <label_generator name=\"CompositeLabel\">\n" +
-                            "                        <arg name=\"term1\" type=\"xpath\">text()</arg>\n" +
-                            "                        <arg name=\"term2\" type=\"xpath\">../creator_lname/text()</arg>\n" +
-                            "                     </label_generator>\n" +
-                            "                  </entity>";
+                    String specificString = "                     <type>" + data.getClassAfter() + "</type>\n" /*+
+                                            "<instance_generator name=\"URIwithType\"/>"+
+                                            "<label_generator name=\"Literal\"/>"
+                            */ ;
+
 
                     String replacementString = specificString + 
                             "                   <additional>\n" +
                             "                        <entity>\n" +
-                            "                           <type>crm:" + data.getAdditionalClass() + "</type>\n" +
+                            "                           <type>" + data.getAdditionalClass() + "</type>\n" +
                             "                        </entity>\n" +
                             "                     </additional>";
 
@@ -123,6 +123,7 @@ public class mainTranslation {
             // Write the modified content to a new output file
             try (FileWriter writer = new FileWriter(outputFile)) {
                 writer.write(fullFileContent);
+                
                 System.out.println("File updated successfully.");
             }
         } catch (IOException e) {
@@ -202,7 +203,7 @@ public class mainTranslation {
             }
             try (FileWriter writer = new FileWriter(outputFile)) {
                 writer.write(fullFileContent);
-                System.out.println("File updated successfully.");
+                System.out.println("File updated successfully."+outputFile.getAbsolutePath());
             }
         } catch (IOException e) {
             System.out.println("IOException occurred: " + e.getMessage());

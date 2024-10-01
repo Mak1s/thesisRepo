@@ -12,6 +12,7 @@ mainClasses\File.class
 servlets\removePost.class
 mainClasses\mainTranslation$JsonData.class
 mainClasses\ClassOnly.class
+servlets\translationPost$DataInput.class
 servlets\servlet_login.class
 mainClasses\User.class
 database\tables\EditClassPropertyTable.class

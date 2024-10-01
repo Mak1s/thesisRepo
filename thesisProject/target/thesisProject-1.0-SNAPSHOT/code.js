@@ -1,7 +1,5 @@
 var x3mlfile= "";
 var newChanges="";
-var notfoundPref="";
-var notfound=0;
 var newChanges1="";
 var newChanges2="";
 var iamfirst=0;
@@ -838,27 +836,40 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
             }else{
                 console.log("eimai o allos servlet:"+servletName);
                 console.log(apanthsh);
+                const firstLine = apanthsh.trim().split('\n')[0];
+                const value = firstLine.split('\t')[1];
+                console.log(value);
+                globalURI=value;
                 console.log(namespaceMap);
+
                    for (const [prefix, uri] of namespaceMap) {
-                    if (apanthsh.includes(uri)) {
-                        console.log("I found " + uri);
-                        globalPref=(prefix);
-                        globalURI=(uri);
-                        break;  
-                    } else {
-                        notfound++;
-                        notfoundPref = "ns1";
-                        globalPref="ns1";
-                    }
-                }
-                cls=apanthsh.split("classes")[0];
-                prt=apanthsh.split("classes")[1];
+                       console.log(uri);
+                       console.log(globalURI);
+                       if(uri===globalURI){
+                            console.log("mphka");
+                            globalPref=prefix;
+                            cls=apanthsh.split("classes")[0];
+                            prt=apanthsh.split("classes")[1];
+                            cls=removeSubstr(cls,globalURI);
+                            prt=removeSubstr(prt,globalURI);
+                            break;
+                       }else{
+                            globalPref="ns1";
+                            cls=apanthsh.split("classes")[0];
+                            prt=apanthsh.split("classes")[1];
+                            cls=removeSubstr(cls,globalURI);
+                            prt=removeSubstr(prt,globalURI);
+
+                        }
+                    }                
+      //          cls=apanthsh.split("classes")[0];
+        //        prt=apanthsh.split("classes")[1];
                 console.log("all classes are :" +cls);
                 console.log("all properties are : "+prt);
                 console.log(globalPref);
                 let clpr=(removeSubstr(apanthsh,globalURI));
-                cls=removeSubstr(cls,globalURI);
-                prt=removeSubstr(prt,globalURI);
+        //        cls=removeSubstr(cls,globalURI);
+          //      prt=removeSubstr(prt,globalURI);
                 console.log(clpr);
                 console.log("I have the prefix-> " + globalPref);
                 all=all+clpr;
@@ -990,23 +1001,46 @@ function translationPost(x3mlfile, newBlob) {
         x3mlfile: x3mlfile, 
         newBlob: newBlob   
     };
+
     console.log(typeof(x3mlfile));
     console.log(typeof(newBlob));
     console.log(x3mlfile);
     console.log(newBlob);
     
+    // Create a new XMLHttpRequest
     var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "translationPost", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Set the response type to 'blob'
+    xhttp.responseType = "blob"; 
+
     xhttp.onload = function() {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
+        if (xhttp.status === 200) {
             console.log("Translation successful!");
-        } else if (xhttp.status === 403) {
-            console.log("Access denied.");
-            return 1;
+
+            // Create a link element to trigger the download
+            const url = window.URL.createObjectURL(xhttp.response);
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download = "newX3ML_out.x3ml";  // The default file name for download
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);  // Clean up after download
+
+            // Remove the link element after triggering the download
+            document.body.removeChild(a);
         } else {
             console.log("Error occurred: " + xhttp.status);
         }
     };
-    xhttp.open("POST", "translationPost"); 
-    xhttp.setRequestHeader("Content-type", "application/json"); // Not needed for FormData
-    xhttp.send(JSON.stringify(data)); 
+
+    xhttp.onerror = function() {
+        console.error("Request failed");
+    };
+
+    // Send the JSON data as a string
+    xhttp.send(JSON.stringify(data));
 }
+
