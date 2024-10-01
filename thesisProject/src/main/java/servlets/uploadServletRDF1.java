@@ -120,10 +120,10 @@ public class uploadServletRDF1 extends HttpServlet {
             Map<String,String> classesMap=modelLoader.listClassesMap();
             Map<String,String> propertiesMap=modelLoader.listPropertiesMap();
             for(String className : classesMap.keySet()) {
-                out.write(className+"\t"+classesMap.get(className));
+                out.write(className+"\t"+classesMap.get(className)+"\n");
             }
             for(String propertyName : propertiesMap.keySet()) {
-                out.write(propertyName+"\t"+propertiesMap.get(propertyName));
+                out.write(propertyName+"\t"+propertiesMap.get(propertyName)+"\n");
             }
 
             //   modelLoader.listClasses().forEach( c -> out.write(c));
