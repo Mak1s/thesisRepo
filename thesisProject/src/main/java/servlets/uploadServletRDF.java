@@ -101,37 +101,20 @@ public class uploadServletRDF extends HttpServlet {
                 Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
            List<String> fileContentLines = Files.readAllLines(file.toPath());
-           // Specify the string to search for
-           /* String searchString = "xml:base";
-            String base="";
-            // Find the line that contains the specific string
-            for (String line : fileContentLines) {
-                if (line.contains(searchString)) {
-                    base=line;
-                    break; // Optionally, stop after finding the first occurrence
-                }
-            }
-*/
            
               editFile.addNewFile(1,fileContentLines);
        
-       
-       // out.write(fileName+base);
-
-            // Load the RDF model from the uploaded file
             ModelLoader modelLoader = new ModelLoader(file.getAbsolutePath());
             Map<String,String> classesMap=modelLoader.listClassesMap();
             Map<String,String> propertiesMap=modelLoader.listPropertiesMap();
             for(String className : classesMap.keySet()) {
-                out.write(className+"\t"+classesMap.get(className));
+                out.write(className+"\t"+classesMap.get(className)+"\n");
+                
             }
             out.write("classes");
             for(String propertyName : propertiesMap.keySet()) {
-                out.write(propertyName+"\t"+propertiesMap.get(propertyName));
+                out.write(propertyName+"\t"+propertiesMap.get(propertyName)+"\n");
             }
-            //modelLoader.listClasses().forEach( c -> out.write(c));
-            //modelLoader.listProperties().forEach( p -> out.write(p));
-            out.write("ModelLoader initialized.\n");
             
             response.setStatus(HttpServletResponse.SC_OK);
 

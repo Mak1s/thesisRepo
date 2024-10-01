@@ -1,7 +1,5 @@
 var x3mlfile= "";
 var newChanges="";
-var notfoundPref="";
-var notfound=0;
 var newChanges1="";
 var newChanges2="";
 var iamfirst=0;
@@ -838,27 +836,40 @@ function getX3MLFile(formId,fileId,contentId,servletName) {
             }else{
                 console.log("eimai o allos servlet:"+servletName);
                 console.log(apanthsh);
+                const firstLine = apanthsh.trim().split('\n')[0];
+                const value = firstLine.split('\t')[1];
+                console.log(value);
+                globalURI=value;
                 console.log(namespaceMap);
+
                    for (const [prefix, uri] of namespaceMap) {
-                    if (apanthsh.includes(uri)) {
-                        console.log("I found " + uri);
-                        globalPref=(prefix);
-                        globalURI=(uri);
-                        break;  
-                    } else {
-                        notfound++;
-                        notfoundPref = "ns1";
-                        globalPref="ns1";
-                    }
-                }
-                cls=apanthsh.split("classes")[0];
-                prt=apanthsh.split("classes")[1];
+                       console.log(uri);
+                       console.log(globalURI);
+                       if(uri===globalURI){
+                            console.log("mphka");
+                            globalPref=prefix;
+                            cls=apanthsh.split("classes")[0];
+                            prt=apanthsh.split("classes")[1];
+                            cls=removeSubstr(cls,globalURI);
+                            prt=removeSubstr(prt,globalURI);
+                            break;
+                       }else{
+                            globalPref="ns1";
+                            cls=apanthsh.split("classes")[0];
+                            prt=apanthsh.split("classes")[1];
+                            cls=removeSubstr(cls,globalURI);
+                            prt=removeSubstr(prt,globalURI);
+
+                        }
+                    }                
+      //          cls=apanthsh.split("classes")[0];
+        //        prt=apanthsh.split("classes")[1];
                 console.log("all classes are :" +cls);
                 console.log("all properties are : "+prt);
                 console.log(globalPref);
                 let clpr=(removeSubstr(apanthsh,globalURI));
-                cls=removeSubstr(cls,globalURI);
-                prt=removeSubstr(prt,globalURI);
+        //        cls=removeSubstr(cls,globalURI);
+          //      prt=removeSubstr(prt,globalURI);
                 console.log(clpr);
                 console.log("I have the prefix-> " + globalPref);
                 all=all+clpr;
