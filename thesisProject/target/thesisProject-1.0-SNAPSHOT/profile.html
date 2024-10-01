@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="style.css">
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <meta name="Author" content="Gerasimos Logiotatopoulos">
+        <meta name="viewport" content="width=device-width">
+   </head>
+    <body class="container">
+            <div class="col-lg-12 text-left fs-1 text-light bg-dark customHeight">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1 id="titlos">Translation System</h1>
+                </div>
+                <div class="col-sm-4 text-right text-light">
+                     <button class="btn btn-light" onclick="index()">Home</button>
+                    <button class="btn btn-light" onclick="profile()">Profile</button>
+                    <button class="btn btn-light" onclick="logout()">Logout</button>
+                    
+                </div>    
+            </div>
+        </div>
+    
+            <div class="row border border-dark " id="profile"> 
+            <div class="col-sm-12">
+                <div class="container mt-5" id="edit" style="display : none;">
+                   <div class="row">
+                   <button class="btn-dark "><span>Name of work</span></button>
+                   <button class="btn-dark "><span>Visibility</span></button> 
+                   <button class="btn-dark "><span>Properties</span></button>
+                   <button class="btn-dark " onclick="back()"><span><-</span></button>
+                   </div>
+                   
+                </div>
+                <div class="container mt-5" id="view">
+                    <div class="custom-card p-3 bg-dark text-light">
+                        <div class="custom-header">
+                            Name of work in the DB with some info
+                        </div>
+                        <div class="d-flex justify-content-between custom-actions mt-2">
+                            <button class="btn-light " onclick="edit()"><span>Edit</span></button>
+                            <button class="btn-light " id="editclass"><span>Edit class only</span></button>
+                            <button class="btn-light " id="editclassontology"><span>Edit class/ontology</span></button>
+                            <button class="btn-light " id="viewwork"><span>View work</span></button>
+                        </div>
+                        <div class="row" id="changedContent">
+                            
+                        </div>
+                    </div>
+                    <div class="custom-card p-3 mt-3 bg-dark text-light">
+                        <div class="custom-header">
+                            Name of work in the DB with some info
+                        </div>
+                        <div class="d-flex justify-content-between custom-actions mt-2">
+                            <button class="btn-light " onclick="edit()"><span>Edit</span></button>
+                            <button class="btn-light " id="editclass1"><span>Edit class only</span></button>
+                            <button class="btn-light " id="editclassontology1"><span>Edit class/ontology</span></button>
+                            <button class="btn-light " id="viewwork1"><span>View work</span></button>
+                        </div>
+                        <div class="row" id="changedContent1"></div>
+                    </div>
+                    <div class="custom-card p-3 mt-3 bg-dark text-light">
+                        <div class="custom-header">
+                            Name of work in the DB with some info
+                        </div>
+                        <div class="d-flex justify-content-between custom-actions mt-2">
+                            <button class="btn-light " onclick="edit()"><span>Edit</span></button>
+                            <button class="btn-light " id="editclass"><span>Edit class only</span></button>
+                            <button class="btn-light " id="editclassontology"><span>Edit class/ontology</span></button>
+                            <button class="btn-light " id="viewwork"><span>View work</span></button>
+                        </div>
+                    </div>
+                    <div class="custom-card p-3 mt-3 bg-dark text-light">
+                        <div class="custom-header">
+                            Name of work in the DB with some info
+                        </div>
+                        <div class="d-flex justify-content-between custom-actions mt-2">
+                            <button class="btn-light " onclick="edit()"><span>Edit</span></button>
+                            <button class="btn-light " id="editclass"><span>Edit class only</span></button>
+                            <button class="btn-light " id="editclassontology"><span>Edit class/ontology</span></button>
+                            <button class="btn-light " id="viewwork"><span>View work</span></button>
+                        </div>
+                    </div>
+                    <div class="custom-card p-3 mt-3 bg-dark text-light">
+                        <div class="custom-header ">
+                            Name of work in the DB with some info
+                        </div>
+                        <div class="d-flex justify-content-between custom-actions mt-2">
+                            <button class="btn-light " onclick="edit()"><span>Edit</span></button>
+                            <button class="editclass " id="editclass"><span>Edit class only</span></button>
+                            <button class="btn-light " id="editclassontology"><span>Edit class/ontology</span></button>
+                            <button class="btn-light " id="viewwork"><span>View work</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="row">
+            <div class="col-sm-6 ">
+                <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
+                <select id="classOptions" name="classOptions">
+                    <option value="E1_CRM_Entity">E1_CRM_Entity</option>
+                    <option value="E2_Temporal_Entity">E2_Temporal_Entity</option>
+                    <option value="E3_Condition_State">E3_Condition_State</option>
+                    <option value="E4_Period">E4_Period</option>
+                    <option value="E5_Event">E5_Event</option>
+                    <option value="E6_Destruction">E6_Destruction</option>
+                    <option value="E7_Activity">E7_Activity</option>
+                    <option value="E8_Acquisition">E8_Acquisition</option>
+                    <option value="E9_Move">E9_Move</option>
+                    <option value="E10_Transfer_of_Custody">E10_Transfer_of_Custody</option>
+                    <option value="E11_Modification">E11_Modification</option>
+                    <option value="E12_Production">E12_Production</option>
+                    <option value="E13_Attribute_Assignment">E13_Attribute_Assignment</option>
+                    <option value="E14_Condition_Assessment">E14_Condition_Assessment</option>
+                    <option value="E15_Identifier_Assignment">E15_Identifier_Assignment</option>
+                    <option value="E16_Measurement">E16_Measurement</option>
+                    <option value="E17_Type_Assignment">E17_Type_Assignment</option>
+                    <option value="E18_Physical_Thing">E18_Physical_Thing</option>
+                    <option value="E19_Physical_Object">E19_Physical_Object</option>
+                    <option value="E20_Biological_Object">E20_Biological_Object</option>
+                    <option value="E21_Person">E21_Person</option>
+                    <option value="E22_Human-Made_Object">E22_Human-Made_Object</option>
+                    <option value="E24_Physical_Human-Made_Thing">E24_Physical_Human-Made_Thing</option>
+                    <option value="E25_Human-Made_Feature">E25_Human-Made_Feature</option>
+                    <option value="E26_Physical_Feature">E26_Physical_Feature</option>
+                    <option value="E27_Site">E27_Site</option>
+                    <option value="E28_Conceptual_Object">E28_Conceptual_Object</option>
+                    <option value="E29_Design_or_Procedure">E29_Design_or_Procedure</option>
+                    <option value="E30_Right">E30_Right</option>
+                    <option value="E31_Document">E31_Document</option>
+                    <option value="E32_Authority_Document">E32_Authority_Document</option>
+                    <option value="E33_Linguistic_Object">E33_Linguistic_Object</option>
+                    <option value="E34_Inscription">E34_Inscription</option>
+                    <option value="E35_Title">E35_Title</option>
+                    <option value="E36_Visual_Item">E36_Visual_Item</option>
+                    <option value="E37_Mark">E37_Mark</option>
+                    <option value="E39_Actor">E39_Actor</option>
+                    <option value="E41_Appellation">E41_Appellation</option>
+                    <option value="E42_Identifier">E42_Identifier</option>
+                    <option value="E52_Time-Span">E52_Time-Span</option>
+                    <option value="E53_Place">E53_Place</option>
+                    <option value="E54_Dimension">E54_Dimension</option>
+                    <option value="E55_Type">E55_Type</option>
+                    <option value="E56_Language">E56_Language</option>
+                    <option value="E57_Material">E57_Material</option>
+                    <option value="E58_Measurement_Unit">E58_Measurement_Unit</option>
+                    <option value="E59_Primitive_Value">E59_Primitive_Value</option>
+                    <option value="E60_Number">E60_Number</option>
+                    <option value="E61_Time_Primitive">E61_Time_Primitive</option>
+                    <option value="E62_String">E62_String</option>
+                    <option value="E63_Beginning_of_Existence">E63_Beginning_of_Existence</option>
+                    <option value="E64_End_of_Existence">E64_End_of_Existence</option>
+                    <option value="E65_Creation">E65_Creation</option>
+                    <option value="E66_Formation">E66_Formation</option>
+                    <option value="E67_Birth">E67_Birth</option>
+                    <option value="E68_Dissolution">E68_Dissolution</option>
+                    <option value="E69_Death">E69_Death</option>
+                    <option value="E70_Thing">E70_Thing</option>
+                    <option value="E71_Human-Made_Thing">E71_Human-Made_Thing</option>
+                    <option value="E72_Legal_Object">E72_Legal_Object</option>
+                    <option value="E73_Information_Object">E73_Information_Object</option>
+                    <option value="E74_Group">E74_Group</option>
+                    <option value="E77_Persistent_Item">E77_Persistent_Item</option>
+                    <option value="E78_Curated_Holding">E78_Curated_Holding</option>
+                    <option value="E79_Part_Addition">E79_Part_Addition</option>
+                    <option value="E80_Part_Removal">E80_Part_Removal</option>
+                    <option value="E81_Transformation">E81_Transformation</option>
+                    <option value="E83_Type_Creation">E83_Type_Creation</option>
+                    <option value="E85_Joining">E85_Joining</option>
+                    <option value="E86_Leaving">E86_Leaving</option>
+                    <option value="E87_Curation_Activity">E87_Curation_Activity</option>
+                    <option value="E89_Propositional_Object">E89_Propositional_Object</option>
+                    <option value="E90_Symbolic_Object">E90_Symbolic_Object</option>
+                    <option value="E92_Spacetime_Volume">E92_Spacetime_Volume</option>
+                    <option value="E93_Presence">E93_Presence</option>
+                    <option value="E94_Space_Primitive">E94_Space_Primitive</option>
+                    <option value="E95_Spacetime_Primitive">E95_Spacetime_Primitive</option>
+                    <option value="E96_Purchase">E96_Purchase</option>
+                    <option value="E97_Monetary_Amount">E97_Monetary_Amount</option>
+                    <option value="E98_Currency">E98_Currency</option>
+                    <option value="E99_Product_Type">E99_Product_Type</option>
+                    
+                </select>
+            </div>
+            <div class="col-sm-6 ">
+                <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
+                <input class="form-control" id="classTO" type="text" placeholder="E99_Identfies_As">
+                <button type="submit" class="btn btn-dark" onclick="getValueClass()">Change</button>
+            </div>
+            </div>
+         </div>
+        </div>
+        <div id="ontoModal" class="modal">
+        <div class="modal-content">
+            <span class="close1">&times;</span>
+            <div class="row">
+            <div class="col-sm-6">
+                <p>Choose class to change from: &nbsp; &nbsp; &nbsp;*</p>
+                <select id="classPropertyOptions" name="classPropertyOptions">
+                    <option value="E1_CRM_Entity">E1_CRM_Entity</option>
+                    <option value="E2_Temporal_Entity">E2_Temporal_Entity</option>
+                    <option value="E3_Condition_State">E3_Condition_State</option>
+                    <option value="E4_Period">E4_Period</option>
+                    <option value="E5_Event">E5_Event</option>
+                    <option value="E6_Destruction">E6_Destruction</option>
+                    <option value="E7_Activity">E7_Activity</option>
+                    <option value="E8_Acquisition">E8_Acquisition</option>
+                    <option value="E9_Move">E9_Move</option>
+                    <option value="E10_Transfer_of_Custody">E10_Transfer_of_Custody</option>
+                    <option value="E11_Modification">E11_Modification</option>
+                    <option value="E12_Production">E12_Production</option>
+                    <option value="E13_Attribute_Assignment">E13_Attribute_Assignment</option>
+                    <option value="E14_Condition_Assessment">E14_Condition_Assessment</option>
+                    <option value="E15_Identifier_Assignment">E15_Identifier_Assignment</option>
+                    <option value="E16_Measurement">E16_Measurement</option>
+                    <option value="E17_Type_Assignment">E17_Type_Assignment</option>
+                    <option value="E18_Physical_Thing">E18_Physical_Thing</option>
+                    <option value="E19_Physical_Object">E19_Physical_Object</option>
+                    <option value="E20_Biological_Object">E20_Biological_Object</option>
+                    <option value="E21_Person">E21_Person</option>
+                    <option value="E22_Human-Made_Object">E22_Human-Made_Object</option>
+                    <option value="E24_Physical_Human-Made_Thing">E24_Physical_Human-Made_Thing</option>
+                    <option value="E25_Human-Made_Feature">E25_Human-Made_Feature</option>
+                    <option value="E26_Physical_Feature">E26_Physical_Feature</option>
+                    <option value="E27_Site">E27_Site</option>
+                    <option value="E28_Conceptual_Object">E28_Conceptual_Object</option>
+                    <option value="E29_Design_or_Procedure">E29_Design_or_Procedure</option>
+                    <option value="E30_Right">E30_Right</option>
+                    <option value="E31_Document">E31_Document</option>
+                    <option value="E32_Authority_Document">E32_Authority_Document</option>
+                    <option value="E33_Linguistic_Object">E33_Linguistic_Object</option>
+                    <option value="E34_Inscription">E34_Inscription</option>
+                    <option value="E35_Title">E35_Title</option>
+                    <option value="E36_Visual_Item">E36_Visual_Item</option>
+                    <option value="E37_Mark">E37_Mark</option>
+                    <option value="E39_Actor">E39_Actor</option>
+                    <option value="E41_Appellation">E41_Appellation</option>
+                    <option value="E42_Identifier">E42_Identifier</option>
+                    <option value="E52_Time-Span">E52_Time-Span</option>
+                    <option value="E53_Place">E53_Place</option>
+                    <option value="E54_Dimension">E54_Dimension</option>
+                    <option value="E55_Type">E55_Type</option>
+                    <option value="E56_Language">E56_Language</option>
+                    <option value="E57_Material">E57_Material</option>
+                    <option value="E58_Measurement_Unit">E58_Measurement_Unit</option>
+                    <option value="E59_Primitive_Value">E59_Primitive_Value</option>
+                    <option value="E60_Number">E60_Number</option>
+                    <option value="E61_Time_Primitive">E61_Time_Primitive</option>
+                    <option value="E62_String">E62_String</option>
+                    <option value="E63_Beginning_of_Existence">E63_Beginning_of_Existence</option>
+                    <option value="E64_End_of_Existence">E64_End_of_Existence</option>
+                    <option value="E65_Creation">E65_Creation</option>
+                    <option value="E66_Formation">E66_Formation</option>
+                    <option value="E67_Birth">E67_Birth</option>
+                    <option value="E68_Dissolution">E68_Dissolution</option>
+                    <option value="E69_Death">E69_Death</option>
+                    <option value="E70_Thing">E70_Thing</option>
+                    <option value="E71_Human-Made_Thing">E71_Human-Made_Thing</option>
+                    <option value="E72_Legal_Object">E72_Legal_Object</option>
+                    <option value="E73_Information_Object">E73_Information_Object</option>
+                    <option value="E74_Group">E74_Group</option>
+                    <option value="E77_Persistent_Item">E77_Persistent_Item</option>
+                    <option value="E78_Curated_Holding">E78_Curated_Holding</option>
+                    <option value="E79_Part_Addition">E79_Part_Addition</option>
+                    <option value="E80_Part_Removal">E80_Part_Removal</option>
+                    <option value="E81_Transformation">E81_Transformation</option>
+                    <option value="E83_Type_Creation">E83_Type_Creation</option>
+                    <option value="E85_Joining">E85_Joining</option>
+                    <option value="E86_Leaving">E86_Leaving</option>
+                    <option value="E87_Curation_Activity">E87_Curation_Activity</option>
+                    <option value="E89_Propositional_Object">E89_Propositional_Object</option>
+                    <option value="E90_Symbolic_Object">E90_Symbolic_Object</option>
+                    <option value="E92_Spacetime_Volume">E92_Spacetime_Volume</option>
+                    <option value="E93_Presence">E93_Presence</option>
+                    <option value="E94_Space_Primitive">E94_Space_Primitive</option>
+                    <option value="E95_Spacetime_Primitive">E95_Spacetime_Primitive</option>
+                    <option value="E96_Purchase">E96_Purchase</option>
+                    <option value="E97_Monetary_Amount">E97_Monetary_Amount</option>
+                    <option value="E98_Currency">E98_Currency</option>
+                    <option value="E99_Product_Type">E99_Product_Type</option>
+                    
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <p>Choose class to change to: &nbsp; &nbsp; &nbsp;*</p>
+                <input class="form-control" id="classPropertyTO" type="text" placeholder="E99_Identfies_As">
+                <button type="submit" class="btn btn-dark" onclick="getValueClassProperty()">Change</button>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-sm-6">
+                <p>Choose property to change from: &nbsp; &nbsp; &nbsp;*</p>
+                <select id="propertiesOptions" name="propertiesOptions">
+                    <option value="P1_is_identified_by_(identifies)">P1_is_identified_by_(identifies)</option>
+                    <option value="P2_has_type_(is_type_of)">P2_has_type_(is_type_of)</option>
+                    <option value="P3_has_note">P3_has_note</option>
+                    <option value="P4_has_time-span_(is_time-span_of)">P4_has_time-span_(is_time-span_of)</option>
+                    <option value="P5_consists_of_(forms_part_of)">P5_consists_of_(forms_part_of)</option>
+                    <option value="P7_took_place_at_(witnessed)">P7_took_place_at_(witnessed)</option>
+                    <option value="P8_took_place_on_or_within_(witnessed)">P8_took_place_on_or_within_(witnessed)</option>
+                    <option value="P9_consists_of_(forms_part_of)">P9_consists_of_(forms_part_of)</option>
+                    <option value="P10_falls_within_(contains)">P10_falls_within_(contains)</option>
+                    <option value="P11_had_participant_(participated_in)">P11_had_participant_(participated_in)</option>
+                    <option value="P12_occurred_in_the_presence_of_(was_present_at)">P12_occurred_in_the_presence_of_(was_present_at)</option>
+                    <option value="P13_destroyed_(was_destroyed_by)">P13_destroyed_(was_destroyed_by)</option>
+                    <option value="P14_carried_out_by_(performed)">P14_carried_out_by_(performed)</option>
+                    <option value="P15_was_influenced_by_(influenced)">P15_was_influenced_by_(influenced)</option>
+                    <option value="P16_used_specific_object_(was_used_for)">P16_used_specific_object_(was_used_for)</option>
+                    <option value="P17_was_motivated_by_(motivated)">P17_was_motivated_by_(motivated)</option>
+                    <option value="P19_was_intended_use_of_(was_made_for)">P19_was_intended_use_of_(was_made_for)</option>
+                    <option value="P20_had_specific_purpose_(was_purpose_of)">P20_had_specific_purpose_(was_purpose_of)</option>
+                    <option value="P21_had_general_purpose_(was_purpose_of)">P21_had_general_purpose_(was_purpose_of)</option>
+                    <option value="P22_transferred_title_to_(acquired_title_through)">P22_transferred_title_to_(acquired_title_through)</option>
+                    <option value="P23_transferred_title_from_(surrendered_title_through)">P23_transferred_title_from_(surrendered_title_through)</option>
+                    <option value="P24_transferred_title_of_(changed_ownership_through)">P24_transferred_title_of_(changed_ownership_through)</option>
+                    <option value="P25_moved_(moved_by)">P25_moved_(moved_by)</option>
+                    <option value="P26_moved_to_(was_destination_of)">P26_moved_to_(was_destination_of)</option>
+                    <option value="P27_moved_from_(was_origin_of)">P27_moved_from_(was_origin_of)</option>
+                    <option value="P28_custody_surrendered_by_(surrendered_custody_through)">P28_custody_surrendered_by_(surrendered_custody_through)</option>
+                    <option value="P29_custody_received_by_(received_custody_through)">P29_custody_received_by_(received_custody_through)</option>
+                    <option value="P30_transferred_custody_of_(custody_transferred_through)">P30_transferred_custody_of_(custody_transferred_through)</option>
+                    <option value="P31_has_modified_(was_modified_by)">P31_has_modified_(was_modified_by)</option>
+                    <option value="P32_used_general_technique_(was_technique_of)">P32_used_general_technique_(was_technique_of)</option>
+                    <option value="P33_used_specific_technique_(was_used_by)">P33_used_specific_technique_(was_used_by)</option>
+                    <option value="P34_concerned_(was_assessed_by)">P34_concerned_(was_assessed_by)</option>
+                    <option value="P35_has_identified_(was_identified_by)">P35_has_identified_(was_identified_by)</option>
+                    <option value="P37_assigned_(was_assigned_by)">P37_assigned_(was_assigned_by)</option>
+                    <option value="P38_deassigned_(was_deassigned_by)">P38_deassigned_(was_deassigned_by)</option>
+                    <option value="P39_measured_(was_measured_by)">P39_measured_(was_measured_by)</option>
+                    <option value="P40_observed_dimension_(was_observed_in)">P40_observed_dimension_(was_observed_in)</option>
+                    <option value="P41_classified_(was_classified_by)">P41_classified_(was_classified_by)</option>
+                    <option value="P42_assigned_(was_assigned_by)">P42_assigned_(was_assigned_by)</option>
+                    <option value="P43_has_dimension_(is_dimension_of)">P43_has_dimension_(is_dimension_of)</option>
+                    <option value="P44_has_condition_(is_condition_of)">P44_has_condition_(is_condition_of)</option>
+                    <option value="P45_consists_of_(is_incorporated_in)">P45_consists_of_(is_incorporated_in)</option>
+                    <option value="P46_is_composed_of_(forms_part_of)">P46_is_composed_of_(forms_part_of)</option>
+                    <option value="P48_has_preferred_identifier_(is_preferred_identifier_of)">P48_has_preferred_identifier_(is_preferred_identifier_of)</option>
+                    <option value="P49_has_former_or_current_keeper_(is_former_or_current_keeper_of)">P49_has_former_or_current_keeper_(is_former_or_current_keeper_of)</option>
+                    <option value="P50_has_current_keeper_(is_current_keeper_of)">P50_has_current_keeper_(is_current_keeper_of)</option>
+                    <option value="P51_has_former_or_current_owner_(is_former_or_current_owner_of)">P51_has_former_or_current_owner_(is_former_or_current_owner_of)</option>
+                    <option value="P52_has_current_owner_(is_current_owner_of)">P52_has_current_owner_(is_current_owner_of)</option>
+                    <option value="P53_has_former_or_current_location_(is_former_or_current_location_of)">P53_has_former_or_current_location_(is_former_or_current_location_of)</option>
+                    <option value="P54_has_current_permanent_location_(is_current_permanent_location_of)">P54_has_current_permanent_location_(is_current_permanent_location_of)</option>
+                    <option value="P55_has_current_location_(currently_holds)">P55_has_current_location_(currently_holds)</option>
+                    <option value="P56_bears_feature_(is_found_on)">P56_bears_feature_(is_found_on)</option>
+                    <option value="P57_has_number_of_parts">P57_has_number_of_parts</option>
+                    <option value="P59_has_section_(is_located_on_or_within)">P59_has_section_(is_located_on_or_within)</option>
+                    <option value="P62_depicts_(is_depicted_by)">P62_depicts_(is_depicted_by)</option>
+                    <option value="P65_shows_visual_item_(is_shown_by)">P65_shows_visual_item_(is_shown_by)</option>
+                    <option value="P67_refers_to_(is_referred_to_by)">P67_refers_to_(is_referred_to_by)</option>
+                    <option value="P68_foresees_use_of_(use_foreseen_by)">P68_foresees_use_of_(use_foreseen_by)</option>
+                    <option value="P69_has_association_with_(is_associated_with)">P69_has_association_with_(is_associated_with)</option>
+                    <option value="P70_documents_(is_documented_in)">P70_documents_(is_documented_in)</option>
+                    <option value="P71_lists_(is_listed_in)">P71_lists_(is_listed_in)</option>
+                    <option value="P72_has_language_(is_language_of)">P72_has_language_(is_language_of)</option>
+                    <option value="P73_has_translation_(is_translation_of)">P73_has_translation_(is_translation_of)</option>
+                    <option value="P74_has_current_or_former_residence_(is_current_or_former_residence_of)">P74_has_current_or_former_residence_(is_current_or_former_residence_of)</option>
+                    <option value="P75_possesses_(is_possessed_by)">P75_possesses_(is_possessed_by)</option>
+                    <option value="P76_has_contact_point_(provides_access_to)">P76_has_contact_point_(provides_access_to)</option>
+                    <option value="P79_beginning_is_qualified_by">P79_beginning_is_qualified_by</option>
+                    <option value="P80_end_is_qualified_by">P80_end_is_qualified_by</option>
+                    <option value="P81_ongoing_throughout">P81_ongoing_throughout</option>
+                    <option value="P82_at_some_time_within">P82_at_some_time_within</option>
+                    <option value="P86_falls_within_(contains)">P86_falls_within_(contains)</option>
+                    <option value="P89_falls_within_(contains)">P89_falls_within_(contains)</option>
+                    <option value="P90_has_value">P90_has_value</option>
+                    <option value="P91_has_unit_(is_unit_of)">P91_has_unit_(is_unit_of)</option>
+                    <option value="P92_brought_into_existence_(was_brought_into_existence_by)">P92_brought_into_existence_(was_brought_into_existence_by)</option>
+                    <option value="P93_took_out_of_existence_(was_taken_out_of_existence_by)">P93_took_out_of_existence_(was_taken_out_of_existence_by)</option>
+                    <option value="P94_has_created_(was_created_by)">P94_has_created_(was_created_by)</option>
+                    <option value="P95_has_formed_(was_formed_by)">P95_has_formed_(was_formed_by)</option>
+                    <option value="P96_by_mother_(gave_birth)">P96_by_mother_(gave_birth)</option>
+                    <option value="P97_from_father_(was_father_for)">P97_from_father_(was_father_for)</option>
+                    <option value="P98_brought_into_life_(was_born)">P98_brought_into_life_(was_born)</option>
+                    <option value="P99_dissolved_(was_dissolved_by)">P99_dissolved_(was_dissolved_by)</option>
+                    <option value="P100_was_death_of_(died_in)">P100_was_death_of_(died_in)</option>
+                    <option value="P101_had_as_general_use_(was_use_of)">P101_had_as_general_use_(was_use_of)</option>
+                    <option value="P102_has_title_(is_title_of)">P102_has_title_(is_title_of)</option>
+                    <option value="P103_was_intended_for_(was_intention_of)">P103_was_intended_for_(was_intention_of)</option>
+                    <option value="P104_is_subject_to_(applies_to)">P104_is_subject_to_(applies_to)</option>
+                    <option value="P105_right_held_by_(has_right_on)">P105_right_held_by_(has_right_on)</option>
+                    <option value="P106_is_composed_of_(forms_part_of)">P106_is_composed_of_(forms_part_of)</option>
+                    <option value="P107_has_current_or_former_member_(is_current_or_former_member_of)">P107_has_current_or_former_member_(is_current_or_former_member_of)</option>
+                    <option value="P108_has_produced_(was_produced_by)">P108_has_produced_(was_produced_by)</option>
+                    <option value="P109_has_current_or_former_curator_(is_current_or_former_curator_of)">P109_has_current_or_former_curator_(is_current_or_former_curator_of)</option>
+                    <option value="P110_augmented_(was_augmented_by)">P110_augmented_(was_augmented_by)</option>
+                    <option value="P111_added_(was_added_by)">P111_added_(was_added_by)</option>
+                    <option value="P112_diminished_(was_diminished_by)">P112_diminished_(was_diminished_by)</option>
+                    <option value="P113_removed_(was_removed_by)">P113_removed_(was_removed_by)</option>
+                    <option value="P121_overlaps_with">P121_overlaps_with</option>
+                    <option value="P122_borders_with">P122_borders_with</option>
+                    <option value="P123_resulted_in_(resulted_from)">P123_resulted_in_(resulted_from)</option>
+                    <option value="P124_transformed_(was_transformed_by)">P124_transformed_(was_transformed_by)</option>
+                    <option value="P125_used_object_of_type_(was_type_of_object_used_in)">P125_used_object_of_type_(was_type_of_object_used_in)</option>
+                    <option value="P126_employed_(was_employed_in)">P126_employed_(was_employed_in)</option>
+                    <option value="P127_has_broader_term_(has_narrower_term)">P127_has_broader_term_(has_narrower_term)</option>
+                    <option value="P128_carries_(is_carried_by)">P128_carries_(is_carried_by)</option>
+                    <option value="P129_is_about_(is_subject_of)">P129_is_about_(is_subject_of)</option>
+                    <option value="P130_shows_features_of_(features_are_also_found_on)">P130_shows_features_of_(features_are_also_found_on)</option>
+                    <option value="P132_spatiotemporally_overlaps_with">P132_spatiotemporally_overlaps_with</option>
+                    <option value="P133_is_spatiotemporally_separated_from">P133_is_spatiotemporally_separated_from</option>
+                    <option value="P134_continued_(was_continued_by)">P134_continued_(was_continued_by)</option>
+                    <option value="P135_created_type_(was_created_by)">P135_created_type_(was_created_by)</option>
+                    <option value="P136_was_based_on_(supported_type_creation)">P136_was_based_on_(supported_type_creation)</option>
+                    <option value="P137_exemplifies_(is_exemplified_by)">P137_exemplifies_(is_exemplified_by)</option>
+                    <option value="P138_represents_(has_representation)">P138_represents_(has_representation)</option>
+                    <option value="P139_has_alternative_form_(is_alternative_form_of)">P139_has_alternative_form_(is_alternative_form_of)</option>
+                    <option value="P140_assigned_attribute_to_(was_attributed_by)">P140_assigned_attribute_to_(was_attributed_by)</option>
+                    <option value="P141_assigned_(was_assigned_by)">P141_assigned_(was_assigned_by)</option>
+                    <option value="P142_used_constituent_(was_used_in)">P142_used_constituent_(was_used_in)</option>
+                    <option value="P143_joined_(was_joined_by)">P143_joined_(was_joined_by)</option>
+                    <option value="P144_joined_with_(gained_member_by)">P144_joined_with_(gained_member_by)</option>
+                    <option value="P145_separated_(left_by)">P145_separated_(left_by)</option>
+                    <option value="P146_separated_from_(lost_member_by)">P146_separated_from_(lost_member_by)</option>
+                    <option value="P147_curated_(was_curated_by)">P147_curated_(was_curated_by)</option>
+                    <option value="P148_has_component_(is_component_of)">P148_has_component_(is_component_of)</option>
+                    <option value="P150_defines_typical_parts_of_(defines_typical_wholes_for)">P150_defines_typical_parts_of_(defines_typical_wholes_for)</option>
+                    <option value="P151_was_formed_from_(participated_in)">P151_was_formed_from_(participated_in)</option>
+                    <option value="P152_has_parent_(is_parent_of)">P152_has_parent_(is_parent_of)</option>
+                    <option value="P156_occupies_(is_occupied_by)">P156_occupies_(is_occupied_by)</option>
+                    <option value="P157_is_at_rest_relative_to_(provides_reference_space_for)">P157_is_at_rest_relative_to_(provides_reference_space_for)</option>
+                    <option value="P160_has_temporal_projection_(is_temporal_projection_of)">P160_has_temporal_projection_(is_temporal_projection_of)</option>
+                    <option value="P161_has_spatial_projection_(is_spatial_projection_of)">P161_has_spatial_projection_(is_spatial_projection_of)</option>
+                    <option value="P164_is_temporally_specified_by_(temporally_specifies)">P164_is_temporally_specified_by_(temporally_specifies)</option>
+                    <option value="P165_incorporates_(is_incorporated_in)">P165_incorporates_(is_incorporated_in)</option>
+                    <option value="P166_was_a_presence_of_(had_presence)">P166_was_a_presence_of_(had_presence)</option>
+                    <option value="P167_was_within_(includes)">P167_was_within_(includes)</option>
+                    <option value="P168_place_is_defined_by_(defines_place)">P168_place_is_defined_by_(defines_place)</option>
+                    <option value="P169_defines_spacetime_volume_(spacetime_volume_is_defined_by)">P169_defines_spacetime_volume_(spacetime_volume_is_defined_by)</option>
+                    <option value="P170_defines_time_(time_is_defined_by)">P170_defines_time_(time_is_defined_by)</option>
+                    <option value="P171_at_some_place_within">P171_at_some_place_within</option>
+                    <option value="P172_contains">P172_contains</option>
+                    <option value="P173_starts_before_or_with_the_end_of_(ends_after_or_with_the_start_of)">P173_starts_before_or_with_the_end_of_(ends_after_or_with_the_start_of)</option>
+                    <option value="P174_starts_before_the_end_of_(ends_after_the_start_of)">P174_starts_before_the_end_of_(ends_after_the_start_of)</option>
+                    <option value="P175_starts_before_or_with_the_start_of_(starts_after_or_with_the_start_of)">P175_starts_before_or_with_the_start_of_(starts_after_or_with_the_start_of)</option>
+                    <option value="P176_starts_before_the_start_of_(starts_after_the_start_of)">P176_starts_before_the_start_of_(starts_after_the_start_of)</option>
+                    <option value="P177_assigned_property_of_type_(is_type_of_property_assigned)">P177_assigned_property_of_type_(is_type_of_property_assigned)</option>
+                    <option value="P179_had_sales_price_(was_sales_price_of)">P179_had_sales_price_(was_sales_price_of)</option>
+                    <option value="P180_has_currency_(was_currency_of)">P180_has_currency_(was_currency_of)</option>
+                    <option value="P182_ends_before_or_with_the_start_of_(starts_after_or_with_the_end_of)">P182_ends_before_or_with_the_start_of_(starts_after_or_with_the_end_of)</option>
+                    <option value="P183_ends_before_the_start_of_(starts_after_the_end_of)">P183_ends_before_the_start_of_(starts_after_the_end_of)</option>
+                    <option value="P184_ends_before_or_with_the_end_of_(ends_with_or_after_the_end_of)">P184_ends_before_or_with_the_end_of_(ends_with_or_after_the_end_of)</option>
+                    <option value="P185_ends_before_the_end_of_(ends_after_the_end_of)">P185_ends_before_the_end_of_(ends_after_the_end_of)</option>
+                    <option value="P186_produced_thing_of_product_type_(is_produced_by)">P186_produced_thing_of_product_type_(is_produced_by)</option>
+                    <option value="P187_has_production_plan_(is_production_plan_for)">P187_has_production_plan_(is_production_plan_for)</option>
+                    <option value="P188_requires_production_tool_(is_production_tool_for)">P188_requires_production_tool_(is_production_tool_for)</option>
+                    <option value="P189_approximates_(is_approximated_by)">P189_approximates_(is_approximated_by)</option>
+                    <option value="P190_has_symbolic_content">P190_has_symbolic_content</option>
+                    <option value="P191_had_duration_(was_duration_of)">P191_had_duration_(was_duration_of)</option>
+                    <option value="P195_was_a_presence_of_(had_presence)">P195_was_a_presence_of_(had_presence)</option>
+                    <option value="P196_defines_(is_defined_by)">P196_defines_(is_defined_by)</option>
+                    <option value="P197_covered_parts_of_(was_partially_covered_by)">P197_covered_parts_of_(was_partially_covered_by)</option>
+                    <option value="P198_holds_or_supports_(is_held_or_supported_by)">P198_holds_or_supports_(is_held_or_supported_by)</option>
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <p>Choose property to change to: &nbsp; &nbsp; &nbsp;*</p>
+                <input class="form-control" id="propertyTO" type="text" placeholder="P90_has_value">
+                <button type="submit" class="btn btn-dark" onclick="getValueProperty()">Change</button>            
+            </div>
+            </div>
+    </div>
+    </div>
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <span class="close2">&times;</span>
+            <h3>Project Name</h3>
+            <textarea class="form-control" readonly>
+{"changes":[
+    {"class":
+        {"classBefore":"E22-Man-Made","classAfter":"E22-Human-Made"}
+    },
+    {"property":
+        {"propertyBefore":"P1_is_id","propertyAfter":"P1_is_recognized"}
+    },
+    {"class_property":
+        {"classBefore":"E22-Man-Made","classAfter":"E22-Human-Made",
+        "propertyBefore":"P1_is_id","propertyAfter":"P1_is_recognized"}
+    },
+    {"class_property_class":
+        {"classBefore":"E22-Man-Made","classAfter":"E22-Human-Made",
+        "propertyBefore":"P1_is_id","propertyAfter":"P1_is_recognized",
+        "extraClass":"E55_Type"}
+    }
+]}</textarea>
+            <button class="btn-dark">Download Work</button>
+        </div>
+    </div>
+    </div>
+        
+    </body>
+            <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <!-- Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="code.js"></script>
+
+</html>

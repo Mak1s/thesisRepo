@@ -86,11 +86,11 @@ public class classPropertyPost extends HttpServlet {
         Logger LOGGER = Logger.getLogger(classOnlyPost.class.getName());
         LOGGER.log(Level.INFO,"eimai servlet ");
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        BufferedReader br = request.getReader();
         StringBuilder jsonBuilder = new StringBuilder();
         String line;
         Blob b;
-
+        
         while ((line = br.readLine()) != null) {
             jsonBuilder.append(line);
         }

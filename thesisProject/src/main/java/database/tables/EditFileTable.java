@@ -25,7 +25,6 @@ import mainClasses.File;
  */
 public class EditFileTable {
        private static final Logger LOGGER = Logger.getLogger(EditFileTable.class.getName());
-      
 
        
     public void createFileTable() throws SQLException, ClassNotFoundException {
@@ -269,10 +268,10 @@ public void addNewFile(int type, List<String> contents) throws ClassNotFoundExce
         byte[] byteArray = concatenatedString.getBytes(StandardCharsets.UTF_8);
         Blob blob = con.createBlob();
         blob.setBytes(1, byteArray);
-
+        LOGGER.log(Level.INFO, "Blob length: " + byteArray.length);
         String insertQuery = "INSERT INTO File (pid, type, contents) VALUES (?, ?, ?)";
         pstmt = con.prepareStatement(insertQuery);
-        pstmt.setInt(1, 1); 
+        pstmt.setInt(1, 1); // Assuming '1' is the 'pid' value
         pstmt.setInt(2, type);
         pstmt.setBlob(3, blob);
 

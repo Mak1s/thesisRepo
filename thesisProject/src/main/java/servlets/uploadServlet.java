@@ -74,7 +74,7 @@ public class uploadServlet extends HttpServlet {
         }
 
          List<String> fileContentLines = Files.readAllLines(file.toPath());
-      
+         
          String specificString = "<type>"; 
          String specificString1="<relationship>";
          String namespace="<namespace prefix=";
@@ -102,7 +102,7 @@ public class uploadServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
        
             editFile.addNewFile(0,fileContentLines);
-            out.write(filteredContent+filteredContent1+allNameSpaces);
+            out.write(String.join("", fileContentLines)+filteredContent+filteredContent1+allNameSpaces);
             Logger.getLogger(uploadServlet.class.getName()).log(Level.INFO,"namespace"+allNameSpaces);
             response.setStatus(HttpServletResponse.SC_OK);
             

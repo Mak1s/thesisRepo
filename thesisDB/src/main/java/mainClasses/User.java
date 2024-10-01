@@ -13,7 +13,13 @@ public class User {
     String FName,LName,username,password;
     
     
-    
+    public int getUserID(){
+        return userID;
+    }
+ 
+    public void setUserID(int userID){
+        this.userID=userID;
+    }
     
     public String getFName(){
         return FName;

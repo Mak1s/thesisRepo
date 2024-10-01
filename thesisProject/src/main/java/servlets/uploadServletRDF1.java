@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -116,8 +117,17 @@ public class uploadServletRDF1 extends HttpServlet {
 
             // Load the RDF model from the uploaded file
             ModelLoader modelLoader = new ModelLoader(file.getAbsolutePath());
-            modelLoader.listClasses().forEach( c -> out.write(c));
-            modelLoader.listProperties().forEach( p -> out.write(p));
+            Map<String,String> classesMap=modelLoader.listClassesMap();
+            Map<String,String> propertiesMap=modelLoader.listPropertiesMap();
+            for(String className : classesMap.keySet()) {
+                out.write(className+"\t"+classesMap.get(className));
+            }
+            for(String propertyName : propertiesMap.keySet()) {
+                out.write(propertyName+"\t"+propertiesMap.get(propertyName));
+            }
+
+            //   modelLoader.listClasses().forEach( c -> out.write(c));
+         //   modelLoader.listProperties().forEach( p -> out.write(p));
             out.write("ModelLoader initialized.\n");
             
             response.setStatus(HttpServletResponse.SC_OK);

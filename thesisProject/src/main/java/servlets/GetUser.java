@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import mainClasses.JSON_Converter;
 import mainClasses.User;
 import database.tables.EditUserTable;
+import java.sql.SQLException;
 /**
  *
  * @author gerry
@@ -80,12 +81,15 @@ public class GetUser extends HttpServlet {
             JSON_Converter jc = new JSON_Converter();
             String JSON = jc.getJSONFromAjax(request.getReader());
             try ( PrintWriter out = response.getWriter()) {
-            
+            Logger.getLogger(GetUser.class.getName()).log(Level.INFO, "Received JSON: " + JSON);
+
             EditUserTable users = new EditUserTable();
             users.addUserFromJSON(JSON);
             out.write(JSON);
             response.setStatus(200);
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GetUser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(GetUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

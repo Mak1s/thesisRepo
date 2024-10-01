@@ -15,6 +15,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -101,7 +102,7 @@ public class uploadServletRDF extends HttpServlet {
             }
            List<String> fileContentLines = Files.readAllLines(file.toPath());
            // Specify the string to search for
-            String searchString = "xml:base";
+           /* String searchString = "xml:base";
             String base="";
             // Find the line that contains the specific string
             for (String line : fileContentLines) {
@@ -110,17 +111,26 @@ public class uploadServletRDF extends HttpServlet {
                     break; // Optionally, stop after finding the first occurrence
                 }
             }
-
+*/
            
               editFile.addNewFile(1,fileContentLines);
        
        
-        out.write(fileName+base);
+       // out.write(fileName+base);
 
             // Load the RDF model from the uploaded file
             ModelLoader modelLoader = new ModelLoader(file.getAbsolutePath());
-            modelLoader.listClasses().forEach( c -> out.write(c));
-            modelLoader.listProperties().forEach( p -> out.write(p));
+            Map<String,String> classesMap=modelLoader.listClassesMap();
+            Map<String,String> propertiesMap=modelLoader.listPropertiesMap();
+            for(String className : classesMap.keySet()) {
+                out.write(className+"\t"+classesMap.get(className));
+            }
+            out.write("classes");
+            for(String propertyName : propertiesMap.keySet()) {
+                out.write(propertyName+"\t"+propertiesMap.get(propertyName));
+            }
+            //modelLoader.listClasses().forEach( c -> out.write(c));
+            //modelLoader.listProperties().forEach( p -> out.write(p));
             out.write("ModelLoader initialized.\n");
             
             response.setStatus(HttpServletResponse.SC_OK);

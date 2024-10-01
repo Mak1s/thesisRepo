@@ -1,0 +1,1392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x3ml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      source_type="xpath"
+      version="1.0"
+      mappings_version="2024-08-29"
+      xsi:noNamespaceSchemaLocation="https://isl.ics.forth.gr/x3ml/schema/x3ml.xsd">
+   <info>
+      <title>GRSF-SpeciesVocabulary</title>
+      <general_description>Modeling for the transformation of fishing gear resources (ISSCFG) in order to construct the GRSF Standard vocabulary for fishing gears with respect to MarineTLO and CIDOC-CRM</general_description>
+      <source>
+         <source_info>
+            <source_schema schema_file="species_sample.xml" type="xml" version="">species_sample</source_schema>
+         </source_info>
+      </source>
+      <target>
+         <target_info>
+            <target_schema schema_file="marinetlo.owl" type="owl" version="">marinetlo</target_schema>
+            <namespaces>
+               <namespace prefix="marinetlo"
+                          uri="http://www.ics.forth.gr/isl/ontology/MarineTLO/"/>
+               <namespace prefix="owl" uri="http://www.w3.org/2002/07/owl#"/>
+               <namespace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+               <namespace prefix="xsd" uri="http://www.w3.org/2001/XMLSchema#"/>
+               <namespace prefix="mtlo" uri="http://www.ics.forth.gr/isl/ontology/MarineTLO/"/>
+               <namespace prefix="skos" uri="http://www.w3.org/2004/02/skos/core#"/>
+               <namespace prefix="dcterms" uri="http://purl.org/dc/terms/"/>
+               <namespace prefix="rdfs" uri="http://www.w3.org/2000/01/rdf-schema#"/>
+               <namespace prefix="vs" uri="http://www.w3.org/2003/06/sw-vocab-status/ns#"/>
+               <namespace prefix="foaf" uri="http://xmlns.com/foaf/0.1/"/>
+               <namespace prefix="dc" uri="http://purl.org/dc/elements/1.1/"/>
+            </namespaces>
+         </target_info>
+         <target_info>
+            <target_schema schema_file="CIDOC_CRM_v7.1.1.rdfs" type="rdfs" version="">CIDOC_CRM_v7.1.1</target_schema>
+            <namespaces>
+               <namespace prefix="owl" uri="http://www.w3.org/2002/07/owl#"/>
+               <namespace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+               <namespace prefix="xsd" uri="http://www.w3.org/2001/XMLSchema#"/>
+               <namespace prefix="rdfs" uri="http://www.w3.org/2000/01/rdf-schema#"/>
+               <namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
+            </namespaces>
+         </target_info>
+      </target>
+      <mapping_info>
+         <mapping_created_by_org/>
+         <mapping_created_by_person/>
+         <in_collaboration_with/>
+      </mapping_info>
+      <example_data_info>
+         <example_data_from/>
+         <example_data_contact_person/>
+         <example_data_source_record/>
+         <generator_policy_info/>
+         <example_data_target_record/>
+         <thesaurus_info/>
+      </example_data_info>
+   </info>
+   <namespaces>
+      <namespace prefix="grsf" uri="https://github.com/grsf/resource/"/>
+   </namespaces>
+   <mappings>
+      <mapping>
+         <domain>
+            <source_node>/species_root/species</source_node>
+            <target_node>
+               <entity>
+                  <type>mtlo:BT27_Species</type>
+                  <instance_generator name="LocalTermUri-Hashed">
+                     <arg name="hierarchy" type="constant">vocabs/species</arg>
+                     <arg name="term" type="xpath">lower-case(string-join((TSN_ID/text(),GBIF_ID/text(),IUCN_ID/text(),FISHBASE_ID/text(),TAXONOMIC_CODE/text(),ALPHA_3_CODE/text(),APHIA_ID/text(),scientific_name/text()),'-'))</arg>
+                  </instance_generator>
+                  <label_generator name="Literal">
+                     <arg name="text" type="xpath">scientific_name/text()</arg>
+                  </label_generator>
+               </entity>
+            </target_node>
+         </domain>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>ALPHA_3_CODE</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LX1_is_identified_by</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>ALPHA_3_CODE</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BC32_Identifier</type>
+                     <instance_generator name="LocalTermUri">
+                        <arg name="hierarchy" type="constant">vocabs/species/identifier</arg>
+                        <arg name="term" type="xpath">string-join(('asfis',lower-case(text())),'_')</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT14_Appellation_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/identifier_type</arg>
+                              <arg name="term" type="constant">asfis</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">ASFIS</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>APHIA_ID</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LX1_is_identified_by</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>APHIA_ID</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BC32_Identifier</type>
+                     <instance_generator name="LocalTermUri">
+                        <arg name="hierarchy" type="constant">vocabs/species/identifier</arg>
+                        <arg name="term" type="xpath">string-join(('aphia_id',lower-case(text())),'_')</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT14_Appellation_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/identifier_type</arg>
+                              <arg name="term" type="constant">aphia_id</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">APHIA ID</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>FISHBASE_ID</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LX1_is_identified_by</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>FISHBASE_ID</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BC32_Identifier</type>
+                     <instance_generator name="LocalTermUri">
+                        <arg name="hierarchy" type="constant">vocabs/species/identifier</arg>
+                        <arg name="term" type="xpath">string-join(('fishbase_id',lower-case(text())),'_')</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT14_Appellation_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/identifier_type</arg>
+                              <arg name="term" type="constant">fishbase_id</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">FishBase ID</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>TSN_ID</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LX1_is_identified_by</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>TSN_ID</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BC32_Identifier</type>
+                     <instance_generator name="LocalTermUri">
+                        <arg name="hierarchy" type="constant">vocabs/species/identifier</arg>
+                        <arg name="term" type="xpath">string-join(('tsn',lower-case(text())),'_')</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT14_Appellation_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/identifier_type</arg>
+                              <arg name="term" type="constant">tsn</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">TSN</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>GBIF_ID</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LX1_is_identified_by</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>GBIF_ID</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BC32_Identifier</type>
+                     <instance_generator name="LocalTermUri">
+                        <arg name="hierarchy" type="constant">vocabs/species/identifier</arg>
+                        <arg name="term" type="xpath">string-join(('gbif',lower-case(text())),'_')</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT14_Appellation_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/identifier_type</arg>
+                              <arg name="term" type="constant">gbif</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">GBIF</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>IUCN_CODE</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LX1_is_identified_by</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>IUCN_CODE</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BC32_Identifier</type>
+                     <instance_generator name="LocalTermUri">
+                        <arg name="hierarchy" type="constant">vocabs/species/identifier</arg>
+                        <arg name="term" type="xpath">string-join(('iucn',lower-case(text())),'_')</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT14_Appellation_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/identifier_type</arg>
+                              <arg name="term" type="constant">iucn</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">IUCN</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>TAXONOMIC_CODE</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LX1_is_identified_by</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>TAXONOMIC_CODE</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BC32_Identifier</type>
+                     <instance_generator name="LocalTermUri">
+                        <arg name="hierarchy" type="constant">vocabs/species/identifier</arg>
+                        <arg name="term" type="xpath">string-join(('taxonomic_code',lower-case(text())),'_')</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT14_Appellation_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/identifier_type</arg>
+                              <arg name="term" type="constant">taxonomic_code</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">taxonomic code</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>scientific_name</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LX4_has_appellation</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>scientific_name</source_node>
+               <target_node>
+                  <entity variable="sc_name">
+                     <type>mtlo:BC30_Appellation</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species/appellation</arg>
+                        <arg name="term" type="xpath">lower-case(string-join((name(),text()),'-'))</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT14_Appellation_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/appellation_type</arg>
+                              <arg name="term" type="constant">scientific_name</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">scientific name</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>genus</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>genus</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT26_Genus</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_genus</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>family</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>family</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT24_Family</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_family</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>order</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>order</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT34_Order</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_order</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>class</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>class</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT22_Class</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_class</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>phylum</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>phylum</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT19_Phylum</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_phylum</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>kingdom</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>kingdom</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT18_Kingdom</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_kingdom</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>isscaap_group</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>isscaap_group</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT33_Marine_Animal_Type</type>
+                     <type>mtlo:BC42_Collection</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_group</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                        <arg name="language" type="constant">en</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT10_Biotic_Element_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/species_group_type</arg>
+                              <arg name="term" type="xpath">name()</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">ISSCAAP Group</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>cpc_class</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>cpc_class</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT33_Marine_Animal_Type</type>
+                     <type>mtlo:BC42_Collection</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_group</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                        <arg name="language" type="constant">en</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT10_Biotic_Element_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/species_group_type</arg>
+                              <arg name="term" type="xpath">name()</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">CPC Class</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>cpc_group</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>cpc_group</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT33_Marine_Animal_Type</type>
+                     <type>mtlo:BC42_Collection</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_group</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                        <arg name="language" type="constant">en</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT10_Biotic_Element_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/species_group_type</arg>
+                              <arg name="term" type="xpath">name()</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">CPC Group</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>common_names_eng/common_name_eng</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LX4_has_appellation</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>common_names_eng/common_name_eng</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BC30_Appellation</type>
+                     <type>mtlo:BC25_Linguistic_Object</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species/appellation</arg>
+                        <arg name="term" type="xpath">text()</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>mtlo:LX3_has_type</relationship>
+                        <entity>
+                           <type>mtlo:BT14_Appellation_Type</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/appellation_type</arg>
+                              <arg name="term" type="constant">common_name</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">common name</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                     <additional>
+                        <relationship>mtlo:LX8_has_language</relationship>
+                        <entity>
+                           <type>mtlo:BT36_Language</type>
+                           <instance_generator name="LocalTermUri">
+                              <arg name="hierarchy" type="constant">vocabs/language</arg>
+                              <arg name="term" type="constant">en</arg>
+                           </instance_generator>
+                           <label_generator name="Literal">
+                              <arg name="text" type="constant">en</arg>
+                           </label_generator>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>water_types/water_type</relation>
+               </source_relation>
+               <target_relation>
+                  <relationship>mtlo:LT3_usaually_is_component_of</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>water_types/water_type</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT7_Ecosystem_Type</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">water_type</arg>
+                        <arg name="term" type="xpath">text()</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">lower-case(text())</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>iucn_red_list_code</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT6_usually_is_subject_of</relationship>
+                  <entity>
+                     <type>mtlo:BT4_Conceptual_Object_Type</type>
+                     <instance_generator name="LocalTermUri">
+                        <arg name="hierarchy" type="constant">iucn_redlist_characterization</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                  </entity>
+                  <relationship>mtlo:LX1_is_identified_by</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>iucn_red_list_code</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BC32_Identifier</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">iucn_redlist_code</arg>
+                        <arg name="term" type="xpath">text()</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>iucn_red_list_category</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <or>
+                        <if>
+                           <exists>text()</exists>
+                        </if>
+                        <if>
+                           <exists>../iucn_red_list_code/text()</exists>
+                        </if>
+                     </or>
+                  </if>
+                  <relationship>mtlo:LT6_usually_is_subject_of</relationship>
+                  <entity>
+                     <type>mtlo:BT4_Conceptual_Object_Type</type>
+                     <instance_generator name="LocalTermUri">
+                        <arg name="hierarchy" type="constant">iucn_redlist_characterization</arg>
+                        <arg name="term" type="xpath">lower-case(../iucn_red_list_code/text())</arg>
+                     </instance_generator>
+                  </entity>
+                  <relationship>mtlo:LX4_has_appellation</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>iucn_red_list_category</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BC30_Appellation</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">iucn_redlist_category</arg>
+                        <arg name="term" type="xpath">text()</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+      </mapping>
+      <mapping>
+         <domain>
+            <source_node>/species_root/species/genus</source_node>
+            <target_node>
+               <if>
+                  <exists>text()</exists>
+               </if>
+               <entity>
+                  <type>mtlo:BT26_Genus</type>
+                  <instance_generator name="LocalTermUri-Hashed">
+                     <arg name="hierarchy" type="constant">vocabs/species_genus</arg>
+                     <arg name="term" type="xpath">lower-case(text())</arg>
+                  </instance_generator>
+                  <label_generator name="Literal">
+                     <arg name="text" type="xpath">text()</arg>
+                  </label_generator>
+               </entity>
+            </target_node>
+         </domain>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../family</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../family</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT24_Family</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_family</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../order</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../order</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT34_Order</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_order</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../class</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../class</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT22_Class</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_class</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../phylum</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../phylum</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT19_Phylum</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_phylum</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../kingdom</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../kingdom</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT18_Kingdom</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_kingdom</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+      </mapping>
+      <mapping>
+         <domain>
+            <source_node>/species_root/species/family</source_node>
+            <target_node>
+               <if>
+                  <exists>text()</exists>
+               </if>
+               <entity>
+                  <type>mtlo:BT24_Family</type>
+                  <instance_generator name="LocalTermUri-Hashed">
+                     <arg name="hierarchy" type="constant">vocabs/species_family</arg>
+                     <arg name="term" type="xpath">lower-case(text())</arg>
+                  </instance_generator>
+                  <label_generator name="Literal">
+                     <arg name="text" type="xpath">text()</arg>
+                  </label_generator>
+               </entity>
+            </target_node>
+         </domain>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../order</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../order</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT34_Order</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_order</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../class</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../order</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT22_Class</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_class</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../phylum</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../phylum</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT19_Phylum</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_phylum</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../kingdom</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../kingdom</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT18_Kingdom</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_kingdom</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+      </mapping>
+      <mapping>
+         <domain>
+            <source_node>/species_root/species/order</source_node>
+            <target_node>
+               <if>
+                  <exists>text()</exists>
+               </if>
+               <entity>
+                  <type>mtlo:BT34_Order</type>
+                  <instance_generator name="LocalTermUri-Hashed">
+                     <arg name="hierarchy" type="constant">vocabs/species_order</arg>
+                     <arg name="term" type="xpath">lower-case(text())</arg>
+                  </instance_generator>
+                  <label_generator name="Literal">
+                     <arg name="text" type="xpath">text()</arg>
+                  </label_generator>
+               </entity>
+            </target_node>
+         </domain>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../class</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../class</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT22_Class</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_class</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../phylum</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../phylum</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT19_Phylum</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_phylum</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../kingdom</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../kingdom</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT18_Kingdom</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_kingdom</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+      </mapping>
+      <mapping>
+         <domain>
+            <source_node>/species_root/species/class</source_node>
+            <target_node>
+               <if>
+                  <exists>text()</exists>
+               </if>
+               <entity>
+                  <type>mtlo:BT22_Class</type>
+                  <instance_generator name="LocalTermUri-Hashed">
+                     <arg name="hierarchy" type="constant">vocabs/species_class</arg>
+                     <arg name="term" type="xpath">lower-case(text())</arg>
+                  </instance_generator>
+                  <label_generator name="Literal">
+                     <arg name="text" type="xpath">text()</arg>
+                  </label_generator>
+               </entity>
+            </target_node>
+         </domain>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../phylum</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../phylum</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT19_Phylum</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_phylum</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../kingdom</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../kingdom</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT18_Kingdom</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_kingdom</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+      </mapping>
+      <mapping>
+         <domain>
+            <source_node>/species_root/species/phylum</source_node>
+            <target_node>
+               <if>
+                  <exists>text()</exists>
+               </if>
+               <entity>
+                  <type>mtlo:BT19_Phylum</type>
+                  <instance_generator name="LocalTermUri-Hashed">
+                     <arg name="hierarchy" type="constant">vocabs/species_phylum</arg>
+                     <arg name="term" type="xpath">lower-case(text())</arg>
+                  </instance_generator>
+                  <label_generator name="Literal">
+                     <arg name="text" type="xpath">text()</arg>
+                  </label_generator>
+               </entity>
+            </target_node>
+         </domain>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>../kingdom</relation>
+               </source_relation>
+               <target_relation>
+                  <if>
+                     <exists>text()</exists>
+                  </if>
+                  <relationship>mtlo:LT8_usually_belongs_to</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>../kingdom</source_node>
+               <target_node>
+                  <entity>
+                     <type>mtlo:BT18_Kingdom</type>
+                     <type>crm:E41_Appellation</type>
+                     <instance_generator name="LocalTermUri-Hashed">
+                        <arg name="hierarchy" type="constant">vocabs/species_kingdom</arg>
+                        <arg name="term" type="xpath">lower-case(text())</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </label_generator>
+                     <additional>
+                        <relationship>crm:P2_has_type</relationship>
+                        <entity>
+                           <type>crm:E55_Type</type>
+                           <instance_generator name="UUID"/>
+                        </entity>
+                     </additional>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+      </mapping>
+   </mappings>
+</x3ml>

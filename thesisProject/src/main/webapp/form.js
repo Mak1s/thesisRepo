@@ -79,14 +79,14 @@ function getUser() {
     console.log(xhttp);
     xhttp.onload = function() {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-         //   document.getElementById("msg-login").style.color="rgb(0, 0, 153)";            
+            document.getElementById("msg").style.color="rgb(0, 0, 153)";            
             console.log("OK 2");
             document.getElementById("msg").innerText="Connected";
              document.getElementById("msg").innerText = xhttp.responseText;
             window.location.href='./index.html';
         }else if(xhttp.status === 401){
             console.log("OK 3");
-         //   document.getElementById("msg-login").style.color="red";
+           document.getElementById("msg").style.color="red";
             document.getElementById("msg").innerText="Wrong Credentials";
         } 
     };

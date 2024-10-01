@@ -9,8 +9,34 @@ package mainClasses;
  * @author gerry
  */
 public class User {
-    String username,password,projects;
+    int userID;
+    String FName,LName,username,password;
     
+    
+    public int getUserID(){
+        return userID;
+    }
+ 
+    public void setUserID(int userID){
+        this.userID=userID;
+    }
+
+    
+    public String getFName(){
+        return FName;
+    }
+ 
+    public void setFName(String FName){
+        this.FName=FName;
+    }
+    
+    public String getLName(){
+        return LName;
+    }
+ 
+    public void setLName(String LName){
+        this.LName=LName;
+    }
     
     public String getUsername(){
         return username;
@@ -28,11 +54,5 @@ public class User {
         this.password=password;
     }
     
-    public String getProjects(){
-        return projects;
-    }
-    
-    public void setProjects( String projects){
-        this.projects=projects;
-    }
+  
 }

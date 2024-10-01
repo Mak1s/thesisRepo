@@ -61,7 +61,7 @@ public class ModelLoader {
     }
 
     public static void main(String []args){
-        ModelLoader modelLoader=new ModelLoader("CIDOC_CRM_v7.1.3.rdf");
+        ModelLoader modelLoader=new ModelLoader("C:\\Users\\gerry\\Documents\\NetBeansProjects\\thesisProject\\src\\main\\java\\mainClasses\\CIDOC_CRM_v7.1.3.rdf");
 //        ModelLoader modelLoader=new ModelLoader("foaf.rdf");
         
 //        modelLoader.listClasses().forEach( c -> System.out.println(c));
@@ -77,3 +77,4 @@ public class ModelLoader {
         }
     }
 }
+  

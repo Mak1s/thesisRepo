@@ -40,7 +40,7 @@ public class EditClassPropertyTable {
 "                           <label_generator name=\"Literal\">\n" +
 "                              <arg name=\"text\" type=\"xpath\">name()</arg>\n" +
 "                           </label_generator>')";
-        stmt.execute(query);
+       stmt.execute(query);
         stmt.close();
         
     }

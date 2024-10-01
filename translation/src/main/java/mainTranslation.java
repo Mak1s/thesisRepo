@@ -1,5 +1,3 @@
-package mainClasses;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -68,31 +66,40 @@ public class mainTranslation {
                     '}';
         }
     }
-
-    public void runTranslationAppFromString(String x3mlContent, String jsonContent) {
+    public static void runTranslationApp(String inputFilePath, String jsonFilePath) {
+        File inputFile = new File(inputFilePath);
+        File jsonFile = new File(jsonFilePath);
         File outputFile = new File("newX3ML_out.x3ml");
 
         Gson gson = new Gson();
 
-        try {
-            // Parse JSON data from the provided string
-            JsonData[] dataArray = gson.fromJson(jsonContent, JsonData[].class);
+        if (!inputFile.exists() || !jsonFile.exists()) {
+            System.out.println("File not found: " + inputFile.getAbsolutePath() + " or " + jsonFile.getAbsolutePath());
+            return;
+        }
+                try {
+            StringBuilder fileContent = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    fileContent.append(line).append("\n");
+                }
+            }
 
-            // Modify the x3mlContent based on JSON rules
-            String fullFileContent = x3mlContent;
+            JsonData[] dataArray;
+            try (BufferedReader reader2 = new BufferedReader(new FileReader(jsonFile))) {
+                dataArray = gson.fromJson(reader2, JsonData[].class);
+            }
+
+            String fullFileContent = fileContent.toString();
 
             for (JsonData data : dataArray) {
                 System.out.println("Processing classBefore: " + data.getClassBefore());
                 System.out.println("Processing propertyBefore: " + data.getPropertyBefore());
-
-                // Replace class and property
                 fullFileContent = fullFileContent.replace(data.getClassBefore(), data.getClassAfter());
                 fullFileContent = fullFileContent.replace(data.getPropertyBefore(), data.getPropertyAfter());
-
-                System.out.println("Changed to classAfter: " + data.getClassAfter());
-                System.out.println("Changed to propertyAfter: " + data.getPropertyAfter());
-
-                // Handle additional class replacements if specified
+                System.out.println("Changed to classAfter: "+ data.getClassAfter());
+                System.out.println("Changed to propertyAfter: "+ data.getPropertyAfter());
                 if (data.getAdditionalClass() != null && !data.getAdditionalClass().isEmpty()) {
                     String specificString = "<entity>\n" +
                             "                     <type>crm:" + data.getClassAfter() + "</type>\n" +
@@ -106,21 +113,28 @@ public class mainTranslation {
                             "                     </label_generator>\n" +
                             "                  </entity>";
 
-                    String replacementString = specificString + 
+                    String replacementString = "<entity>\n" +
+                            "                     <type>crm:" + data.getClassAfter() + "</type>\n" +
+                            "                     <instance_generator name=\"LocalTermURI\">\n" +
+                            "                        <arg name=\"hierarchy\" type=\"constant\">person</arg>\n" +
+                            "                        <arg name=\"term\" type=\"xpath\">../creator_viaf/text()</arg>\n" +
+                            "                     </instance_generator>\n" +
+                            "                     <label_generator name=\"CompositeLabel\">\n" +
+                            "                        <arg name=\"term1\" type=\"xpath\">text()</arg>\n" +
+                            "                        <arg name=\"term2\" type=\"xpath\">../creator_lname/text()</arg>\n" +
+                            "                     </label_generator>\n" +
+                            "                  </entity>" +
                             "                   <additional>\n" +
                             "                        <entity>\n" +
                             "                           <type>crm:" + data.getAdditionalClass() + "</type>\n" +
                             "                        </entity>\n" +
                             "                     </additional>";
-
                     if (fullFileContent.contains(specificString)) {
                         fullFileContent = fullFileContent.replace(specificString, replacementString);
                         System.out.println("Multiline specific string replaced for class: " + data.getClassAfter());
                     }
                 }
             }
-
-            // Write the modified content to a new output file
             try (FileWriter writer = new FileWriter(outputFile)) {
                 writer.write(fullFileContent);
                 System.out.println("File updated successfully.");
@@ -128,8 +142,9 @@ public class mainTranslation {
         } catch (IOException e) {
             System.out.println("IOException occurred: " + e.getMessage());
         }
-    }
+    
 
+    }
     public static void main(String[] args) {
 
         File inputFile = new File("reflection.txt");
