@@ -9,6 +9,10 @@ import com.google.gson.Gson;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import servlets.classOnlyPost;
+import gr.forth.ics.isl.x3ml.X3MLEngine;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 
 public class mainTranslation {
 
@@ -203,6 +207,8 @@ public class mainTranslation {
             }
             try (FileWriter writer = new FileWriter(outputFile)) {
                 writer.write(fullFileContent);
+                InputStream inputStream = new FileInputStream(outputFile);
+                System.out.println(X3MLEngine.validateX3MLMappings((inputStream)));
                 System.out.println("File updated successfully."+outputFile.getAbsolutePath());
             }
         } catch (IOException e) {

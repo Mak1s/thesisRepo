@@ -15,7 +15,38 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+      <repositories>
+        <repository>
+            <id>FORTH-ISL-releases</id>
+            <name>FORTH ISL Nexus repository - Releases</name>
+            <url>https://isl.ics.forth.gr/maven-releases/</url>
+        </repository>
+    </repositories>
     <dependencies>
+        <dependency>
+            <groupId>gr.forth.ics.isl</groupId>
+            <artifactId>x3ml-engine</artifactId>
+            <version>2.2.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-core</artifactId>
+            <version>4.7.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-arq</artifactId>
+            <version>4.7.0</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
