@@ -101,7 +101,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         Gson gson = new Gson();
         DataInput dataInput;
         try {
-            // Assuming the input is {"x3mlfile": "...", "newBlob": "..."}
+           
             dataInput = gson.fromJson(fullContent, DataInput.class);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error parsing JSON: ", e);

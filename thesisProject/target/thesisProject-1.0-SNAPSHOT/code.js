@@ -997,6 +997,8 @@ function removePost(jsonString){
 }
 
 function translationPost(x3mlfile, newBlob) {
+    const index=x3mlfile.indexOf("</x3ml>");
+    x3mlfile = x3mlfile.substring(0, index + "</x3ml>".length);
     const data = {
         x3mlfile: x3mlfile, 
         newBlob: newBlob   
@@ -1027,9 +1029,7 @@ function translationPost(x3mlfile, newBlob) {
             a.download = "newX3ML_out.x3ml";  // The default file name for download
             document.body.appendChild(a);
             a.click();
-            window.URL.revokeObjectURL(url);  // Clean up after download
-
-            // Remove the link element after triggering the download
+            window.URL.revokeObjectURL(url);
             document.body.removeChild(a);
         } else {
             console.log("Error occurred: " + xhttp.status);
